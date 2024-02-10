@@ -1,58 +1,97 @@
-import { useProduct, useStore } from './'
+import { Product, Variation } from '../types'
 
-export const useVariations = () => {
-  const { isLoading, error, product } = useProduct()
-  const selectedVariations = useStore((store) => store.variations)
+export const useVariations = (product: Product, variationId: string) => {
   let widths: string[] | null = null
   let sizes: string[] | null = null
   let metals: string[] | null = null
-  if (!isLoading && !error && product) {
-    const hasWidthVariation = product.variations.some(
-      (variation) => variation.attributes.pa_width
+  let otherOptions: Variation[] = []
+  let alternatives: Variation[] = []
+  const primaryAttr = product.variations.some(
+    (variation) => variation.attributes.pa_gauge
+  )
+    ? 'pa_gauge'
+    : 'pa_total-carat'
+
+  const selectedVariation = product.variations.find(
+    (variation) => variation['variation-id'] === parseInt(variationId)
+  )
+  if (selectedVariation) {
+    sizes = Array.from(
+      new Set(
+        product.variations
+          .filter(
+            (variation) =>
+              variation.attributes[primaryAttr] ===
+              selectedVariation.attributes[primaryAttr]
+          )
+          .map((variation) => variation.attributes.pa_size)
+      )
     )
-    const hasSizeVariation = product.variations.some(
-      (variation) => variation.attributes.pa_size
+
+    metals = Array.from(
+      new Set(
+        product.variations
+          .filter(
+            (variation) =>
+              variation.attributes[primaryAttr] ===
+              selectedVariation.attributes[primaryAttr]
+          )
+          .map((variation) => variation.attributes['pa_metal-code'])
+      )
     )
-    const hasMetalVariation = product.variations.some(
-      (variation) => variation.attributes['pa_metal-code']
-    )
-    if (hasWidthVariation) {
+
+    if (primaryAttr === 'pa_gauge') {
       widths = Array.from(
         new Set(
-          product.variations.map((variation) => variation.attributes.pa_width)
+          product.variations
+            .filter(
+              (variation) =>
+                variation.attributes[primaryAttr] ===
+                selectedVariation.attributes[primaryAttr]
+            )
+            .map((variation) => variation.attributes.pa_width)
         )
       )
     }
-    if (!hasWidthVariation && hasSizeVariation) {
-      sizes = Array.from(
-        new Set(
-          product.variations.map((variation) => variation.attributes.pa_size)
+
+    const uniquePrimaryAttrValues = Array.from(
+      new Set(
+        product.variations.map((variation) => variation.attributes[primaryAttr])
+      )
+    )
+
+    uniquePrimaryAttrValues
+      .filter(
+        (attrValue) => attrValue !== selectedVariation.attributes[primaryAttr]
+      )
+      .forEach((attrValue) => {
+        const otherVariation = product.variations.find(
+          (variation) =>
+            variation.attributes[primaryAttr] === attrValue &&
+            variation.attributes['pa_metal-code'] ===
+              selectedVariation.attributes['pa_metal-code']
+        )
+        if (otherVariation) otherOptions.push(otherVariation)
+      })
+
+    const uniqueVariationMetals = Array.from(
+      new Set(
+        product.variations.map(
+          (variation) => variation.attributes['pa_metal-code']
         )
       )
-    }
-    if (hasWidthVariation && selectedVariations.width && hasSizeVariation) {
-      const filteredVariations = product.variations.filter(
-        (variation) =>
-          variation.attributes.pa_width === selectedVariations.width
-      )
-      sizes = Array.from(
-        new Set(
-          filteredVariations.map((variation) => variation.attributes.pa_size)
+    ).filter((metal) => metal !== selectedVariation.attributes['pa_metal-code'])
+
+    uniqueVariationMetals.forEach((metal) => {
+      uniquePrimaryAttrValues.forEach((uniquePrimaryAttr) => {
+        const altVariation = product.variations.find(
+          (variation) =>
+            variation.attributes['pa_metal-code'] === metal &&
+            variation.attributes[primaryAttr] === uniquePrimaryAttr
         )
-      )
-    }
-    if (hasMetalVariation && selectedVariations.size) {
-      const filteredVariations = product.variations.filter(
-        (variation) => variation.attributes.pa_size === selectedVariations.size
-      )
-      metals = Array.from(
-        new Set(
-          filteredVariations.map(
-            (variation) => variation.attributes['pa_metal-code']
-          )
-        )
-      )
-    }
+        if (altVariation) alternatives.push(altVariation)
+      })
+    })
   }
-  return { widths, sizes, metals, isLoading, error }
+  return { widths, sizes, metals, otherOptions, alternatives }
 }

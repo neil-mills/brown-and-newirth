@@ -3,9 +3,11 @@ import { Product } from '../types'
 import { mountStoreDevtool } from 'simple-zustand-devtools'
 
 interface Store {
-  productId: number | null
+  productId: string | null
+  variationId: string | null
   productsQuery: ProductsQuery
-  setProductId: (productId: number) => void
+  setProductId: (productId: string) => void
+  setVariationId: (variationId: string) => void
   setSearchQuery: (search: string) => void
   setSku: (sku: string) => void
   setCategory: (category: string) => void
@@ -29,8 +31,11 @@ interface Variations {
 
 export const useStore = create<Store>((set) => ({
   productId: null,
-  setProductId: (productId: number) =>
+  variationId: null,
+  setProductId: (productId: string) =>
     set((store) => ({ ...store, productId })),
+  setVariationId: (variationId: string) =>
+    set((store) => ({ ...store, variationId })),
   productsQuery: {} as ProductsQuery,
   setSearchQuery: (search: string) =>
     set((store) => ({ ...store, productsQuery: { search } })),

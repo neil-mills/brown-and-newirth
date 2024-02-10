@@ -10,7 +10,7 @@ export interface Product {
   variations: Variation[]
 }
 
-interface Variation {
+export interface Variation {
   'variation-id': number
   name: string
   slug: string
@@ -22,9 +22,10 @@ interface Variation {
   image: string
   attributes: {
     'pa_metal-code': string
-    'pa_total-carat': string
-    'pa_centre-carat': string
-    'pa_diamond-quality': string
+    'pa_total-carat'?: string
+    'pa_centre-carat'?: string
+    'pa_diamond-quality'?: string
+    pa_gauge?: string
     pa_width: string
     pa_size: PaSize
   }

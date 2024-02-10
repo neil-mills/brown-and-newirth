@@ -1,28 +1,26 @@
 'use client'
-import Link from 'next/link'
+import { Fragment } from 'react'
+import { ProductCard } from '.'
 import { Product } from '../types'
-import { useCategories } from '@/app/hooks'
+import CategoryCard from './CategoryCard'
 
-const ProductGrid = () => {
-  const { categoryProducts: products, isLoading, error } = useCategories()
-  if (isLoading) {
-    return <p>Loading</p>
-  }
-  if (error) {
-    return <p>{error.message}</p>
-  }
-  console.log({ products })
+interface Props {
+  type: 'category' | 'product'
+  products: Product[]
+}
+const ProductGrid = ({ type, products }: Props) => {
   return (
-    <>
-      <h3>Categories</h3>
-      <ul>
-        {products.map((product) => (
-          <li key={product.productId}>
-            <Link href={`/products/${product.productId}`}>{product.name}</Link>
-          </li>
-        ))}
-      </ul>
-    </>
+    <ul>
+      {products.map((product) => (
+        <Fragment key={product.productId}>
+          {type === 'category' ? (
+            <CategoryCard product={product} />
+          ) : (
+            <ProductCard product={product} />
+          )}
+        </Fragment>
+      ))}
+    </ul>
   )
 }
 
