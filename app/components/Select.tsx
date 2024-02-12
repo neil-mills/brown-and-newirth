@@ -1,17 +1,17 @@
-import React from 'react'
+import { Option } from '@/app/types'
+import { ChangeEvent } from 'react'
 
 interface Props {
   options: Option[]
   value?: string
+  defaultLabel: string
+  onChange: (event: ChangeEvent<HTMLSelectElement>) => void
 }
 
-interface Option {
-  label: string
-  value: string
-}
-export const Select = ({ options, value }: Props) => {
+export const Select = ({ options, value, defaultLabel, onChange }: Props) => {
   return (
-    <select value={value}>
+    <select value={value} onChange={onChange}>
+      <option value="">{defaultLabel}</option>
       {options.map((option) => (
         <option key={option.value} value={option.value}>
           {option.label}

@@ -1,20 +1,26 @@
 import { create } from 'zustand'
-import { Product } from '../types'
+import { Product, Variation } from '../types'
 import { mountStoreDevtool } from 'simple-zustand-devtools'
 
+type PrimaryAttr = 'pa_gauge' | 'pa_total-carat'
+
 interface Store {
+  product: Product | null
   productId: string | null
   variationId: string | null
+  variation: Variation | null
   productsQuery: ProductsQuery
-  setProductId: (productId: string) => void
-  setVariationId: (variationId: string) => void
+  setProduct: (product: Product | null) => void
+  setVariation: (variation: Variation | null) => void
+  setVariationId: (variationId: string | null) => void
+  primaryAttr: PrimaryAttr
   setSearchQuery: (search: string) => void
   setSku: (sku: string) => void
   setCategory: (category: string) => void
-  variations: Variations
-  setVariationWidth: (width: string) => void
-  setVariationSize: (size: string) => void
-  setVariationMetal: (metal: string) => void
+  variationOptions: VariationOptions
+  setVariationOptionWidth: (width: string) => void
+  setVariationOptionSize: (size: string) => void
+  setVariationOptionMetal: (metal: string) => void
 }
 
 interface ProductsQuery {
@@ -23,19 +29,28 @@ interface ProductsQuery {
   category?: string
 }
 
-interface Variations {
-  width?: string | null
-  size: string | null
-  metal: string | null
+interface VariationOptions {
+  width?: string
+  size: string
+  metal: string
 }
 
 export const useStore = create<Store>((set) => ({
   productId: null,
+  product: null,
   variationId: null,
+  variation: null,
+  primaryAttr: 'pa_gauge',
   setProductId: (productId: string) =>
     set((store) => ({ ...store, productId })),
-  setVariationId: (variationId: string) =>
+  setProduct: (product: Product | null) =>
+    set((store) => ({ ...store, product })),
+  setVariation: (variation: Variation | null) =>
+    set((store) => ({ ...store, variation })),
+  setVariationId: (variationId: string | null) =>
     set((store) => ({ ...store, variationId })),
+  setPrimaryAttr: (primaryAttr: PrimaryAttr) =>
+    set((store) => ({ ...store, primaryAttr })),
   productsQuery: {} as ProductsQuery,
   setSearchQuery: (search: string) =>
     set((store) => ({ ...store, productsQuery: { search } })),
@@ -49,13 +64,22 @@ export const useStore = create<Store>((set) => ({
       ...store,
       productsQuery: { ...store.productsQuery, category },
     })),
-  variations: { width: null, size: null, metal: null },
-  setVariationWidth: (width: string) =>
-    set((store) => ({ ...store, variations: { ...store.variations, width } })),
-  setVariationSize: (size: string) =>
-    set((store) => ({ ...store, variations: { ...store.variations, size } })),
-  setVariationMetal: (metal: string) =>
-    set((store) => ({ ...store, variations: { ...store.variations, metal } })),
+  variationOptions: { width: '', size: '', metal: '' },
+  setVariationOptionWidth: (width: string) =>
+    set((store) => ({
+      ...store,
+      variationOptions: { ...store.variationOptions, width },
+    })),
+  setVariationOptionSize: (size: string) =>
+    set((store) => ({
+      ...store,
+      variationOptions: { ...store.variationOptions, size },
+    })),
+  setVariationOptionMetal: (metal: string) =>
+    set((store) => ({
+      ...store,
+      variationOptions: { ...store.variationOptions, metal },
+    })),
 }))
 
 if (process.env.NODE_ENV === 'development') {

@@ -1,10 +1,15 @@
 import Link from 'next/link'
-import { Product } from '../types'
+import { Product, Variation } from '../types'
 
-export const ProductCard = ({ product }: { product: Product }) => {
-  return (
-    <li>
-      <Link href={`/products/${product.productId}`}>{product.name}</Link>
-    </li>
-  )
+const isProduct = (item: Product | Variation): item is Product => {
+  return (item as Product).productId !== undefined
+}
+
+export const ProductCard = ({ item }: { item: Product | Variation }) => {
+  // const url = isProduct(item) ? `/products/${item.productId}`: `/products/category/${item.}`
+  // return (
+  //   <li>
+  //     <Link href={`/products/${product.productId}`}>{product.name}</Link>
+  //   </li>
+  // )
 }

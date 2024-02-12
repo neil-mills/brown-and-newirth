@@ -1,27 +1,17 @@
 'use client'
-import { Fragment } from 'react'
 import { ProductCard } from '.'
-import { Product } from '../types'
-import CategoryCard from './CategoryCard'
+import { Product, Variation } from '../types'
 
 interface Props {
   type: 'category' | 'product'
-  products: Product[]
+  items: Product[] | Variation[]
 }
-const ProductGrid = ({ type, products }: Props) => {
+export const ProductGrid = ({ type, items }: Props) => {
   return (
     <ul>
-      {products.map((product) => (
-        <Fragment key={product.productId}>
-          {type === 'category' ? (
-            <CategoryCard product={product} />
-          ) : (
-            <ProductCard product={product} />
-          )}
-        </Fragment>
+      {items.map((item, i) => (
+        <ProductCard item={item} />
       ))}
     </ul>
   )
 }
-
-export default ProductGrid

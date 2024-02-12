@@ -1,144 +1,60 @@
 import { Product, Variation } from '../types'
-import { useGetData, useVariations } from './'
+import { useGetData, useStore } from './'
 
-interface Response {
+interface ReturnValues {
   isLoading: boolean
   error: Error | null
   product: Product | null
   variation: Variation | null
-  variationOptions: VariationOptions
-  otherOptions: Variation[]
-  altOptions: Variation[]
-}
-
-interface VariationOptions {
-  widths: string[] | null
-  sizes: string[] | null
-  metals: string[] | null
+  primaryAttr: string | null
 }
 
 export const useProduct = (
   productId: string,
   variationId?: string
-): Response => {
-  const { data: products, error, isLoading } = useGetData()
+): ReturnValues => {
+  const variationOptions = useStore((store) => store.variationOptions)
   let product: Product | null = null
-  let selectedVariation: Variation | null = null
-  const variationOptions: VariationOptions = {
-    widths: null,
-    sizes: null,
-    metals: null,
-  }
-
-  let otherOptions: Variation[] = []
-  let altOptions: Variation[] = []
-
-  if (!error && !isLoading && products) {
-    product = products.find((p) => p.productId === parseInt(productId)) || null
+  let variation: Variation | null = null
+  let primaryAttr = null
+  const { data: products, error, isLoading } = useGetData()
+  if (!isLoading && !error) {
+    const product = products?.find((p) => p.productId === parseInt(productId))
     if (product) {
-      const primaryAttr = product.variations.some(
+      primaryAttr = product.variations.some(
         (variation) => variation.attributes.pa_gauge
       )
         ? 'pa_gauge'
         : 'pa_total-carat'
 
-      selectedVariation = !variationId
-        ? product.variations[0]
-        : product.variations.find(
+      if (variationId) {
+        variation =
+          product.variations.find(
             (variation) => variation['variation-id'] === parseInt(variationId)
           ) || null
-      if (selectedVariation) {
-        variationOptions.sizes = Array.from(
-          new Set(
-            product.variations
-              .filter(
-                (variation) =>
-                  variation.attributes[primaryAttr] ===
-                  selectedVariation!.attributes[primaryAttr]
-              )
-              .map((variation) => variation.attributes.pa_size)
-          )
-        )
-
-        variationOptions.metals = Array.from(
-          new Set(
-            product.variations
-              .filter(
-                (variation) =>
-                  variation.attributes[primaryAttr] ===
-                  selectedVariation!.attributes[primaryAttr]
-              )
-              .map((variation) => variation.attributes['pa_metal-code'])
-          )
-        )
-
-        if (primaryAttr === 'pa_gauge') {
-          variationOptions.widths = Array.from(
-            new Set(
-              product.variations
-                .filter(
-                  (variation) =>
-                    variation.attributes[primaryAttr] ===
-                    selectedVariation!.attributes[primaryAttr]
-                )
-                .map((variation) => variation.attributes.pa_width)
-            )
+      } else {
+        let filteredVariations = product.variations
+        if (variationOptions.width) {
+          filteredVariations = filteredVariations.filter(
+            (variation) =>
+              variation.attributes.pa_width === variationOptions.width
           )
         }
-
-        const uniquePrimaryAttrValues = Array.from(
-          new Set(
-            product.variations.map(
-              (variation) => variation.attributes[primaryAttr]
-            )
+        if (variationOptions.size) {
+          filteredVariations = filteredVariations.filter(
+            (variation) =>
+              variation.attributes.pa_size === variationOptions.size
           )
-        )
-
-        uniquePrimaryAttrValues
-          .filter(
-            (attrValue) =>
-              attrValue !== selectedVariation!.attributes[primaryAttr]
+        }
+        if (variationOptions.metal) {
+          filteredVariations = filteredVariations.filter(
+            (variation) =>
+              variation.attributes['pa_metal-code'] === variationOptions.metal
           )
-          .forEach((attrValue) => {
-            const otherVariation = product!.variations.find(
-              (variation) =>
-                variation.attributes[primaryAttr] === attrValue &&
-                variation.attributes['pa_metal-code'] ===
-                  selectedVariation!.attributes['pa_metal-code']
-            )
-            if (otherVariation) otherOptions.push(otherVariation)
-          })
-
-        const uniqueVariationMetals = Array.from(
-          new Set(
-            product.variations.map(
-              (variation) => variation.attributes['pa_metal-code']
-            )
-          )
-        ).filter(
-          (metal) => metal !== selectedVariation!.attributes['pa_metal-code']
-        )
-
-        uniqueVariationMetals.forEach((metal) => {
-          uniquePrimaryAttrValues.forEach((uniquePrimaryAttr) => {
-            const altVariation = product!.variations.find(
-              (variation) =>
-                variation.attributes['pa_metal-code'] === metal &&
-                variation.attributes[primaryAttr] === uniquePrimaryAttr
-            )
-            if (altVariation) altOptions.push(altVariation)
-          })
-        })
+        }
+        variation = filteredVariations[0] || null
       }
     }
   }
-  return {
-    product,
-    variation: selectedVariation,
-    variationOptions,
-    otherOptions,
-    altOptions,
-    isLoading,
-    error,
-  }
+  return { product, variation, primaryAttr, isLoading, error }
 }
