@@ -4,7 +4,7 @@ import {
   QueryClient,
   dehydrate,
 } from '@tanstack/react-query'
-import { SearchByCategory } from '@/app/components'
+import { SearchByCategory, SearchByCode } from '@/app/components'
 
 export default async function Home() {
   const queryClient = new QueryClient()
@@ -17,6 +17,7 @@ export default async function Home() {
     <main>
       <HydrationBoundary state={dehydrate(queryClient)}>
         <h1>Search</h1>
+        <SearchByCode />
         <SearchByCategory />
       </HydrationBoundary>
     </main>
