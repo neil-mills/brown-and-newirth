@@ -1,20 +1,15 @@
-import { useStore } from '.'
+import { useStore } from '@/app/hooks'
 import { Variation } from '../types'
 
 export const useOtherVariations = (): Variation[] => {
-  const selectedProduct = useStore((store) => store.product)
-  const selectedVariationId = useStore((store) => store.variationId)
-  let otherOptions: Variation[] = []
-  if (selectedProduct && selectedVariationId) {
-    const primaryAttr = selectedProduct.variations.some(
-      (variation) => variation.attributes.pa_gauge
-    )
-      ? 'pa_gauge'
-      : 'pa_total-carat'
+  const {
+    product: selectedProduct,
+    variation: selectedVariation,
+    primaryAttr,
+  } = useStore((store) => store.selectedItem)
 
-    const selectedVariation = selectedProduct.variations.find(
-      (variation) => variation['variation-id'] === parseInt(selectedVariationId)
-    )
+  let otherOptions: Variation[] = []
+  if (selectedProduct && selectedVariation) {
     const uniquePrimaryAttrValues = Array.from(
       new Set(
         selectedProduct.variations.map(
@@ -24,7 +19,7 @@ export const useOtherVariations = (): Variation[] => {
     )
     uniquePrimaryAttrValues
       .filter(
-        (attrValue) => attrValue !== selectedVariation!.attributes[primaryAttr]
+        (attrValue) => attrValue !== selectedVariation.attributes[primaryAttr]
       )
       .forEach((attrValue) => {
         const otherVariation = selectedProduct!.variations.find(
@@ -33,7 +28,11 @@ export const useOtherVariations = (): Variation[] => {
             variation.attributes['pa_metal-code'] ===
               selectedVariation!.attributes['pa_metal-code']
         )
-        if (otherVariation) otherOptions.push(otherVariation)
+        if (otherVariation)
+          otherOptions.push({
+            ...otherVariation,
+            productId: selectedProduct.productId,
+          })
       })
   }
   return otherOptions

@@ -1,4 +1,4 @@
-import { Product, Variation } from '../types'
+import { PrimaryAttr, Product, Variation } from '../types'
 import { useGetData, useStore } from './'
 
 interface ReturnValues {
@@ -6,7 +6,7 @@ interface ReturnValues {
   error: Error | null
   product: Product | null
   variation: Variation | null
-  primaryAttr: string | null
+  primaryAttr: PrimaryAttr
 }
 
 export const useProduct = (
@@ -16,17 +16,16 @@ export const useProduct = (
   const variationOptions = useStore((store) => store.variationOptions)
   let product: Product | null = null
   let variation: Variation | null = null
-  let primaryAttr = null
+  let primaryAttr: 'pa_gauge' | 'pa_total-carat' = 'pa_gauge'
   const { data: products, error, isLoading } = useGetData()
   if (!isLoading && !error) {
-    const product = products?.find((p) => p.productId === parseInt(productId))
+    product = products?.find((p) => p.productId === parseInt(productId)) || null
     if (product) {
       primaryAttr = product.variations.some(
-        (variation) => variation.attributes.pa_gauge
+        (variation) => variation.attributes.pa_gauge !== undefined
       )
         ? 'pa_gauge'
         : 'pa_total-carat'
-
       if (variationId) {
         variation =
           product.variations.find(

@@ -21,7 +21,7 @@ export const formatMetal = (metalCode: string): string => {
     const metal = metalCode.slice(-1)
     if (isKey(metal)) {
       const carat = metalCode.replace(metal, '')
-      return `${carat}<sup>ct</sup> ${map[metal]}`
+      return `${carat}ct ${map[metal]}`
     } else {
       return ''
     }

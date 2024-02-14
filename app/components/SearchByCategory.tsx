@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useCategories } from '../hooks'
-import ProductGrid from './ProductGrid'
+import { ProductGrid } from '@/app/components'
 
 export const SearchByCategory = () => {
   const { categoryProducts, isLoading, error } = useCategories()
@@ -10,7 +10,7 @@ export const SearchByCategory = () => {
   return (
     <>
       <h3>Search by category</h3>
-      <ProductGrid type="category" products={categoryProducts} />
+      <ProductGrid type="category" items={categoryProducts} />
     </>
   )
 }

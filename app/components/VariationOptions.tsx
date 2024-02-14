@@ -3,9 +3,9 @@ import { useStore, useVariationOptions } from '../hooks'
 import { ChangeEvent } from 'react'
 
 export const VariationOptions = () => {
+  const { variation, primaryAttr } = useStore((store) => store.selectedItem)
   const { widths, sizes, metals } = useVariationOptions()
-  const primaryAttr = useStore((store) => store.primaryAttr)
-  const variation = useStore((store) => store.variation)
+
   const {
     width: selectedWidth,
     size: selectedSize,

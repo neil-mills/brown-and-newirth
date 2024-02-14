@@ -10,7 +10,7 @@ export const ProductGrid = ({ type, items }: Props) => {
   return (
     <ul>
       {items.map((item, i) => (
-        <ProductCard item={item} />
+        <ProductCard key={i} type={type} item={item} />
       ))}
     </ul>
   )

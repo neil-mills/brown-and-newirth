@@ -29,6 +29,7 @@ export interface Variation {
     pa_width: string
     pa_size: PaSize
   }
+  productId?: number
 }
 
 type Status = 'publish'

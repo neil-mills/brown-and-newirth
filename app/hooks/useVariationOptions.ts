@@ -7,10 +7,12 @@ interface Option {
 }
 
 export const useVariationOptions = () => {
-  const variationOptions = useStore((store) => store.variationOptions)
-  const selectedVariation = useStore((store) => store.variation)
-  const selectedProduct = useStore((store) => store.product)
-  const primaryAttr = useStore((store) => store.primaryAttr)
+  const {
+    product: selectedProduct,
+    variation: selectedVariation,
+    primaryAttr,
+  } = useStore((store) => store.selectedItem)
+
   let widths: Option[] | null = null
   let sizes: Option[] = []
   let metals: Option[] = []
@@ -24,14 +26,10 @@ export const useVariationOptions = () => {
                 variation.attributes[primaryAttr] ===
                 selectedVariation!.attributes[primaryAttr]
             )
-            .map((variation) => ({
-              label: formatWidth(variation.attributes.pa_width),
-              value: variation.attributes.pa_width,
-            }))
+            .map((variation) => variation.attributes.pa_width)
         )
-      )
+      ).map((width) => ({ label: formatWidth(width), value: width }))
     }
-    // if (variationOptions?.width) {
     sizes = Array.from(
       new Set(
         selectedProduct.variations
@@ -40,14 +38,13 @@ export const useVariationOptions = () => {
               variation.attributes[primaryAttr] ===
               selectedVariation!.attributes[primaryAttr]
           )
-          .map((variation) => ({
-            label: variation.attributes.pa_size.toUpperCase(),
-            value: variation.attributes.pa_size,
-          }))
+          .map((variation) => variation.attributes.pa_size)
       )
-    )
-    // }
-    // if (variationOptions?.size) {
+    ).map((size) => ({
+      label: size.toUpperCase(),
+      value: size,
+    }))
+
     metals = Array.from(
       new Set(
         selectedProduct.variations
@@ -56,13 +53,13 @@ export const useVariationOptions = () => {
               variation.attributes[primaryAttr] ===
               selectedVariation!.attributes[primaryAttr]
           )
-          .map((variation) => ({
-            label: formatMetal(variation.attributes['pa_metal-code']),
-            value: variation.attributes['pa_metal-code'],
-          }))
+          .map((variation) => variation.attributes['pa_metal-code'])
       )
-    )
-    // }
+    ).map((metal) => ({
+      label: formatMetal(metal),
+      value: metal,
+    }))
   }
+
   return { widths, sizes, metals }
 }

@@ -2,18 +2,14 @@ import { useStore } from '.'
 import { Variation } from '../types'
 
 export const useAltVariations = (): Variation[] => {
-  const selectedProduct = useStore((store) => store.product)
-  const selectedVariationId = useStore((store) => store.variationId)
+  const {
+    product: selectedProduct,
+    variation: selectedVariation,
+    primaryAttr,
+  } = useStore((store) => store.selectedItem)
+
   let altOptions: Variation[] = []
-  if (selectedProduct && selectedVariationId) {
-    const selectedVariation = selectedProduct.variations.find(
-      (variation) => variation['variation-id'] === parseInt(selectedVariationId)
-    )
-    const primaryAttr = selectedProduct.variations.some(
-      (variation) => variation.attributes.pa_gauge
-    )
-      ? 'pa_gauge'
-      : 'pa_total-carat'
+  if (selectedProduct && selectedVariation) {
     const uniquePrimaryAttrValues = Array.from(
       new Set(
         selectedProduct.variations.map(
@@ -38,7 +34,11 @@ export const useAltVariations = (): Variation[] => {
             variation.attributes['pa_metal-code'] === metal &&
             variation.attributes[primaryAttr] === uniquePrimaryAttr
         )
-        if (altVariation) altOptions.push(altVariation)
+        if (altVariation)
+          altOptions.push({
+            ...altVariation,
+            productId: selectedProduct.productId,
+          })
       })
     })
   }

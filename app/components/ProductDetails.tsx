@@ -1,9 +1,9 @@
 import { useStore } from '@/app/hooks'
 import { VariationOptions } from '@/app/components'
 
-export const Product = () => {
-  const variation = useStore((store) => store.variation)
-  const primaryAttr = useStore((store) => store.primaryAttr)
+export const ProductDetails = () => {
+  const { variation, primaryAttr } = useStore((store) => store.selectedItem)
+
   return (
     <>
       <p>{variation?.sku}</p>

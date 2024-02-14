@@ -1,6 +1,6 @@
 'use client'
-
-import { Product } from '@/app/components'
+import { useEffect } from 'react'
+import { ProductDetails, OtherOptions, AltOptions } from '@/app/components'
 import { useProduct, useStore } from '@/app/hooks'
 
 interface Props {
@@ -11,24 +11,26 @@ interface Props {
 
 const ProductDetailsPage = ({ params: { slug } }: Props) => {
   const [productId, _variation, variationId] = slug
-  const setProduct = useStore((store) => store.setProduct)
-  const setVariation = useStore((store) => store.setVariation)
-  const { product, variation, isLoading, error } = useProduct(
+  const setSelectedItem = useStore((store) => store.setSelectedItem)
+  const { product, variation, primaryAttr, isLoading, error } = useProduct(
     productId,
     variationId
   )
+
+  useEffect(() => {
+    setSelectedItem({ product, variation, primaryAttr })
+  }, [setSelectedItem, product, variation, primaryAttr])
+
   if (isLoading) return <p>Loading</p>
   if (error) return <p>{error.message}</p>
   if (!product) return <p>No product found</p>
-  setProduct(product)
-  setVariation(variation)
+
   return (
     <>
       <h1>{product.name}</h1>
-      <Product />
+      <ProductDetails />
       <OtherOptions />
       <AltOptions />
-      <div></div>
     </>
   )
 }
