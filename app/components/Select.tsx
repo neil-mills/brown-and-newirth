@@ -10,7 +10,11 @@ interface Props {
 
 export const Select = ({ options, value, defaultLabel, onChange }: Props) => {
   return (
-    <select value={value} onChange={onChange}>
+    <select
+      className="form-select alt bg-grey"
+      value={value}
+      onChange={onChange}
+    >
       <option value="">{defaultLabel}</option>
       {options.map((option) => (
         <option key={option.value} value={option.value}>

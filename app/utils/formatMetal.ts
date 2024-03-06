@@ -1,30 +1,19 @@
-const colourKeys = ['y', 'r', 'w', 'plt'] as const
-type Keys = typeof colourKeys[number]
+import { metals } from '@/app/maps'
 
-type Map = {
-  [K in Keys]: string
-}
+type MetalCode = 'plt' | '18y' | '18w' | '18r'
+const keys = ['y', 'w', 'r'] as const
 
-const map: Map = {
-  y: 'yellow',
-  r: 'rose',
-  w: 'white',
-  plt: 'platinum',
-}
+type Key = typeof keys[number]
 
-const isKey = (str: string): str is Keys => {
-  return colourKeys.includes(str as Keys)
+const isMetalCode = (str: string | MetalCode): str is MetalCode => {
+  return ['plt', '18w', '18y', '18r'].includes(str)
 }
+// const keys = Object.keys(metals)
 
 export const formatMetal = (metalCode: string): string => {
-  if (metalCode !== 'plt') {
-    const metal = metalCode.slice(-1)
-    if (isKey(metal)) {
-      const carat = metalCode.replace(metal, '')
-      return `${carat}ct ${map[metal]}`
-    } else {
-      return ''
-    }
+  if (Object.keys(metals).some((key) => metalCode.includes(key))) {
+    const key = metalCode === 'plt' ? metalCode : (metalCode.slice(-1) as Key)
+    return metals?.[key] || ''
   }
-  return map[metalCode]
+  return ''
 }

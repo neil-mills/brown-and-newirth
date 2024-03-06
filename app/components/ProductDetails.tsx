@@ -1,42 +1,29 @@
 import { useStore } from '@/app/hooks'
 import { VariationOptions } from '@/app/components'
+import Link from 'next/link'
+import DataTable from './DataTable'
+import AddToBasket from './AddToBasket'
+import ImageCarousel from './ImageCarousel'
 
 export const ProductDetails = () => {
-  const { variation, primaryAttr } = useStore((store) => store.selectedItem)
-
+  const {
+    variations,
+    size: selectedSize,
+    metal: selectedMetal,
+  } = useStore((store) => store.selectedSku)
+  if (!variations) return null
   return (
     <>
-      <p>{variation?.sku}</p>
-      <dl>
-        {primaryAttr === 'pa_gauge' ? (
-          <>
-            <dt>Profile:</dt>
-            <dd></dd>
-            <dt>Gauge:</dt>
-            <dd>{variation?.attributes.pa_gauge}</dd>
-          </>
-        ) : (
-          <>
-            <dt>Diamond shape:</dt>
-            <dd>?</dd>
-            <dt>Centre carat:</dt>
-            <dd>
-              {variation?.attributes['pa_centre-carat']}
-              <sup>ct</sup>
-            </dd>
-            <dt>Total carat:</dt>
-            <dd>
-              {variation?.attributes['pa_total-carat']}
-              <sup>ct</sup>
-            </dd>
-            <dt>Diamond quality:</dt>
-            <dd>{variation?.attributes['pa_diamond-quality']}</dd>
-            <dt>Diamond origin:</dt>
-            <dd>?</dd>
-          </>
-        )}
-      </dl>
+      <Link
+        href="#"
+        className="mb-2 fw-300"
+      >{`< Link Return To Previous`}</Link>
+      <div className="col-left-inner d-flex flex-column justify-content-between has-border">
+        <ImageCarousel />
+      </div>
+      <DataTable />
       <VariationOptions />
+      {selectedSize && selectedMetal && <AddToBasket />}
     </>
   )
 }

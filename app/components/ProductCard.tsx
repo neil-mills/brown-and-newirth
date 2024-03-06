@@ -1,11 +1,13 @@
 import Link from 'next/link'
-import { Product, Variation } from '../types'
+import Image from 'next/image'
+import { Product, ProductStyle, Variation } from '../types'
+import { StyleMap } from '../maps'
 
 interface Props {
-  item: Product | Variation
-  type: 'product' | 'category'
+  item: Product | Variation | StyleMap
+  type: 'product' | 'style'
 }
-const isProduct = (item: Product | Variation): item is Product => {
+const isProduct = (item: Product | Variation | StyleMap): item is Product => {
   return (item as Product).productId !== undefined
 }
 
@@ -13,28 +15,30 @@ const isVariation = (item: Product | Variation): item is Variation => {
   return (item as Variation)['variation-id'] !== undefined
 }
 
+const isStyle = (item: Product | Variation | StyleMap): item is StyleMap => {
+  return (item as StyleMap).label !== undefined
+}
+
 export const ProductCard = ({ item, type }: Props) => {
-  let url = ''
-  let label = item.name
-  let gauge = ''
-  let metal = ''
-  if (type === 'category' && isProduct(item)) {
-    url = `/products/category/${item.category.toLowerCase()}`
-    label = item.category
-  }
-  if (type === 'product' && isProduct(item)) {
-    url = `/products/${item.productId}`
-  }
-  if (type === 'product' && isVariation(item)) {
-    url = `/products/${item.productId}/variation/${item['variation-id']}`
-    gauge = item.attributes.pa_gauge
-    metal = item.attributes['pa_metal-code']
-  }
   return (
-    <li>
-      <Link href={url}>
-        {label}, gauge: {gauge}, metal: {metal}
+    <div className="col-6 col-sm-4 col-lg-6 col-xl-4 col-xxl-3 col-product-grid">
+      <Link
+        href="#"
+        className="product-grid-item style-1 letter-spacing bg-cover d-flex flex-column justify-content-between position-relative"
+      >
+        {/* <Image
+          src={isStyle(item) ? item.image : '/img/01_solitaires.png'}
+          alt={item.label}
+          fill
+          className="img-fluid w-100"
+          sizes="(max-width: 480px) auto, (max-width: 768px) auto, auto"
+        /> */}
+        <img className="img-fluid w-100" src={item.image} alt={item.label} />
+        <div>
+          {isProduct(item) && item.name}
+          {isStyle(item) && item.label}
+        </div>
       </Link>
-    </li>
+    </div>
   )
 }

@@ -1,22 +1,22 @@
 import { create } from 'zustand'
-import { Product, Variation, PrimaryAttr } from '../types'
+import { Product, Variation } from '../types'
 import { mountStoreDevtool } from 'simple-zustand-devtools'
 
-interface SelectedItem {
+interface SelectedSku {
+  sku: string
   product: Product | null
-  variation: Variation | null
-  primaryAttr: PrimaryAttr
+  variations: Variation[]
+  images: string[]
+  size?: string
+  metal?: string
 }
 interface Store {
   productsQuery: ProductsQuery
-  selectedItem: SelectedItem
-  setSelectedItem: (selectedItem: SelectedItem) => void
+  selectedSku: SelectedSku
+  setSelectedSku: (selectedSku: SelectedSku) => void
   setSearchQuery: (search: string) => void
-  setSku: (sku: string) => void
-  variationOptions: VariationOptions
-  setVariationOptionWidth: (width: string) => void
-  setVariationOptionSize: (size: string) => void
-  setVariationOptionMetal: (metal: string) => void
+  setSize: (size: string) => void
+  setMetal: (metal: string) => void
 }
 
 interface ProductsQuery {
@@ -25,44 +25,29 @@ interface ProductsQuery {
   category?: string
 }
 
-interface VariationOptions {
-  width?: string
-  size: string
-  metal: string
-}
-
 export const useStore = create<Store>((set) => ({
-  selectedItem: {
+  selectedSku: {
+    sku: '',
     product: null,
-    variation: null,
-    primaryAttr: 'pa_gauge',
+    variations: [],
+    images: [],
+    size: '',
+    metal: '',
   },
-  setSelectedItem: (selectedItem: SelectedItem) =>
-    set((store) => ({ ...store, selectedItem })),
-
   productsQuery: {} as ProductsQuery,
+  setSelectedSku: (selectedSku: SelectedSku) =>
+    set((store) => ({ ...store, selectedSku })),
   setSearchQuery: (search: string) =>
     set((store) => ({ ...store, productsQuery: { search } })),
-  setSku: (sku: string) =>
+  setSize: (size: string) =>
     set((store) => ({
       ...store,
-      productsQuery: { ...store.productsQuery, sku },
+      selectedSku: { ...store.selectedSku, size },
     })),
-  variationOptions: { width: '', size: '', metal: '' },
-  setVariationOptionWidth: (width: string) =>
+  setMetal: (metal: string) =>
     set((store) => ({
       ...store,
-      variationOptions: { ...store.variationOptions, width },
-    })),
-  setVariationOptionSize: (size: string) =>
-    set((store) => ({
-      ...store,
-      variationOptions: { ...store.variationOptions, size },
-    })),
-  setVariationOptionMetal: (metal: string) =>
-    set((store) => ({
-      ...store,
-      variationOptions: { ...store.variationOptions, metal },
+      variationOptions: { ...store.selectedSku, metal },
     })),
 }))
 

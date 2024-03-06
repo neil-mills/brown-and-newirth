@@ -5,6 +5,7 @@ import {
   dehydrate,
 } from '@tanstack/react-query'
 import { SearchByCategory, SearchByCode } from '@/app/components'
+import SearchByStyle from './components/SearchByStyle'
 
 export default async function Home() {
   const queryClient = new QueryClient()
@@ -14,12 +15,15 @@ export default async function Home() {
   })
 
   return (
-    <main>
+    <>
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <h1>Search</h1>
-        <SearchByCode />
-        <SearchByCategory />
+        <div className="col-left is-search h-100 position-relative bg-black d-flex align-items-center">
+          <SearchByCode />
+        </div>
+        <div className="col col-right h-100">
+          <SearchByStyle />
+        </div>
       </HydrationBoundary>
-    </main>
+    </>
   )
 }

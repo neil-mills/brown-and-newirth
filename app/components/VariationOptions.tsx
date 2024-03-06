@@ -3,29 +3,48 @@ import { useStore, useVariationOptions } from '../hooks'
 import { ChangeEvent } from 'react'
 
 export const VariationOptions = () => {
-  const { variation, primaryAttr } = useStore((store) => store.selectedItem)
-  const { widths, sizes, metals } = useVariationOptions()
-
   const {
-    width: selectedWidth,
+    variations,
     size: selectedSize,
     metal: selectedMetal,
-  } = useStore((store) => store.variationOptions)
-  const showOrderButton =
-    (primaryAttr === 'pa_gauge' &&
-      selectedWidth &&
-      selectedSize &&
-      selectedMetal) ||
-    (primaryAttr === 'pa_total-carat' && selectedSize && selectedMetal)
-  const setVariationOptionWidth = useStore(
-    (store) => store.setVariationOptionWidth
+  } = useStore((store) => store.selectedSku)
+  const { sizes, metals } = useVariationOptions()
+
+  const showOrderButton = selectedSize && selectedMetal
+
+  const setSize = useStore((store) => store.setSize)
+  const setMetal = useStore((store) => store.setMetal)
+
+  return (
+    <div className="row row-pad-sm mb-16px">
+      <div className="col-sm col-pad-sm mb-3 mb-sm-0">
+        <Select
+          options={sizes}
+          value={selectedSize}
+          defaultLabel="Size"
+          onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+            setSize(event.target.value)
+          }
+        />
+      </div>
+      <div className="col-sm col-pad-sm mb-3 mb-sm-0">
+        <Select
+          options={metals}
+          value={selectedMetal}
+          defaultLabel="Metal"
+          onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+            setMetal(event.target.value)
+          }
+        />
+      </div>
+      <div className="col col-pad-sm">
+        <button className="btn btn-border w-100">
+          <span>Save/Compare</span>
+        </button>
+      </div>
+    </div>
   )
-  const setVariationOptionSize = useStore(
-    (store) => store.setVariationOptionSize
-  )
-  const setVariationOptionMetal = useStore(
-    (store) => store.setVariationOptionMetal
-  )
+
   return (
     <ul>
       {primaryAttr === 'pa_gauge' && widths && (
