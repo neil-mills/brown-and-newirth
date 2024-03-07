@@ -24,27 +24,7 @@ const ImageCarousel = () => {
             />
           </div>
         ))}
-        {/* <div className="carousel-item bg-grey-light">
-          <img
-            src="/img/02_halos.png"
-            className="img-fluid w-75 d-block mx-auto"
-            alt="Product Title"
-          />
-        </div>
-        <div className="carousel-item bg-grey-light">
-          <img
-            src="/img/03_clusters.png"
-            className="img-fluid w-75 d-block mx-auto"
-            alt="Product Title"
-          />
-        </div>
-        <div className="carousel-item bg-grey-light">
-          <img
-            src="/img/04_3-stones.png"
-            className="img-fluid w-75 d-block mx-auto"
-            alt="Product Title"
-          />
-        </div> */}
+
         {images.length > 1 && (
           <>
             <button
@@ -83,50 +63,6 @@ const ImageCarousel = () => {
             ></span>
           </button>
         ))}
-        {/* <button
-          type="button"
-          data-bs-target="#carouselSingle"
-          data-bs-slide-to="1"
-          className="bg-grey-light mx-0"
-        >
-          <span
-            className="position-absolute cover bg-cover"
-            style={{ backgroundImage: `url('./img/01_solitaires.png')` }}
-          ></span>
-        </button>
-        <button
-          type="button"
-          data-bs-target="#carouselSingle"
-          data-bs-slide-to="2"
-          className="bg-grey-light mx-0"
-        >
-          <span
-            className="position-absolute cover bg-cover"
-            style={{ backgroundImage: `url('./img/01_solitaires.png')` }}
-          ></span>
-        </button>
-        <button
-          type="button"
-          data-bs-target="#carouselSingle"
-          data-bs-slide-to="3"
-          className="bg-grey-light mx-0"
-        >
-          <span
-            className="position-absolute cover bg-cover"
-            style={{ backgroundImage: `url('./img/01_solitaires.png')` }}
-          ></span>
-        </button>
-        <button
-          type="button"
-          data-bs-target="#carouselSingle"
-          data-bs-slide-to="3"
-          className="bg-grey-light mx-0"
-        >
-          <span
-            className="position-absolute cover bg-cover"
-            style={{ backgroundImage: `url('./img/01_solitaires.png')` }}
-          ></span>
-        </button> */}
       </div>
     </div>
   )
