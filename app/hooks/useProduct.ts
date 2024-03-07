@@ -1,5 +1,4 @@
-import { OtherOptions } from '@/app/components'
-import { Product, Variation } from '../types'
+import { Product, Variation, ProductFilters } from '../types'
 import { useGetData } from './'
 
 interface ReturnValues {
@@ -11,7 +10,10 @@ interface ReturnValues {
   otherOptions: Variation[]
 }
 
-export const useProduct = (sku: string): ReturnValues => {
+export const useProduct = (
+  sku: string,
+  filters: ProductFilters
+): ReturnValues => {
   let product: Product | null = null
   let variations: Variation[] = []
   let images: string[] = []
@@ -50,6 +52,14 @@ export const useProduct = (sku: string): ReturnValues => {
             images,
           }
         })
+        // if (filters?.diamondOrigin) {
+        //   const map = {
+        //     mined: 'NATURAL',
+        //     'lab-grown': 'LAB GROWN',
+        //   }
+        //   otherOptions = otherOptions.filter((option) => option)
+        //   // LAB GROWN, NATURAL
+        // }
       }
     }
   }

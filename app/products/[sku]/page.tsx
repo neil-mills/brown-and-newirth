@@ -2,6 +2,7 @@
 import { useEffect } from 'react'
 import { ProductDetails, OtherOptions } from '@/app/components'
 import { useProduct, useStore } from '@/app/hooks'
+import { ProductFilters } from '@/app/types'
 import ResultsFilter from '@/app/components/ResultsFilter'
 import ResultsTabs from '@/app/components/ResultsTabs'
 
@@ -9,12 +10,19 @@ interface Props {
   params: {
     sku: string
   }
+  searchParams: {
+    diamondOrigin?: string
+  }
 }
 
-const ProductDetailsPage = ({ params: { sku } }: Props) => {
+const ProductDetailsPage = ({
+  params: { sku },
+  searchParams: { diamondOrigin = '' },
+}: Props) => {
   const setSelectedSku = useStore((store) => store.setSelectedSku)
+  const filters: ProductFilters = { diamondOrigin }
   const { product, variations, images, otherOptions, isLoading, error } =
-    useProduct(sku)
+    useProduct(sku, filters)
 
   useEffect(() => {
     setSelectedSku({ sku, product, variations, images, otherOptions })
