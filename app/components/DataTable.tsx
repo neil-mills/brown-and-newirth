@@ -1,6 +1,7 @@
 import React from 'react'
 import { useStore } from '@/app/hooks'
 import { formatCarat } from '@/app/utils'
+import { diamondOrigin } from '../maps'
 
 const DataTable = () => {
   const { product, variations } = useStore((store) => store.selectedSku)
@@ -26,14 +27,18 @@ const DataTable = () => {
         <div className="col-6 col-sm-4">
           <div className="px-2 px-xl-3 pb-2 pb-sm-3 pt-2 pt-sm-0">
             <h6>Diamond Origin</h6>
-            <p className="fw-300">{product?.attributes?.pa_diamond}</p>
+            <p className="fw-300">
+              {product?.attributes?.pa_diamond
+                ? diamondOrigin[product.attributes.pa_diamond]
+                : ''}
+            </p>
           </div>
         </div>
         <div className="col-6 col-sm-4">
           <div className="px-2 px-xl-3 pt-2 pt-sm-3">
             <h6>Centre Carat</h6>
             <p className="fw-300">
-              {formatCarat(variation?.attributes?.['pa_centre-carat'])}
+              {formatCarat(variation?.attributes?.['pa_centre-carat'] || '')}
               <sup>ct</sup>
             </p>
           </div>
@@ -42,7 +47,7 @@ const DataTable = () => {
           <div className="px-2 px-xl-3 pt-2 pt-sm-3">
             <h6>Total Carat</h6>
             <p className="fw-300">
-              {formatCarat(variation?.attributes?.['pa_total-carat'])}
+              {formatCarat(variation?.attributes?.['pa_total-carat'] || '')}
               <sup>ct</sup>
             </p>
           </div>
