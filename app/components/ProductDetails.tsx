@@ -4,8 +4,11 @@ import Link from 'next/link'
 import DataTable from './DataTable'
 import AddToBasket from './AddToBasket'
 import ImageCarousel from './ImageCarousel'
+import { useRouter } from 'next/navigation'
 
 export const ProductDetails = () => {
+  const router = useRouter()
+
   const {
     variations,
     size: selectedSize,
@@ -16,8 +19,9 @@ export const ProductDetails = () => {
     <>
       <Link
         href="#"
+        onClick={() => router.back()}
         className="mb-2 fw-300"
-      >{`< Link Return To Previous`}</Link>
+      >{`< Return To Previous`}</Link>
       <div className="col-left-inner d-flex flex-column justify-content-between has-border">
         <ImageCarousel />
       </div>
