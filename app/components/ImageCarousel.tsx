@@ -45,24 +45,28 @@ const ImageCarousel = () => {
             alt="Product Title"
           />
         </div> */}
-        <button
-          className="carousel-control-prev align-items-end"
-          type="button"
-          data-bs-target="#carouselSingle"
-          data-bs-slide="prev"
-        >
-          <span className="carousel-control-prev-icon"></span>
-          <span className="visually-hidden">Previous</span>
-        </button>
-        <button
-          className="carousel-control-next align-items-end"
-          type="button"
-          data-bs-target="#carouselSingle"
-          data-bs-slide="next"
-        >
-          <span className="carousel-control-next-icon"></span>
-          <span className="visually-hidden">Next</span>
-        </button>
+        {images.length > 1 && (
+          <>
+            <button
+              className="carousel-control-prev align-items-end"
+              type="button"
+              data-bs-target="#carouselSingle"
+              data-bs-slide="prev"
+            >
+              <span className="carousel-control-prev-icon"></span>
+              <span className="visually-hidden">Previous</span>
+            </button>
+            <button
+              className="carousel-control-next align-items-end"
+              type="button"
+              data-bs-target="#carouselSingle"
+              data-bs-slide="next"
+            >
+              <span className="carousel-control-next-icon"></span>
+              <span className="visually-hidden">Next</span>
+            </button>
+          </>
+        )}
       </div>
       <div className="carousel-indicators thumbnails position-relative m-0 flex-column justify-content-start">
         {images.map((src, i) => (
@@ -75,7 +79,7 @@ const ImageCarousel = () => {
           >
             <span
               className="position-absolute cover bg-cover"
-              style={{ backgroundImage: `url('./img/01_solitaires.png')` }}
+              style={{ backgroundImage: `url('${src}')` }}
             ></span>
           </button>
         ))}
