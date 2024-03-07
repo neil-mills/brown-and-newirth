@@ -1,6 +1,6 @@
 'use client'
 import { useEffect } from 'react'
-import { ProductDetails, OtherOptions, AltOptions } from '@/app/components'
+import { ProductDetails, OtherOptions } from '@/app/components'
 import { useProduct, useStore } from '@/app/hooks'
 import ResultsFilter from '@/app/components/ResultsFilter'
 import ResultsTabs from '@/app/components/ResultsTabs'
@@ -13,11 +13,12 @@ interface Props {
 
 const ProductDetailsPage = ({ params: { sku } }: Props) => {
   const setSelectedSku = useStore((store) => store.setSelectedSku)
-  const { product, variations, images, isLoading, error } = useProduct(sku)
+  const { product, variations, images, otherOptions, isLoading, error } =
+    useProduct(sku)
 
   useEffect(() => {
-    setSelectedSku({ sku, product, variations, images })
-  }, [setSelectedSku, product, variations, images, sku])
+    setSelectedSku({ sku, product, variations, images, otherOptions })
+  }, [setSelectedSku, product, variations, images, otherOptions, sku])
 
   if (isLoading) return <p>Loading</p>
   if (error) return <p>{error.message}</p>

@@ -1,6 +1,8 @@
 import React from 'react'
+import { useStore } from '../hooks'
 
 const ResultsTabs = () => {
+  const { otherOptions } = useStore((store) => store.selectedSku)
   return (
     <div className="result-tabs col-pad-sm">
       <div className="nav row g-0" role="tablist">
@@ -12,7 +14,7 @@ const ResultsTabs = () => {
             type="button"
             role="tab"
           >
-            Other options (11)
+            Other options ({otherOptions.length})
           </button>
         </div>
         <div className="col-6 col-lg-12 col-xl-6">

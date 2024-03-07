@@ -7,6 +7,7 @@ interface SelectedSku {
   product: Product | null
   variations: Variation[]
   images: string[]
+  otherOptions: Variation[]
   size?: string
   metal?: string
 }
@@ -31,6 +32,7 @@ export const useStore = create<Store>((set) => ({
     product: null,
     variations: [],
     images: [],
+    otherOptions: [],
     size: '',
     metal: '',
   },

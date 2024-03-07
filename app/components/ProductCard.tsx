@@ -1,44 +1,85 @@
-import Link from 'next/link'
 import Image from 'next/image'
-import { Product, ProductStyle, Variation } from '../types'
-import { StyleMap } from '../maps'
+import { Variation } from '../types'
+import { useRouter } from 'next/navigation'
 
 interface Props {
-  item: Product | Variation | StyleMap
-  type: 'product' | 'style'
-}
-const isProduct = (item: Product | Variation | StyleMap): item is Product => {
-  return (item as Product).productId !== undefined
+  item: Variation
 }
 
-const isVariation = (item: Product | Variation): item is Variation => {
-  return (item as Variation)['variation-id'] !== undefined
-}
+export const ProductCard = ({ item }: Props) => {
+  const router = useRouter()
+  let carouselImages: string[] = []
+  if (item?.images) {
+    carouselImages = item.images.length > 1 ? item.images.slice(1) : item.images
+  }
 
-const isStyle = (item: Product | Variation | StyleMap): item is StyleMap => {
-  return (item as StyleMap).label !== undefined
-}
-
-export const ProductCard = ({ item, type }: Props) => {
   return (
-    <div className="col-6 col-sm-4 col-lg-6 col-xl-4 col-xxl-3 col-product-grid">
-      <Link
-        href="#"
-        className="product-grid-item style-1 letter-spacing bg-cover d-flex flex-column justify-content-between position-relative"
-      >
-        {/* <Image
-          src={isStyle(item) ? item.image : '/img/01_solitaires.png'}
-          alt={item.label}
-          fill
+    <div className="col-6 col-sm-4 col-lg-6 col-xxl-4 col-product-grid">
+      <div className="product-grid-item style-2 bg-grey-light position-relative">
+        <img
           className="img-fluid w-100"
-          sizes="(max-width: 480px) auto, (max-width: 768px) auto, auto"
-        /> */}
-        <img className="img-fluid w-100" src={item.image} alt={item.label} />
-        <div>
-          {isProduct(item) && item.name}
-          {isStyle(item) && item.label}
+          src={item?.images?.[0] ? item.images[0] : ''}
+          alt={item.name}
+        />
+
+        <div className="product-grid-item-overlay position-absolute bg-white">
+          <div
+            id={item.sku}
+            className="carousel carousel-crossfade bg-grey-light mb-3"
+            data-bs-interval="false"
+          >
+            <div className="carousel-inner">
+              {carouselImages.map((image, i) => (
+                <div
+                  key={i}
+                  className={`carousel-item${i === 0 ? ' active' : ''}`}
+                >
+                  <img
+                    src={image}
+                    className="img-fluid w-100"
+                    alt="Product Title"
+                  />
+                </div>
+              ))}
+            </div>
+            {carouselImages.length > 1 && (
+              <>
+                <button
+                  className="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#carouselProductPreview"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    className="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="visually-hidden">Previous</span>
+                </button>
+                <button
+                  className="carousel-control-next"
+                  type="button"
+                  data-bs-target="#carouselProductPreview"
+                  data-bs-slide="next"
+                >
+                  <span
+                    className="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span className="visually-hidden">Next</span>
+                </button>
+              </>
+            )}
+          </div>
+          <p>{item.sku}</p>
+          <button
+            className="btn btn-border w-100"
+            onClick={() => router.push(`/products/${item.sku}`)}
+          >
+            <span>View</span>
+          </button>
         </div>
-      </Link>
+      </div>
     </div>
   )
 }

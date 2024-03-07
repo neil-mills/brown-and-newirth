@@ -96,6 +96,7 @@ export interface Variation {
   'sale-price': number
   'stock-status': StockStatus
   image: string
+  images?: string[]
   attributes: {
     'pa_metal-code': string
     'pa_total-carat'?: string

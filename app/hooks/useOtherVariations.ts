@@ -14,7 +14,17 @@ export const useOtherVariations = (): Variation[] => {
       )
     )
     otherOptions = otherSkus.map((sku) => {
-      return product.variations.filter((variation) => variation.sku === sku)[0]
+      const variations = product.variations.filter(
+        (variation) => variation.sku === sku
+      )
+      const images = Array.from(
+        new Set(variations.map((variation) => variation.image))
+      )
+      return {
+        ...variations[0],
+        images,
+        name: product,
+      }
     })
     console.log(otherOptions)
   }
