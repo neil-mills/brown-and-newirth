@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import Link from 'next/link'
 
 const Nav = () => {
   return (
@@ -55,14 +56,14 @@ const Nav = () => {
             />
           </a>
         </div>
-        <a className="navbar-logo position-absolute" href="/">
+        <Link className="navbar-logo position-absolute" href="/">
           <Image
             src="/img/svg/logo-brown-and-newirth.svg"
             alt="Brown and Newirth"
             width={179}
             height={50}
           />
-        </a>
+        </Link>
       </nav>
     </>
   )

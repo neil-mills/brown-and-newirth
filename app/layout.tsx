@@ -3,7 +3,7 @@ import '@/app/globals.css'
 import Head from 'next/head'
 import QueryProvider from '@/lib/QueryProvider'
 import InstallBootstrap from './components/InstallBootstrap'
-import Nav from './components/Nav'
+import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 
 export const metadata: Metadata = {
@@ -66,7 +66,7 @@ export default function RootLayout({
       </Head>
       <body className="h-100 overflow-hidden">
         <InstallBootstrap />
-        <Nav />
+        <Header />
         <div className="wrapper d-flex">
           <Sidebar />
           <div className="inner flex-grow-1">
