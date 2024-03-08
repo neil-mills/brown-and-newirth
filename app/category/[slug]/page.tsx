@@ -1,21 +1,28 @@
+import { notFound } from 'next/navigation'
 import {
   BackLink,
   CategoryBanner,
   ShapeFilterMenu,
   TitleBar,
 } from '@/app/components'
+import { useCategory } from '@/app/hooks'
 
 interface Props {
-  params: { category: string }
+  params: { slug: string }
 }
-const ProductCategoryPage = ({ params: { category } }: Props) => {
+const ProductCategoryPage = ({ params: { slug } }: Props) => {
+  const [category, categoryData] = useCategory(slug)
+  if (!category || !categoryData) {
+    return notFound()
+  }
+  console.log(category)
   return (
     <>
       <div className="col-left h-100 d-flex flex-column">
         <BackLink />
         <div className="col-left-inner flex-grow-1 d-flex flex-column p-0">
-          <CategoryBanner />
-          <ShapeFilterMenu />
+          <CategoryBanner category={categoryData} />
+          <ShapeFilterMenu category={category} />
         </div>
       </div>
 
