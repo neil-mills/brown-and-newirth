@@ -1,10 +1,9 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { Product, Variation } from '../types'
-import { StyleMap } from '../maps'
+import { Mapping } from '../types'
 
 interface Props {
-  item: StyleMap
+  item: Mapping
 }
 // const isProduct = (item: Product | Variation | StyleMap): item is Product => {
 //   return (item as Product).productId !== undefined
