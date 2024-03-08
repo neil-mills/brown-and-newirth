@@ -1,30 +1,40 @@
-import { Product } from '../types'
-import { useStore, useGetData } from './'
+import { Variation, ProductStyle, ProductAttributes, Filters } from '../types'
+import { useGetData } from './'
 
-export const useProducts = () => {
-  let products: Product[] = []
+interface Result {
+  products: Variation[]
+  isLoading: boolean
+  error: Error | null
+}
+
+export const useProducts = (
+  category: string,
+  filters: Filters | null
+): Result => {
+  let products: Variation[] = []
   const { data, error, isLoading } = useGetData()
-  const search = useStore((store) => store.productsQuery.search)
-  const selectedCategoryId = useStore((store) => store.productsQuery.category)
-  const selectedSku = useStore((store) => store.productsQuery.sku)
 
   if (!isLoading && !error && data) {
-    products = data
-    if (search) {
-      products = products?.filter(
-        (product) =>
-          product.name.includes(search) || product.sku.includes(search)
-      )
-    } else {
-      if (selectedCategoryId) {
-        products = products.filter(
-          (product) => (product.category = selectedCategoryId)
+    let filteredProducts = data.filter((product) =>
+      product.attributes.pa_style?.includes(category as ProductStyle)
+    )
+    if (filters) {
+      Object.entries(filters).forEach(([filter, value]) => {
+        filteredProducts = filteredProducts.filter((product) =>
+          product?.attributes?.[filter as ProductAttributes]?.includes(value)
         )
-      }
-      if (selectedSku) {
-        products = products.filter((product) => product.sku === selectedSku)
-      }
+      })
     }
+
+    products = filteredProducts.map((product) => {
+      const variations = product.variations.filter(
+        (variation) => variation.sku === product.sku
+      )
+      const images = Array.from(
+        new Set(variations.map((variation) => variation.image))
+      )
+      return { ...variations[0], images }
+    })
   }
-  return { products, error, isLoading }
+  return { products, isLoading, error }
 }
