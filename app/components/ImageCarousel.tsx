@@ -20,7 +20,7 @@ export const ImageCarousel = () => {
             <img
               src={src}
               className="img-fluid w-75 d-block mx-auto"
-              alt={product.name}
+              alt={product?.name}
             />
           </div>
         ))}
