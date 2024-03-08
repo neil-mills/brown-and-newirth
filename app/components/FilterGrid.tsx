@@ -5,7 +5,7 @@ export const FilterGrid = ({
   type,
   filters,
 }: {
-  type: string
+  type: 'shape' | 'profile'
   filters: Mapping[]
 }) => {
   const router = useRouter()
