@@ -1,17 +1,11 @@
-import { useCategories, useStore } from '@/app/hooks'
-import { Product } from '@/app/types'
+import { Mapping } from '@/app/types'
+import { stylesMap } from '@/app/maps'
 
-export const useCategory = () => {
-  const { categoryProducts, isLoading, error } = useCategories()
-  const selectedCategory = useStore((store) => store.productsQuery.category)
-  let category: Product | null = null
-  if (!isLoading && !error && categoryProducts) {
-    category =
-      categoryProducts.find(
-        (categoryProduct) =>
-          categoryProduct.category.toLowerCase() === selectedCategory
-      ) || null
-  }
-
-  return { category, isLoading, error }
+export const useCategory = (
+  slug: string
+): [string | undefined, Mapping | undefined] => {
+  const category = Object.entries(stylesMap).find(
+    ([_key, map]) => map.slug === slug
+  )
+  return [category?.[0], category?.[1]]
 }
