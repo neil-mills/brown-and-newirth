@@ -1,7 +1,7 @@
 import React from 'react'
 import { useStore } from '../hooks'
 
-const ResultsTabs = () => {
+export const ResultsTabs = () => {
   const { otherOptions } = useStore((store) => store.selectedSku)
   return (
     <div className="result-tabs col-pad-sm">
@@ -32,5 +32,3 @@ const ResultsTabs = () => {
     </div>
   )
 }
-
-export default ResultsTabs

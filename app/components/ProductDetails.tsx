@@ -1,11 +1,13 @@
 import { useStore } from '@/app/hooks'
-import { VariationOptions } from '@/app/components'
 import Link from 'next/link'
-import DataTable from './DataTable'
-import AddToBasket from './AddToBasket'
-import ImageCarousel from './ImageCarousel'
 import { useRouter } from 'next/navigation'
-import BackLink from './BackLink'
+import {
+  VariationOptions,
+  DataTable,
+  AddToBasket,
+  ImageCarousel,
+  BackLink,
+} from '@/app/components'
 
 export const ProductDetails = () => {
   const router = useRouter()

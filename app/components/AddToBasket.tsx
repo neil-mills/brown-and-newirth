@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AddToBasket = () => {
+export const AddToBasket = () => {
   return (
     <div className="row g-0">
       <div className="product-single-price-wrapper d-flex align-items-center product-single-price-wrapper">
@@ -21,5 +21,3 @@ const AddToBasket = () => {
     </div>
   )
 }
-
-export default AddToBasket

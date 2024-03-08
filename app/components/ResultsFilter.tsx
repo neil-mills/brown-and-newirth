@@ -1,8 +1,9 @@
+'use client'
 import { ChangeEvent, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useStore } from '../hooks'
 
-const ResultsFilter = () => {
+export const ResultsFilter = () => {
   const router = useRouter()
   const [filter, setFilter] = useState('')
   const selectRef = useRef<HTMLSelectElement>(null)
@@ -30,5 +31,3 @@ const ResultsFilter = () => {
     </div>
   )
 }
-
-export default ResultsFilter

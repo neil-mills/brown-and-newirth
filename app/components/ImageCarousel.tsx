@@ -1,6 +1,6 @@
 import { useStore } from '../hooks'
 
-const ImageCarousel = () => {
+export const ImageCarousel = () => {
   const { product, images } = useStore((store) => store.selectedSku)
   return (
     <div
@@ -67,5 +67,3 @@ const ImageCarousel = () => {
     </div>
   )
 }
-
-export default ImageCarousel

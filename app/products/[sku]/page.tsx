@@ -1,10 +1,13 @@
 'use client'
 import { useEffect } from 'react'
-import { ProductDetails, OtherOptions } from '@/app/components'
+import {
+  ProductDetails,
+  OtherOptions,
+  ResultsFilter,
+  ResultsTabs,
+} from '@/app/components'
 import { useProduct, useStore } from '@/app/hooks'
 import { ProductFilters } from '@/app/types'
-import ResultsFilter from '@/app/components/ResultsFilter'
-import ResultsTabs from '@/app/components/ResultsTabs'
 
 interface Props {
   params: {

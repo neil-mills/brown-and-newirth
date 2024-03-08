@@ -1,9 +1,8 @@
 'use client'
-import TitleBar from './TitleBar'
-import { useStyles } from '../hooks'
-import { ProductGrid } from './ProductGrid'
+import { TitleBar, ProductGrid } from '@/app/components'
+import { useStyles } from '@/app/hooks'
 
-const SearchByStyle = () => {
+export const SearchByStyle = () => {
   const { styles, isLoading, error } = useStyles()
   if (isLoading) return <p>Loading</p>
   if (error) return <p>{error.message}</p>
@@ -14,5 +13,3 @@ const SearchByStyle = () => {
     </>
   )
 }
-
-export default SearchByStyle

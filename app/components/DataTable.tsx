@@ -3,7 +3,7 @@ import { useStore } from '@/app/hooks'
 import { formatCarat } from '@/app/utils'
 import { diamondOrigin } from '../maps'
 
-const DataTable = () => {
+export const DataTable = () => {
   const { product, variations } = useStore((store) => store.selectedSku)
   if (!product) return null
   const variation = variations[0]
@@ -62,5 +62,3 @@ const DataTable = () => {
     </div>
   )
 }
-
-export default DataTable

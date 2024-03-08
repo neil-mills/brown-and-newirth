@@ -1,9 +1,8 @@
 'use client'
-import FilterGrid from './FilterGrid'
-import TitleBar from './TitleBar'
+import { FilterGrid, TitleBar } from '@/app/components'
 import { useShapes } from '../hooks'
 
-const ShapeFilterMenu = () => {
+export const ShapeFilterMenu = () => {
   const { shapes, isLoading, error } = useShapes()
   if (isLoading) return <p>Loading</p>
   if (error) return <p>{error.message}</p>
@@ -15,5 +14,3 @@ const ShapeFilterMenu = () => {
     </>
   )
 }
-
-export default ShapeFilterMenu

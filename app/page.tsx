@@ -4,8 +4,7 @@ import {
   QueryClient,
   dehydrate,
 } from '@tanstack/react-query'
-import { SearchByCategory, SearchByCode } from '@/app/components'
-import SearchByStyle from './components/SearchByStyle'
+import { SearchByCode, SearchByStyle } from '@/app/components'
 
 export default async function Home() {
   const queryClient = new QueryClient()

@@ -1,7 +1,7 @@
 import { usePathname, useRouter } from 'next/navigation'
 import { Mapping } from '../types'
 
-const FilterGrid = ({
+export const FilterGrid = ({
   type,
   filters,
 }: {
@@ -32,5 +32,3 @@ const FilterGrid = ({
     </div>
   )
 }
-
-export default FilterGrid

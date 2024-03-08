@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-const BackLink = () => {
+export const BackLink = () => {
   const router = useRouter()
   return (
     <Link
@@ -12,5 +12,3 @@ const BackLink = () => {
     >{`< Return To Previous`}</Link>
   )
 }
-
-export default BackLink
