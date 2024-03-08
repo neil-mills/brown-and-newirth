@@ -10,7 +10,7 @@ export const VariationOptions = () => {
   } = useStore((store) => store.selectedSku)
   const { sizes, metals } = useVariationOptions()
 
-  const showOrderButton = selectedSize && selectedMetal
+  // const showOrderButton = selectedSize && selectedMetal
 
   const setSize = useStore((store) => store.setSize)
   const setMetal = useStore((store) => store.setMetal)
@@ -44,7 +44,7 @@ export const VariationOptions = () => {
       </div>
     </div>
   )
-
+  /*
   return (
     <ul>
       {primaryAttr === 'pa_gauge' && widths && (
@@ -89,4 +89,5 @@ export const VariationOptions = () => {
       )}
     </ul>
   )
+  */
 }
