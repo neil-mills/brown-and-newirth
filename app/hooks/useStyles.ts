@@ -1,14 +1,14 @@
-import { ProductStyle } from '../types'
+import { ProductStyle, Mapping } from '../types'
 import { useGetData } from './'
-import { StyleMap, styles as styleMap } from '../maps'
+import { stylesMap } from '../maps'
 
 export const useStyles = (): {
-  styles: StyleMap[]
+  styles: Mapping[]
   isLoading: boolean
   error: Error | null
 } => {
   const { data: products, error, isLoading } = useGetData()
-  let styles: StyleMap[] = []
+  let styles: Mapping[] = []
   if (!isLoading && !error && products) {
     const productStyles = Array.from(
       new Set(
@@ -20,8 +20,12 @@ export const useStyles = (): {
       )
     )
     styles = productStyles.map((style) => {
-      const map = styleMap.find((map) => map.value === style)
-      return { value: style, label: map?.label || '', image: map?.image || '' }
+      const map = stylesMap?.[style]
+      return {
+        label: map?.label || '',
+        slug: map?.slug || '',
+        image: map?.image || '',
+      }
     })
   }
 
