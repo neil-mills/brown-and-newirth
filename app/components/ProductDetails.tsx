@@ -5,6 +5,7 @@ import DataTable from './DataTable'
 import AddToBasket from './AddToBasket'
 import ImageCarousel from './ImageCarousel'
 import { useRouter } from 'next/navigation'
+import BackLink from './BackLink'
 
 export const ProductDetails = () => {
   const router = useRouter()
@@ -17,11 +18,7 @@ export const ProductDetails = () => {
   if (!variations) return null
   return (
     <>
-      <Link
-        href="#"
-        onClick={() => router.back()}
-        className="mb-2 fw-300"
-      >{`< Return To Previous`}</Link>
+      <BackLink />
       <div className="col-left-inner d-flex flex-column justify-content-between has-border">
         <ImageCarousel />
       </div>
