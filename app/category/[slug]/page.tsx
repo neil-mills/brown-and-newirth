@@ -6,6 +6,7 @@ import {
   TitleBar,
 } from '@/app/components'
 import { useCategory } from '@/app/hooks'
+import { ProfileFilterMenu } from '@/app/components/ProfileFilterMenu'
 
 interface Props {
   params: { slug: string }
@@ -15,7 +16,6 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
   if (!category || !categoryData) {
     return notFound()
   }
-  console.log(category)
   return (
     <>
       <div className="col-left h-100 d-flex flex-column">
@@ -23,6 +23,7 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
         <div className="col-left-inner flex-grow-1 d-flex flex-column p-0">
           <CategoryBanner category={categoryData} />
           <ShapeFilterMenu category={category} />
+          <ProfileFilterMenu category={category} />
         </div>
       </div>
 
