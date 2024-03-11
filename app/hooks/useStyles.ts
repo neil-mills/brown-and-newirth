@@ -13,10 +13,18 @@ export const useStyles = (): {
     const productStyles = Array.from(
       new Set(
         products
-          .filter((product) => product?.attributes?.pa_style)
+          .filter(
+            (product) =>
+              product?.attributes?.pa_style ||
+              product?.attributes?.['pa_type-2']
+          )
           .reduce((acc, product) => {
-            return [...acc, ...product.attributes.pa_style!]
-          }, [] as ProductStyle[])
+            return [
+              ...acc,
+              ...(product?.attributes?.pa_style || []),
+              ...(product?.attributes?.['pa_type-2'] || []),
+            ]
+          }, [] as string[])
       )
     )
     styles = productStyles.map((style) => {
