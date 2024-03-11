@@ -1,6 +1,7 @@
 export interface Mapping {
   label: string
-  image: string
+  image?: string
+  class?: string
   slug: string
 }
 

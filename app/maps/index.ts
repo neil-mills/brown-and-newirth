@@ -1,5 +1,6 @@
 export * from './metals'
 export * from './styles'
-export * from './diamondOrigin'
+export * from './diamonds'
 export * from './shapes'
 export * from './profiles'
+export * from './carats'
