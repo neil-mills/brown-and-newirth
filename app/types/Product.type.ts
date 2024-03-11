@@ -41,6 +41,7 @@ export interface Product {
     pa_width: string[]
     pa_size: ProductSize[]
     pa_style?: ProductStyle[]
+    'pa_type-2'?: ('DRESS RING' | 'PENDANT' | 'EARRING' | 'BRACELET')[]
     pa_profile?: (
       | 'Flat'
       | 'CLASSIC COURT'
@@ -76,8 +77,7 @@ export interface Product {
     )[]
     pa_shaped?: ('Pinch' | 'Twist' | 'Curved' | 'Cutaway')[]
     'pa_diamond-set'?: 'Yes' | 'No'
-    'pa_type-2'?: ('PENDANT' | 'EARRING')[]
-    pa_diamond?: 'NATURAL' | 'LAB GROWN'
+    pa_diamond?: ('NATURAL' | 'LAB GROWN')[]
   }
   collection: string | null
   image: string
@@ -102,6 +102,7 @@ export interface Variation {
     'pa_total-carat'?: string
     'pa_centre-carat'?: string
     'pa_diamond-quality'?: string
+    pa_diamond?: string
     pa_gauge?: VariationGauge
     pa_width: string
     pa_size: VariationSize
