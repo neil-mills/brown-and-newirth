@@ -5,7 +5,7 @@ type Map = {
   [K in Keys]: string
 }
 
-export const metals: Map = {
+export const metalsMap: Map = {
   plt: 'Platinum',
   y: 'Gold',
   w: 'White Gold',

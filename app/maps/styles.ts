@@ -32,4 +32,29 @@ export const stylesMap: Map = {
     slug: 'other',
     image: '/img/04_3-stones.png',
   },
+  BRACELET: {
+    label: 'Bracelets',
+    slug: 'bracelet',
+    image: '/img/16_bracelets.png',
+  },
+  EARRING: {
+    label: 'Earrings',
+    slug: 'earring',
+    image: '/img/14_earrings.png',
+  },
+  PENDANT: {
+    label: 'Pendants',
+    slug: 'pendant',
+    image: '/img/15_pendants.png',
+  },
+  'DRESS RING': {
+    label: 'Dress',
+    slug: 'dress',
+    image: '/img/13_dress.png',
+  },
+  'FULL SET': {
+    label: 'Dress',
+    slug: 'dress',
+    image: '/img/13_dress.png',
+  },
 }
