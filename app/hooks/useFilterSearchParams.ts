@@ -1,21 +1,24 @@
 import { centreCaratsMap, diamondOriginsMap } from '@/app/maps'
-import { ProductAttributes, VariationAttributes } from '../types'
+import { Map } from '@/app/types'
 
-const map = {
+const map: { [key: string]: Map } = {
   pa_diamond: diamondOriginsMap,
   'pa_centre-carat': centreCaratsMap,
 }
-// const isAttribute = (key: string | ProductAttributes): key is ProductAttributes => {
-//   return ()
-// }
 
-export const useFilterSearchParams = (searchParams: Record<string, string>) => {
-  let filters = null
+export const useFilterSearchParams = (
+  searchParams: Record<string, string>
+): Record<string, string> | null => {
+  let filters: Record<string, string> | null = null
   if (!searchParams || Object.keys(searchParams).length === 0) return filters
-  Object.entries(searchParams).reduce((acc, [key, value]) => {
+  filters = Object.entries(searchParams).reduce((acc, [key, value]) => {
     if (Object.keys(map).includes(key)) {
-      const paramMap = map[key].slug === value
-      acc = {...acc, [paramMap]}
+      const index = Object.entries(map[key]).findIndex(
+        ([_key, mapping]) => mapping.slug === value
+      )
+      acc = { ...acc, [key]: Object.keys(map[key])[index] }
     }
-  })
+    return acc
+  }, {} as Record<string, string>)
+  return filters
 }

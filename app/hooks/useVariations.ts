@@ -2,10 +2,12 @@ import { VariationAttributes, VariationFilters, Variation } from '@/app/types'
 import { useStore } from '@/app/hooks'
 import { getUniqueArrayValues } from '@/app/utils'
 
-export const useVariations = (filters: VariationFilters): Variation[] => {
+export const useVariations = (
+  filters: Record<string, string> | null
+): Variation[] => {
   const { variations } = useStore((store) => store.selectedSku)
   let filteredVariations = variations
-  if (Object.keys(filters)) {
+  if (filters && Object.keys(filters)) {
     Object.entries(filters).forEach(([filter, value]) => {
       filteredVariations = filteredVariations.filter(
         (variation) =>

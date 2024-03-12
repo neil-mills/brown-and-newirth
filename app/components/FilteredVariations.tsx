@@ -6,9 +6,8 @@ import { VariationFilters } from '@/app/types'
 export const FilteredVariations = ({
   filters,
 }: {
-  filters: VariationFilters | null
+  filters: Record<string, string> | null
 }) => {
-  console.log({ filters })
   const variations = useVariations(filters)
   return (
     <>

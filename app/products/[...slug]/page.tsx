@@ -7,7 +7,7 @@ import {
   ResultsTabs,
   FilteredVariations,
 } from '@/app/components'
-import { useProduct, useStore } from '@/app/hooks'
+import { useProduct, useStore, useFilterSearchParams } from '@/app/hooks'
 import { VariationFilters } from '@/app/types'
 
 interface Props {
@@ -22,7 +22,7 @@ const ProductDetailsPage = ({ params: { slug }, searchParams }: Props) => {
   const productId = idParam === 'productId' ? id : null
   const sku = idParam === 'sku' ? id : null
   const setSelectedSku = useStore((store) => store.setSelectedSku)
-
+  const filters = useFilterSearchParams(searchParams)
   const { product, variations, images, otherOptions, isLoading, error } =
     useProduct({ productId, sku })
   useEffect(() => {
@@ -73,7 +73,7 @@ const ProductDetailsPage = ({ params: { slug }, searchParams }: Props) => {
             </div>
           </>
         )}
-        {productId && <FilteredVariations filters={searchParams} />}
+        {productId && <FilteredVariations filters={filters} />}
       </div>
     </>
   )
