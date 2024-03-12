@@ -1,9 +1,13 @@
 import Image from 'next/image'
-import { Variation } from '../types'
+import { Product, Variation } from '@/app/types'
 import { useRouter } from 'next/navigation'
 
 interface Props {
-  item: Variation
+  item: Variation | Product
+}
+
+const isVariation = (item: Product | Variation): item is Variation => {
+  return (item as Variation)['variation-id'] !== undefined
 }
 
 export const ProductCard = ({ item }: Props) => {
@@ -16,9 +20,12 @@ export const ProductCard = ({ item }: Props) => {
   return (
     <div className="col-6 col-sm-4 col-lg-6 col-xxl-4 col-product-grid">
       <div className="product-grid-item style-2 bg-grey-light position-relative">
-        <img
+        <Image
           className="img-fluid w-100"
           src={item?.images?.[0] ? item.images[0] : ''}
+          width={150}
+          height={150}
+          quality={100}
           alt={item.name}
         />
 
@@ -34,10 +41,13 @@ export const ProductCard = ({ item }: Props) => {
                   key={i}
                   className={`carousel-item${i === 0 ? ' active' : ''}`}
                 >
-                  <img
+                  <Image
                     src={image}
                     className="img-fluid w-100"
-                    alt="Product Title"
+                    width={150}
+                    height={150}
+                    quality={100}
+                    alt={item.name}
                   />
                 </div>
               ))}
@@ -71,10 +81,18 @@ export const ProductCard = ({ item }: Props) => {
               </>
             )}
           </div>
-          <p>{item.sku}</p>
+          {isVariation(item) && <p>{item.sku}</p>}
           <button
             className="btn btn-border w-100"
-            onClick={() => router.push(`/products/${item.sku}`)}
+            onClick={() =>
+              router.push(
+                `/products/${
+                  isVariation(item)
+                    ? `sku/${item.sku}`
+                    : `productId/${item.productId}`
+                }`
+              )
+            }
           >
             <span>View</span>
           </button>

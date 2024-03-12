@@ -3,7 +3,7 @@ import { Product, Variation } from '../types'
 import { mountStoreDevtool } from 'simple-zustand-devtools'
 
 interface SelectedSku {
-  sku: string
+  sku: string | null
   product: Product | null
   variations: Variation[]
   images: string[]
@@ -32,7 +32,7 @@ interface ProductsQuery {
 
 export const useStore = create<Store>((set) => ({
   selectedSku: {
-    sku: '',
+    sku: null,
     product: null,
     variations: [],
     images: [],

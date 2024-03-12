@@ -1,7 +1,7 @@
 import { useStore } from './useStore'
 import { centreCaratsMap } from '@/app/maps'
 import { Mapping } from '@/app/types'
-import { getUniqueValues } from '../utils'
+import { getUniqueArrayValues } from '../utils'
 
 export const useCentreCarats = (): Mapping[] => {
   let centreCarats: string[] = []
@@ -23,7 +23,7 @@ export const useCentreCarats = (): Mapping[] => {
         (variation) => variation?.attributes?.['pa_centre-carat']
       )
     ) {
-      centreCaratOptions = getUniqueValues(
+      centreCaratOptions = getUniqueArrayValues(
         variations
           .filter(
             (variation) => variation.attributes.pa_diamond === diamondOrigin

@@ -1,20 +1,29 @@
-'use client'
-import { ProductCard, CategoryCard } from '.'
-import { Variation, Mapping } from '../types'
+import { ProductCard, CategoryCard } from '@/app/components'
+import { Product, Variation, Mapping } from '@/app/types'
 
 interface Props {
   type: 'style' | 'product'
-  items: Variation[] | Mapping[]
+  items: Product[] | Variation[] | Mapping[]
 }
-export const ProductGrid = ({ type, items }: Props) => {
+
+const isProduct = (item: Product | Variation | Mapping): item is Product => {
+  return (item as Product).productId !== undefined
+}
+const isVariation = (
+  item: Product | Variation | Mapping
+): item is Variation => {
+  return (item as Variation)['variation-id'] !== undefined
+}
+
+export const ProductGrid = ({ items }: Props) => {
   return (
     <div className="row row-product-grid text-uppercase text-xs text-center">
       {items.map((item, i) => (
         <>
-          {type === 'product' ? (
-            <ProductCard key={i} item={item as Variation} />
+          {isProduct(item) || isVariation(item) ? (
+            <ProductCard key={i} item={item} />
           ) : (
-            <CategoryCard key={i} item={item as Mapping} />
+            <CategoryCard key={i} item={item} />
           )}
         </>
       ))}

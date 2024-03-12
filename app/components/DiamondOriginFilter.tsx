@@ -1,9 +1,22 @@
 'use client'
 import { usePathname, useRouter } from 'next/navigation'
-import { useDiamondOrigins } from '@/app/hooks'
+import {
+  useDiamondOrigins,
+  useProductFilterOptions,
+  useStore,
+} from '@/app/hooks'
 
 export const DiamondOriginFilter = () => {
-  const diamondOrigins = useDiamondOrigins()
+  const { product } = useStore((store) => store.selectedSku)
+  const {
+    filterOptions: diamondOrigins,
+    isLoading,
+    error,
+  } = useProductFilterOptions({
+    filter: 'pa_diamond',
+    productId: product?.productId,
+  })
+  // const diamondOrigins = useDiamondOrigins()
   const router = useRouter()
   const pathname = usePathname()
 
@@ -20,7 +33,7 @@ export const DiamondOriginFilter = () => {
             <button
               className={`btn btn-filter btn-border ${diamondOrigin.class} w-100`}
               onClick={() =>
-                router.push(`${pathname}?diamondOrigin=${diamondOrigin.slug}`)
+                router.push(`${pathname}?pa_diamond=${diamondOrigin.slug}`)
               }
             >
               <span>{diamondOrigin.label}</span>

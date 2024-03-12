@@ -1,6 +1,7 @@
 import { useCentreCarats } from '@/app/hooks'
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
+import icon from '@/public/img/svg/icon-shape-round.svg'
 
 export const DiamondCentreCaratFilter = () => {
   const centreCarats = useCentreCarats()
@@ -18,12 +19,7 @@ export const DiamondCentreCaratFilter = () => {
             disabled={centreCarat.disabled}
           >
             <div className="icon-wrapper-square d-flex align-items-center justify-content-center">
-              <Image
-                src="/img/svg/icon-shape-round.svg"
-                width={1}
-                height={1}
-                alt="Round"
-              />
+              <Image src={icon} alt="Round" />
             </div>
           </button>
           <p className="mt-2">

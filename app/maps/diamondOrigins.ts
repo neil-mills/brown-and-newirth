@@ -1,4 +1,6 @@
-export const diamondOriginsMap = {
+import { Map } from '@/app/types'
+
+export const diamondOriginsMap: Map = {
   NATURAL: {
     label: 'Naturally formed, mined',
     class: 'btn-natural',

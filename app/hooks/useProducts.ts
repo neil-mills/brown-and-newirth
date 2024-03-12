@@ -1,39 +1,41 @@
-import { Variation, ProductStyle, ProductAttributes, Filters } from '../types'
+import { getUniqueArrayValues } from '../utils/getUniqueArrayValues'
+import {
+  Product,
+  ProductStyle,
+  ProductAttributes,
+  ProductFilters,
+} from '../types'
 import { useGetData } from './'
 
 interface Result {
-  products: Variation[]
+  products: Product[]
   isLoading: boolean
   error: Error | null
 }
 
 export const useProducts = (
   category: string,
-  filters: Filters | null
+  filters: ProductFilters | null
 ): Result => {
-  let products: Variation[] = []
+  let products: Product[] = []
   const { data, error, isLoading } = useGetData()
 
   if (!isLoading && !error && data) {
-    let filteredProducts = data.filter((product) =>
+    products = data.filter((product) =>
       product.attributes.pa_style?.includes(category as ProductStyle)
     )
     if (filters) {
       Object.entries(filters).forEach(([filter, value]) => {
-        filteredProducts = filteredProducts.filter((product) =>
+        products = products.filter((product) =>
           product?.attributes?.[filter as ProductAttributes]?.includes(value)
         )
       })
     }
-
-    products = filteredProducts.map((product) => {
-      const variations = product.variations.filter(
-        (variation) => variation.sku === product.sku
+    products = products.map((product) => {
+      const images = getUniqueArrayValues(
+        product.variations.map((variation) => variation.image)
       )
-      const images = Array.from(
-        new Set(variations.map((variation) => variation.image))
-      )
-      return { ...variations[0], images }
+      return { ...product, images }
     })
   }
   return { products, isLoading, error }

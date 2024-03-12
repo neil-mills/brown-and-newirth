@@ -81,6 +81,7 @@ export interface Product {
   }
   collection: string | null
   image: string
+  images?: string[]
   price: number
   'sale-price': number
   variations: Variation[]

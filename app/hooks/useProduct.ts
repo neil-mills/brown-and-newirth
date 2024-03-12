@@ -1,5 +1,6 @@
-import { Product, Variation, ProductFilters } from '../types'
-import { useGetData } from './'
+import { Product, Variation } from '@/app/types'
+import { useGetData } from '@/app/hooks'
+import { getUniqueArrayValues } from '../utils'
 
 interface ReturnValues {
   isLoading: boolean
@@ -10,28 +11,54 @@ interface ReturnValues {
   otherOptions: Variation[]
 }
 
-export const useProduct = (
-  sku: string,
-  filters: ProductFilters
-): ReturnValues => {
+interface Props {
+  sku: string | null
+  productId: string | null
+}
+
+export const useProduct = ({ sku, productId }: Props): ReturnValues => {
   let product: Product | null = null
   let variations: Variation[] = []
   let images: string[] = []
   let otherOptions: Variation[] = []
   const { data: products, error, isLoading } = useGetData()
   if (!isLoading && !error) {
-    product =
-      products?.filter((product) =>
-        product.variations.some((variation) => variation.sku === sku)
-      )[0] || null
+    if (productId) {
+      product =
+        products?.find(
+          (product) => product?.productId.toString() === productId
+        ) || null
+    }
+
+    if (sku) {
+      product =
+        products?.find((product) =>
+          product.variations.some((variation) => variation.sku === sku)
+        ) || null
+    }
 
     if (product) {
-      variations = product.variations.filter(
-        (variation) => variation.sku === sku
-      )
-      if (variations) {
-        images = Array.from(
-          new Set(variations.map((variation) => variation.image))
+      if (productId) {
+        const skus = getUniqueArrayValues(
+          product.variations.map((variation) => variation.sku)
+        )
+        variations =
+          skus.map(
+            (sku) =>
+              product!.variations.filter(
+                (variation) => variation.sku === sku
+              )[0]
+          ) || []
+      }
+      if (sku) {
+        variations = sku
+          ? product.variations.filter((variation) => variation.sku === sku)
+          : []
+      }
+
+      if (variations?.length) {
+        images = getUniqueArrayValues(
+          variations.map((variation) => variation.image)
         )
         const otherSkus = Array.from(
           new Set(
@@ -52,14 +79,6 @@ export const useProduct = (
             images,
           }
         })
-        // if (filters?.diamondOrigin) {
-        //   const map = {
-        //     mined: 'NATURAL',
-        //     'lab-grown': 'LAB GROWN',
-        //   }
-        //   otherOptions = otherOptions.filter((option) => option)
-        //   // LAB GROWN, NATURAL
-        // }
       }
     }
   }

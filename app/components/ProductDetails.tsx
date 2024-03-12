@@ -14,6 +14,7 @@ export const ProductDetails = () => {
     variations,
     size: selectedSize,
     metal: selectedMetal,
+    sku,
   } = useStore((store) => store.selectedSku)
   if (!variations) return null
   return (
@@ -21,10 +22,14 @@ export const ProductDetails = () => {
       <BackLink />
       <div className="col-left-inner d-flex flex-column justify-content-between has-border">
         <ImageCarousel />
-        <p className="fw-300">Filter By:</p>
-        <DiamondOriginFilter />
-        <hr />
-        <DiamondCentreCaratFilter />
+        {!sku && (
+          <>
+            <p className="fw-300">Filter By:</p>
+            <DiamondOriginFilter />
+            <hr />
+            <DiamondCentreCaratFilter />
+          </>
+        )}
         <DataTable />
         <VariationOptions />
         {selectedSize && selectedMetal && <AddToBasket />}
