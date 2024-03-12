@@ -1,7 +1,7 @@
 import React from 'react'
 import { useStore } from '@/app/hooks'
 import { formatCarat } from '@/app/utils'
-import { diamondOrigin } from '../maps'
+import { diamondOriginsMap } from '../maps'
 
 export const DataTable = () => {
   const { product, variations } = useStore((store) => store.selectedSku)
@@ -29,7 +29,7 @@ export const DataTable = () => {
             <h6>Diamond Origin</h6>
             <p className="fw-300">
               {product?.attributes?.pa_diamond
-                ? diamondOrigin[product.attributes.pa_diamond]
+                ? diamondOriginsMap[product.attributes.pa_diamond].label
                 : ''}
             </p>
           </div>

@@ -1,4 +1,4 @@
-import { metals } from '@/app/maps'
+import { metalsMap } from '@/app/maps'
 
 type MetalCode = 'plt' | '18y' | '18w' | '18r'
 const keys = ['y', 'w', 'r'] as const
@@ -11,9 +11,9 @@ const isMetalCode = (str: string | MetalCode): str is MetalCode => {
 // const keys = Object.keys(metals)
 
 export const formatMetal = (metalCode: string): string => {
-  if (Object.keys(metals).some((key) => metalCode.includes(key))) {
+  if (Object.keys(metalsMap).some((key) => metalCode.includes(key))) {
     const key = metalCode === 'plt' ? metalCode : (metalCode.slice(-1) as Key)
-    return metals?.[key] || ''
+    return metalsMap?.[key] || ''
   }
   return ''
 }
