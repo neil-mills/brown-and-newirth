@@ -1,4 +1,4 @@
 export * from './formatMetal'
 export * from './formatWidth'
 export * from './formatCarat'
-export * from './getUniqueValues'
+export * from './getUniqueArrayValues'
