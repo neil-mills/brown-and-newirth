@@ -1,8 +1,8 @@
-export const diamondsMap = {
+export const diamondOriginsMap = {
   NATURAL: {
     label: 'Naturally formed, mined',
     class: 'btn-natural',
-    slug: 'mined',
+    slug: 'natural',
   },
   'LAB GROWN': {
     label: 'Created&reg; Lab-Grown',

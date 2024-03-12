@@ -28,8 +28,23 @@ const ProductDetailsPage = ({
     useProduct(sku, filters)
 
   useEffect(() => {
-    setSelectedSku({ sku, product, variations, images, otherOptions })
-  }, [setSelectedSku, product, variations, images, otherOptions, sku])
+    setSelectedSku({
+      sku,
+      product,
+      variations,
+      images,
+      otherOptions,
+      diamondOrigin,
+    })
+  }, [
+    setSelectedSku,
+    product,
+    variations,
+    images,
+    otherOptions,
+    sku,
+    diamondOrigin,
+  ])
 
   if (isLoading) return <p>Loading</p>
   if (error) return <p>{error.message}</p>

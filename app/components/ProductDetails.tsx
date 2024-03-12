@@ -1,19 +1,15 @@
 import { useStore } from '@/app/hooks'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import {
   VariationOptions,
   DataTable,
   AddToBasket,
   ImageCarousel,
   BackLink,
+  DiamondCentreCaratFilter,
+  DiamondOriginFilter,
 } from '@/app/components'
-import CaratFilter from './CaratFilter'
-import DiamondOriginFilter from './DiamondOriginFilter'
 
 export const ProductDetails = () => {
-  const router = useRouter()
-
   const {
     variations,
     size: selectedSize,
@@ -24,13 +20,15 @@ export const ProductDetails = () => {
     <>
       <BackLink />
       <div className="col-left-inner d-flex flex-column justify-content-between has-border">
-        <DiamondOriginFilter />
-        <CaratFilter />
         <ImageCarousel />
+        <p className="fw-300">Filter By:</p>
+        <DiamondOriginFilter />
+        <hr />
+        <DiamondCentreCaratFilter />
+        <DataTable />
+        <VariationOptions />
+        {selectedSize && selectedMetal && <AddToBasket />}
       </div>
-      <DataTable />
-      <VariationOptions />
-      {selectedSize && selectedMetal && <AddToBasket />}
     </>
   )
 }

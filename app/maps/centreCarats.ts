@@ -1,6 +1,6 @@
 import { Map } from '../types'
 
-export const caratsMap: Map = {
+export const centreCaratsMap: Map = {
   '0.250': {
     label: '0.25',
     class: 'carat-025',

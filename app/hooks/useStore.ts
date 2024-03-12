@@ -8,8 +8,8 @@ interface SelectedSku {
   variations: Variation[]
   images: string[]
   otherOptions: Variation[]
-  diamond?: string
-  carat?: string
+  diamondOrigin?: string
+  centreCarat?: string
   size?: string
   metal?: string
 }
@@ -37,6 +37,8 @@ export const useStore = create<Store>((set) => ({
     variations: [],
     images: [],
     otherOptions: [],
+    diamondOrigin: '',
+    centreCarat: '',
     size: '',
     metal: '',
   },
