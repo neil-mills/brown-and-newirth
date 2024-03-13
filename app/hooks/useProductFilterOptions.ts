@@ -1,5 +1,5 @@
 import { useGetData } from '.'
-import { Mapping, ProductStyle, Product } from '@/app/types'
+import { Mapping, ProductStyle, ProductType, Product } from '@/app/types'
 import { shapesMap, profilesMap, diamondOriginsMap } from '@/app/maps'
 import { getUniqueArrayValues } from '@/app/utils'
 
@@ -30,8 +30,10 @@ export const useProductFilterOptions = ({
   let filteredProducts = products
   if (!isLoading && !error && products) {
     if (category) {
-      filteredProducts = products.filter((product: Product) =>
-        product.attributes.pa_style?.includes(category as ProductStyle)
+      filteredProducts = products.filter(
+        (product: Product) =>
+          product.attributes.pa_style?.includes(category as ProductStyle) ||
+          product.attributes['pa_type-2']?.includes(category as ProductType)
       )
     }
     if (productId) {

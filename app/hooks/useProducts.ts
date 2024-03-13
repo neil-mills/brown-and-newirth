@@ -1,5 +1,11 @@
 import { getUniqueArrayValues } from '@/app/utils'
-import { Product, ProductStyle, ProductAttributes, Images } from '@/app/types'
+import {
+  Product,
+  ProductStyle,
+  ProductType,
+  ProductAttributes,
+  Images,
+} from '@/app/types'
 import { useGetData } from '@/app/hooks'
 
 interface Result {
@@ -16,8 +22,10 @@ export const useProducts = (
   const { data, error, isLoading } = useGetData()
 
   if (!isLoading && !error && data) {
-    products = data.filter((product) =>
-      product.attributes.pa_style?.includes(category as ProductStyle)
+    products = data.filter(
+      (product) =>
+        product.attributes.pa_style?.includes(category as ProductStyle) ||
+        product.attributes['pa_type-2']?.includes(category as ProductType)
     )
     if (filters) {
       Object.entries(filters).forEach(([filter, value]) => {
@@ -49,5 +57,6 @@ export const useProducts = (
       return { ...product, images }
     })
   }
+  console.log(products)
   return { products, isLoading, error }
 }
