@@ -1,6 +1,6 @@
-import { getUniqueArrayValues } from '../utils/getUniqueArrayValues'
-import { Product, ProductStyle, ProductAttributes } from '../types'
-import { useGetData } from './'
+import { getUniqueArrayValues } from '@/app/utils'
+import { Product, ProductStyle, ProductAttributes, Images } from '@/app/types'
+import { useGetData } from '@/app/hooks'
 
 interface Result {
   products: Product[]
@@ -29,9 +29,23 @@ export const useProducts = (
       })
     }
     products = products.map((product) => {
-      const images = getUniqueArrayValues(
-        product.variations.map((variation) => variation.image)
-      )
+      const images: Images<string[]> = {
+        thumbnail: getUniqueArrayValues(
+          product.variations.map(
+            (variation) => variation['variation-images'].thumbnail
+          )
+        ),
+        medium: getUniqueArrayValues(
+          product.variations.map(
+            (variation) => variation['variation-images'].medium
+          )
+        ),
+        large: getUniqueArrayValues(
+          product.variations.map(
+            (variation) => variation['variation-images'].large
+          )
+        ),
+      }
       return { ...product, images }
     })
   }

@@ -16,20 +16,21 @@ export const ImageCarousel = () => {
         >
           <span>View Online</span>
         </a>
-        {images.map((src, i) => (
+        {images.large.map((src, i) => (
           <div key={i} className="carousel-item bg-grey-light active">
             <Image
               src={src}
+              width={720}
+              height={880}
               className="img-fluid w-75 d-block mx-auto"
               alt={product?.name || ''}
-              width={300}
-              height={300}
+              sizes="(max-width: 480px) 100vw, (max-width: 720px) 50vw, 33vw"
               priority
             />
           </div>
         ))}
 
-        {images.length > 1 && (
+        {images.large.length > 1 && (
           <>
             <button
               className="carousel-control-prev align-items-end"
@@ -53,7 +54,7 @@ export const ImageCarousel = () => {
         )}
       </div>
       <div className="carousel-indicators thumbnails position-relative m-0 flex-column justify-content-start">
-        {images.map((src, i) => (
+        {images.thumbnail.map((src, i) => (
           <button
             key={`tn_${i}`}
             type="button"

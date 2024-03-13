@@ -1,4 +1,4 @@
-import { Product, Variation } from '@/app/types'
+import { Product, Variation, Images } from '@/app/types'
 import { useGetData } from '@/app/hooks'
 import { getUniqueArrayValues } from '../utils'
 
@@ -7,7 +7,7 @@ interface ReturnValues {
   error: Error | null
   product: Product | null
   variations: Variation[]
-  images: string[]
+  images: Images<string[]>
   otherOptions: Variation[]
 }
 
@@ -19,7 +19,7 @@ interface Props {
 export const useProduct = ({ sku, productId }: Props): ReturnValues => {
   let product: Product | null = null
   let variations: Variation[] = []
-  let images: string[] = []
+  let images: Images<string[]> = { thumbnail: [], medium: [], large: [] }
   let otherOptions: Variation[] = []
   const { data: products, error, isLoading } = useGetData()
   if (!isLoading && !error) {
@@ -57,9 +57,19 @@ export const useProduct = ({ sku, productId }: Props): ReturnValues => {
       }
 
       if (variations?.length) {
-        images = getUniqueArrayValues(
-          variations.map((variation) => variation.image)
-        )
+        images = {
+          thumbnail: getUniqueArrayValues(
+            variations.map(
+              (variation) => variation['variation-images'].thumbnail
+            )
+          ),
+          medium: getUniqueArrayValues(
+            variations.map((variation) => variation['variation-images'].medium)
+          ),
+          large: getUniqueArrayValues(
+            variations.map((variation) => variation['variation-images'].large)
+          ),
+        }
         const otherSkus = Array.from(
           new Set(
             product.variations
@@ -71,9 +81,22 @@ export const useProduct = ({ sku, productId }: Props): ReturnValues => {
           const variations = product!.variations.filter(
             (variation) => variation.sku === sku
           )
-          const images = Array.from(
-            new Set(variations.map((variation) => variation.image))
-          )
+          const images: Images<string[]> = {
+            thumbnail: getUniqueArrayValues(
+              variations.map(
+                (variation) => variation['variation-images'].thumbnail
+              )
+            ),
+            medium: getUniqueArrayValues(
+              variations.map(
+                (variation) => variation['variation-images'].medium
+              )
+            ),
+            large: getUniqueArrayValues(
+              variations.map((variation) => variation['variation-images'].large)
+            ),
+          }
+
           return {
             ...variations[0],
             images,

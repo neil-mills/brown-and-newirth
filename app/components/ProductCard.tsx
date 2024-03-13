@@ -13,8 +13,11 @@ const isVariation = (item: Product | Variation): item is Variation => {
 export const ProductCard = ({ item }: Props) => {
   const router = useRouter()
   let carouselImages: string[] = []
-  if (item?.images) {
-    carouselImages = item.images.length > 1 ? item.images.slice(1) : item.images
+  if (item?.images?.medium) {
+    carouselImages =
+      item.images.medium.length > 1
+        ? item.images.medium.slice(1)
+        : item.images.medium
   }
 
   return (
@@ -22,10 +25,11 @@ export const ProductCard = ({ item }: Props) => {
       <div className="product-grid-item style-2 bg-grey-light position-relative">
         <Image
           className="img-fluid w-100"
-          src={item?.images?.[0] ? item.images[0] : ''}
-          width={150}
-          height={150}
+          src={item?.images?.medium?.[0] ? item.images.medium[0] : ''}
+          width={245}
+          height={300}
           quality={100}
+          sizes="(max-width: 220px) 100vw, (max-width: 240px) 50vw, 33vw"
           alt={item.name}
         />
 

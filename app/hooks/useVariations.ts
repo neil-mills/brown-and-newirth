@@ -1,4 +1,4 @@
-import { VariationAttributes, Variation } from '@/app/types'
+import { VariationAttributes, Variation, Images } from '@/app/types'
 import { useStore } from '@/app/hooks'
 import { getUniqueArrayValues } from '@/app/utils'
 
@@ -19,10 +19,21 @@ export const useVariations = (
   }
   filteredVariations = filteredVariations.map((variation) => {
     const skuVariations = variations.filter((v) => v.sku === variation.sku)
-    const images = getUniqueArrayValues(
-      skuVariations.map((variation) => variation.image)
-    )
+    const images: Images<string[]> = {
+      thumbnail: getUniqueArrayValues(
+        skuVariations.map(
+          (variation) => variation['variation-images'].thumbnail
+        )
+      ),
+      medium: getUniqueArrayValues(
+        skuVariations.map((variation) => variation['variation-images'].medium)
+      ),
+      large: getUniqueArrayValues(
+        skuVariations.map((variation) => variation['variation-images'].large)
+      ),
+    }
     return { ...variation, images }
   })
+  console.log(filteredVariations)
   return filteredVariations
 }

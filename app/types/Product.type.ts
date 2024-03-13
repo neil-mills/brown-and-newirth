@@ -18,6 +18,12 @@ type StockStatus = 'instock'
 type VariationSize = 'a-q' | 'r-z' | 'z'
 type VariationGauge = 'light' | 'medium' | 'heavy' | 'super-heavy'
 type DiamondQuality = 'GSI' | 'HSI' | 'D-FVS' | 'GVS'
+
+export interface Images<T> {
+  thumbnail: T
+  medium: T
+  large: T
+}
 export type DiamondOrigin = 'NATURAL' | 'LAB GROWN'
 export type ProductStyle =
   | 'Halo'
@@ -81,8 +87,8 @@ export interface Product {
     pa_diamond?: DiamondOrigin[]
   }
   collection: string | null
-  image: string
-  images?: string[]
+  'product-images': Images<string>
+  images?: Images<string[]>
   price: number
   'sale-price': number
   variations: Variation[]
@@ -97,8 +103,8 @@ export interface Variation {
   price: number
   'sale-price': number
   'stock-status': StockStatus
-  image: string
-  images?: string[]
+  'variation-images': Images<string>
+  images?: Images<string[]>
   attributes: {
     'pa_metal-code': string
     'pa_total-carat'?: string

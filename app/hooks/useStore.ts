@@ -1,12 +1,12 @@
 import { create } from 'zustand'
-import { Product, Variation } from '../types'
+import { Images, Product, Variation } from '@/app/types'
 import { mountStoreDevtool } from 'simple-zustand-devtools'
 
 interface SelectedSku {
   sku: string | null
   product: Product | null
   variations: Variation[]
-  images: string[]
+  images: Images<string[]>
   otherOptions: Variation[]
   diamondOrigin?: string
   centreCarat?: string
