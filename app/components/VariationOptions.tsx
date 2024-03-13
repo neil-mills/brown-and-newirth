@@ -1,6 +1,9 @@
+'use client'
 import { Select } from '@/app/components'
-import { useStore, useVariationOptions } from '../hooks'
-import { ChangeEvent } from 'react'
+import { useStore, useVariationOptions } from '@/app/hooks'
+import { ChangeEvent, useEffect } from 'react'
+import { sizesMap } from '@/app/maps'
+import { Variation } from '@/app/types'
 
 export const VariationOptions = () => {
   const {
@@ -8,12 +11,30 @@ export const VariationOptions = () => {
     size: selectedSize,
     metal: selectedMetal,
   } = useStore((store) => store.selectedSku)
+  const setVariation = useStore((store) => store.setVariation)
   const { sizes, metals } = useVariationOptions()
-
-  // const showOrderButton = selectedSize && selectedMetal
-
   const setSize = useStore((store) => store.setSize)
   const setMetal = useStore((store) => store.setMetal)
+
+  useEffect(() => {
+    let selectedVariation: Variation | null = null
+    if (selectedSize) {
+      const sizeRange =
+        Object.entries(sizesMap).find(([key, value]) =>
+          value.includes(selectedSize)
+        )?.[0] || null
+      console.log(sizeRange)
+      if (sizeRange) {
+        selectedVariation =
+          variations.find(
+            (variation) =>
+              variation.attributes['pa_metal-code'] === selectedMetal &&
+              variation.attributes.pa_size === sizeRange
+          ) || null
+      }
+    }
+    if (selectedVariation) setVariation(selectedVariation)
+  }, [selectedSize, selectedMetal, setVariation, variations])
 
   return (
     <div className="row row-pad-sm mb-16px">
@@ -44,50 +65,4 @@ export const VariationOptions = () => {
       </div>
     </div>
   )
-  /*
-  return (
-    <ul>
-      {primaryAttr === 'pa_gauge' && widths && (
-        <li>
-          <Select
-            options={widths}
-            value={selectedWidth}
-            defaultLabel="Width"
-            onChange={(event: ChangeEvent<HTMLSelectElement>) =>
-              setVariationOptionWidth(event.target.value)
-            }
-          />
-        </li>
-      )}
-      <li>
-        <Select
-          options={sizes}
-          value={selectedSize}
-          defaultLabel="Size"
-          onChange={(event: ChangeEvent<HTMLSelectElement>) =>
-            setVariationOptionSize(event.target.value)
-          }
-        />
-      </li>
-      <li>
-        <Select
-          options={metals}
-          value={selectedMetal}
-          defaultLabel="Metal"
-          onChange={(event: ChangeEvent<HTMLSelectElement>) =>
-            setVariationOptionMetal(event.target.value)
-          }
-        />
-      </li>
-      {showOrderButton && (
-        <>
-          <li>&pound;{variation?.price}</li>
-          <li>
-            <button type="submit">Order</button>
-          </li>
-        </>
-      )}
-    </ul>
-  )
-  */
 }

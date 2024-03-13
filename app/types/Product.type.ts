@@ -15,7 +15,7 @@ type MetalCode =
 type ProductSize = 'A-Q' | 'R-Z' | 'Z+'
 type Status = 'publish'
 type StockStatus = 'instock'
-type VariationSize = 'a-q' | 'r-z' | 'z'
+export type VariationSize = 'a-q' | 'r-z' | 'z'
 type VariationGauge = 'light' | 'medium' | 'heavy' | 'super-heavy'
 type DiamondQuality = 'GSI' | 'HSI' | 'D-FVS' | 'GVS'
 

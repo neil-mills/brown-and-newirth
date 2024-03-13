@@ -6,6 +6,7 @@ interface SelectedSku {
   sku: string | null
   product: Product | null
   variations: Variation[]
+  variation?: Variation | null
   images: Images<string[]>
   otherOptions: Variation[]
   diamondOrigin?: string
@@ -22,6 +23,7 @@ interface Store {
   setSearchQuery: (search: string) => void
   setSize: (size: string) => void
   setMetal: (metal: string) => void
+  setVariation: (variation: Variation) => void
   setDiamondOrigin: (diamond: string) => void
   setCarat: (carat: string) => void
 }
@@ -37,6 +39,7 @@ export const useStore = create<Store>((set) => ({
     sku: null,
     product: null,
     variations: [],
+    variation: null,
     images: { thumbnail: [], medium: [], large: [] },
     otherOptions: [],
     diamondOrigin: '',
@@ -60,12 +63,17 @@ export const useStore = create<Store>((set) => ({
   setMetal: (metal: string) =>
     set((store) => ({
       ...store,
-      variationOptions: { ...store.selectedSku, metal },
+      selectedSku: { ...store.selectedSku, metal },
     })),
   setDiamondOrigin: (diamondOrigin: string) =>
     set((store) => ({
       ...store,
       selectedSku: { ...store.selectedSku, diamondOrigin },
+    })),
+  setVariation: (variation: Variation) =>
+    set((store) => ({
+      ...store,
+      selectedSku: { ...store.selectedSku, variation },
     })),
   setCarat: (carat: string) =>
     set((store) => ({

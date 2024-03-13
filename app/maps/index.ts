@@ -1,4 +1,5 @@
 export * from './metals'
+export * from './sizes'
 export * from './styles'
 export * from './diamondOrigins'
 export * from './shapes'
