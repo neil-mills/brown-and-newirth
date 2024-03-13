@@ -1,20 +1,20 @@
 'use client'
 import { FilterGrid, TitleBar } from '@/app/components'
-import { useFilters } from '../hooks'
+import { useProductFilterOptions } from '../hooks'
 
 export const ProfileFilterMenu = ({ category }: { category: string }) => {
   const {
-    filters: profiles,
+    filterOptions: profiles,
     isLoading,
     error,
-  } = useFilters(category, 'pa_profile')
+  } = useProductFilterOptions({ category, filter: 'pa_profile' })
   if (isLoading) return <p>Loading</p>
   if (error) return <p>{error.message}</p>
 
   return (
     <>
       <TitleBar>Choose your profile</TitleBar>
-      <FilterGrid type="profile" filters={profiles} />
+      <FilterGrid type="pa_profile" filters={profiles} />
     </>
   )
 }

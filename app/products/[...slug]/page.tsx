@@ -1,5 +1,5 @@
 'use client'
-import { useEffect } from 'react'
+import { Suspense, useEffect } from 'react'
 import {
   ProductDetails,
   OtherOptions,
@@ -73,7 +73,11 @@ const ProductDetailsPage = ({ params: { slug }, searchParams }: Props) => {
             </div>
           </>
         )}
-        {productId && <FilteredVariations filters={filters} />}
+        {productId && (
+          <Suspense>
+            <FilteredVariations filters={filters} />
+          </Suspense>
+        )}
       </div>
     </>
   )

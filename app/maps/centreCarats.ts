@@ -21,6 +21,11 @@ export const centreCaratsMap: Map = {
     class: 'carat-030',
     slug: '0.30',
   },
+  '0.330': {
+    label: '0.33',
+    class: 'carat-030',
+    slug: '0.33',
+  },
   '0.400': {
     label: '0.40',
     class: 'carat-040',

@@ -1,5 +1,5 @@
 import { shapesMap, profilesMap } from '@/app/maps'
-import { Filters, Map, ProductAttributes } from '@/app/types'
+import { ProductFilters, Map, ProductAttributes } from '@/app/types'
 
 interface KeyMap {
   key: ProductAttributes
@@ -13,7 +13,7 @@ const paramsMap: Record<string, KeyMap> = {
 
 export const useProductFilters = (
   searchParams: Record<string, string>
-): Filters | null => {
+): ProductFilters | null => {
   const filters = Object.keys(searchParams).length
     ? Object.entries(searchParams).reduce((acc, [key, value]) => {
         const map = Object.entries(shapesMap).find(
@@ -26,7 +26,7 @@ export const useProductFilters = (
           }
         }
         return acc
-      }, {} as Filters)
+      }, {} as ProductFilters)
     : null
   return filters
 }

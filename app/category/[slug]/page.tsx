@@ -1,8 +1,12 @@
 import { notFound } from 'next/navigation'
-import { BackLink, CategoryBanner, ShapeFilterMenu } from '@/app/components'
-import { useCategory, useProductFilters } from '@/app/hooks'
-import { ProfileFilterMenu, FilterResults } from '@/app/components'
-import { shapesMap } from '@/app/maps'
+import {
+  BackLink,
+  CategoryBanner,
+  ShapeFilterMenu,
+  ProfileFilterMenu,
+  FilteredProducts,
+} from '@/app/components'
+import { useCategory, useFilterSearchParams } from '@/app/hooks'
 
 interface Props {
   params: { slug: string }
@@ -10,8 +14,7 @@ interface Props {
 }
 
 const ProductCategoryPage = ({ params: { slug }, searchParams }: Props) => {
-  const filters = useProductFilters(searchParams)
-
+  const filters = useFilterSearchParams(searchParams)
   const [category, categoryData] = useCategory(slug)
   if (!category || !categoryData) {
     return notFound()
@@ -27,7 +30,7 @@ const ProductCategoryPage = ({ params: { slug }, searchParams }: Props) => {
         </div>
       </div>
       <div className="col col-right h-100">
-        <FilterResults filters={filters} category={category} />
+        <FilteredProducts filters={filters} category={category} />
       </div>
     </>
   )

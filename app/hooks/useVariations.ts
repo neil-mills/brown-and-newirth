@@ -1,4 +1,4 @@
-import { VariationAttributes, VariationFilters, Variation } from '@/app/types'
+import { VariationAttributes, Variation } from '@/app/types'
 import { useStore } from '@/app/hooks'
 import { getUniqueArrayValues } from '@/app/utils'
 
@@ -6,9 +6,11 @@ export const useVariations = (
   filters: Record<string, string> | null
 ): Variation[] => {
   const { variations } = useStore((store) => store.selectedSku)
+
   let filteredVariations = variations
   if (filters && Object.keys(filters)) {
     Object.entries(filters).forEach(([filter, value]) => {
+      if (filter === 'pa_centre-carat') value = value.replace('.', '-')
       filteredVariations = filteredVariations.filter(
         (variation) =>
           variation?.attributes?.[filter as VariationAttributes] === value

@@ -7,7 +7,7 @@ export const ShapeFilterMenu = ({ category }: { category: string }) => {
     filterOptions: shapes,
     isLoading,
     error,
-  } = useProductFilterOptions('pa_shape', category)
+  } = useProductFilterOptions({ filter: 'pa_shape', category })
   if (isLoading) return <p>Loading</p>
   if (error) return <p>{error.message}</p>
   return (

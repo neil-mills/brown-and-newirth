@@ -1,10 +1,5 @@
 import { getUniqueArrayValues } from '../utils/getUniqueArrayValues'
-import {
-  Product,
-  ProductStyle,
-  ProductAttributes,
-  ProductFilters,
-} from '../types'
+import { Product, ProductStyle, ProductAttributes } from '../types'
 import { useGetData } from './'
 
 interface Result {
@@ -15,7 +10,7 @@ interface Result {
 
 export const useProducts = (
   category: string,
-  filters: ProductFilters | null
+  filters: Record<string, string> | null
 ): Result => {
   let products: Product[] = []
   const { data, error, isLoading } = useGetData()
