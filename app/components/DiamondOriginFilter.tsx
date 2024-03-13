@@ -27,6 +27,7 @@ export const DiamondOriginFilter = () => {
           >
             <button
               className={`btn btn-filter btn-border ${diamondOrigin.class} w-100`}
+              disabled={diamondOrigins.length === 1}
               onClick={() =>
                 router.push(`${pathname}?pa_diamond=${diamondOrigin.slug}`)
               }
