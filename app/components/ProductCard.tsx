@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { Product, Variation } from '@/app/types'
 import { useRouter } from 'next/navigation'
+import { CreatedLosenge } from '@/app/components'
 
 interface Props {
   item: Variation | Product
@@ -19,6 +20,10 @@ export const ProductCard = ({ item }: Props) => {
         ? item.images.medium.slice(1)
         : item.images.medium
   }
+
+  const isCreated =
+    (isVariation(item) && item.attributes.pa_diamond === 'LAB GROWN') ||
+    (!isVariation && item.attributes.pa_diamond?.includes('LAB GROWN'))
 
   return (
     <div className="col-6 col-sm-4 col-lg-6 col-xxl-4 col-product-grid">
@@ -56,6 +61,7 @@ export const ProductCard = ({ item }: Props) => {
                 </div>
               ))}
             </div>
+
             {carouselImages.length > 1 && (
               <>
                 <button
@@ -84,6 +90,7 @@ export const ProductCard = ({ item }: Props) => {
                 </button>
               </>
             )}
+            {isCreated && <CreatedLosenge />}
           </div>
           {isVariation(item) && <p>{item.sku}</p>}
           <button
