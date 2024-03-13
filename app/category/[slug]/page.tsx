@@ -14,7 +14,7 @@ interface Props {
 }
 
 const ProductCategoryPage = ({ params: { slug }, searchParams }: Props) => {
-  const filters = useFilterSearchParams(searchParams)
+  const filters = useFilterSearchParams(searchParams.toString())
   const [category, categoryData] = useCategory(slug)
   if (!category || !categoryData) {
     return notFound()
