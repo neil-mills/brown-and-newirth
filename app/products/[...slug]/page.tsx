@@ -8,21 +8,23 @@ import {
   FilteredVariations,
 } from '@/app/components'
 import { useProduct, useStore, useFilterSearchParams } from '@/app/hooks'
-import { VariationFilters } from '@/app/types'
+import { useSearchParams } from 'next/navigation'
 
 interface Props {
   params: {
     slug: string[]
   }
-  searchParams: VariationFilters
 }
 
-const ProductDetailsPage = ({ params: { slug }, searchParams }: Props) => {
+const ProductDetailsPage = ({ params: { slug } }: Props) => {
+  const searchParams = useSearchParams()
   const [idParam, id] = slug
   const productId = idParam === 'productId' ? id : null
   const sku = idParam === 'sku' ? id : null
   const setSelectedSku = useStore((store) => store.setSelectedSku)
-  const filters = useFilterSearchParams(searchParams)
+  const setSearchParams = useStore((store) => store.setSearchParams)
+
+  const filters = useFilterSearchParams(searchParams.toString())
   const { product, variations, images, otherOptions, isLoading, error } =
     useProduct({ productId, sku })
   useEffect(() => {
@@ -32,9 +34,10 @@ const ProductDetailsPage = ({ params: { slug }, searchParams }: Props) => {
       variations,
       images,
       otherOptions,
-      diamondOrigin: searchParams?.pa_diamond,
-      centreCarat: searchParams?.['pa_centre-carat'],
+      diamondOrigin: searchParams.get('pa_diamond') || '',
+      centreCarat: searchParams.get('pa_centre-carat') || '',
     })
+    setSearchParams(searchParams.toString())
   }, [
     setSelectedSku,
     product,
@@ -43,6 +46,7 @@ const ProductDetailsPage = ({ params: { slug }, searchParams }: Props) => {
     otherOptions,
     sku,
     searchParams,
+    setSearchParams,
   ])
 
   if (isLoading) return <p>Loading</p>

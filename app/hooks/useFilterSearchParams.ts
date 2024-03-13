@@ -1,5 +1,6 @@
 import { centreCaratsMap, diamondOriginsMap, shapesMap } from '@/app/maps'
 import { Map } from '@/app/types'
+import { searchParamsToObject } from '@/app/utils'
 
 const map: { [key: string]: Map } = {
   pa_diamond: diamondOriginsMap,
@@ -8,8 +9,9 @@ const map: { [key: string]: Map } = {
 }
 
 export const useFilterSearchParams = (
-  searchParams: Record<string, string>
+  searchParamsStr: string
 ): Record<string, string> | null => {
+  const searchParams = searchParamsToObject(searchParamsStr)
   let filters: Record<string, string> | null = null
   if (!searchParams || Object.keys(searchParams).length === 0) return filters
   filters = Object.entries(searchParams).reduce((acc, [key, value]) => {

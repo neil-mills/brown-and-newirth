@@ -16,6 +16,8 @@ interface SelectedSku {
 interface Store {
   productsQuery: ProductsQuery
   selectedSku: SelectedSku
+  searchParams: string
+  setSearchParams: (searchParams: string) => void
   setSelectedSku: (selectedSku: SelectedSku) => void
   setSearchQuery: (search: string) => void
   setSize: (size: string) => void
@@ -42,9 +44,12 @@ export const useStore = create<Store>((set) => ({
     size: '',
     metal: '',
   },
+  searchParams: '',
   productsQuery: {} as ProductsQuery,
   setSelectedSku: (selectedSku: SelectedSku) =>
     set((store) => ({ ...store, selectedSku })),
+  setSearchParams: (searchParams: string) =>
+    set((store) => ({ ...store, searchParams })),
   setSearchQuery: (search: string) =>
     set((store) => ({ ...store, productsQuery: { search } })),
   setSize: (size: string) =>
@@ -57,10 +62,10 @@ export const useStore = create<Store>((set) => ({
       ...store,
       variationOptions: { ...store.selectedSku, metal },
     })),
-  setDiamondOrigin: (diamond: string) =>
+  setDiamondOrigin: (diamondOrigin: string) =>
     set((store) => ({
       ...store,
-      selectedSku: { ...store.selectedSku, diamond },
+      selectedSku: { ...store.selectedSku, diamondOrigin },
     })),
   setCarat: (carat: string) =>
     set((store) => ({

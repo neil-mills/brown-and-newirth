@@ -34,6 +34,5 @@ export const useVariations = (
     }
     return { ...variation, images }
   })
-  console.log(filteredVariations)
   return filteredVariations
 }
