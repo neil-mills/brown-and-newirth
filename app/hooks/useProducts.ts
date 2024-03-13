@@ -10,7 +10,7 @@ interface Result {
 
 export const useProducts = (
   category: string,
-  filters: Record<ProductAttributes, string>
+  filters: Record<ProductAttributes, string> | null
 ): Result => {
   let products: Product[] = []
   const { data, error, isLoading } = useGetData()
