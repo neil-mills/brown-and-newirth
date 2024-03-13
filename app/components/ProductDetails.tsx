@@ -33,9 +33,13 @@ export const ProductDetails = () => {
             <DiamondCentreCaratFilter />
           </>
         )}
-        <DataTable />
-        <VariationOptions />
-        {selectedSize && selectedMetal && <AddToBasket />}
+        {sku && (
+          <>
+            <DataTable />
+            <VariationOptions />
+            {selectedSize && selectedMetal && <AddToBasket />}
+          </>
+        )}
       </div>
     </>
   )
