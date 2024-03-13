@@ -35,7 +35,7 @@ export const useStore = create<Store>((set) => ({
     sku: null,
     product: null,
     variations: [],
-    images: [],
+    images: { thumbnail: [], medium: [], large: [] },
     otherOptions: [],
     diamondOrigin: '',
     centreCarat: '',
