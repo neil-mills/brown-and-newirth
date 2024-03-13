@@ -1,6 +1,11 @@
 import { Map } from '@/app/types'
 
 export const centreCaratsMap: Map = {
+  '0.100': {
+    label: '0.10',
+    class: 'carat-025',
+    slug: '0.10',
+  },
   '0.150': {
     label: '0.15',
     class: 'carat-025',
