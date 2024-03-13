@@ -1,10 +1,6 @@
 'use client'
 import { usePathname, useRouter } from 'next/navigation'
-import {
-  useDiamondOrigins,
-  useProductFilterOptions,
-  useStore,
-} from '@/app/hooks'
+import { useProductFilterOptions, useStore } from '@/app/hooks'
 
 export const DiamondOriginFilter = () => {
   const { product } = useStore((store) => store.selectedSku)
@@ -14,9 +10,8 @@ export const DiamondOriginFilter = () => {
     error,
   } = useProductFilterOptions({
     filter: 'pa_diamond',
-    productId: product?.productId,
+    productId: product?.productId.toString(),
   })
-  // const diamondOrigins = useDiamondOrigins()
   const router = useRouter()
   const pathname = usePathname()
 

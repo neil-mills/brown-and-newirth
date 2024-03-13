@@ -31,9 +31,6 @@ export const DataTable = () => {
               {variation?.attributes?.['pa_diamond']
                 ? diamondOriginsMap[variation.attributes['pa_diamond']].label
                 : ''}
-              {/* {product?.attributes?.pa_diamond
-                ? diamondOriginsMap[product.attributes.pa_diamond].label
-                : ''} */}
             </p>
           </div>
         </div>
