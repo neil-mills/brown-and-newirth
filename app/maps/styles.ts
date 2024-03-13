@@ -57,4 +57,9 @@ export const stylesMap: Map = {
     slug: 'dress',
     image: '/img/13_dress.png',
   },
+  Shaped: {
+    label: 'Shaped',
+    slug: 'shaped',
+    image: '/img/09_shaped.png',
+  },
 }
