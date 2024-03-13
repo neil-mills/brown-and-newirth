@@ -1,4 +1,5 @@
-import { notFound } from 'next/navigation'
+'use client'
+import { notFound, useSearchParams } from 'next/navigation'
 import {
   BackLink,
   CategoryBanner,
@@ -10,10 +11,10 @@ import { useCategory, useFilterSearchParams } from '@/app/hooks'
 
 interface Props {
   params: { slug: string }
-  searchParams: { shape?: string; profile?: string }
 }
 
-const ProductCategoryPage = ({ params: { slug }, searchParams }: Props) => {
+const ProductCategoryPage = ({ params: { slug } }: Props) => {
+  const searchParams = useSearchParams()
   const filters = useFilterSearchParams(searchParams.toString())
   const [category, categoryData] = useCategory(slug)
   if (!category || !categoryData) {
