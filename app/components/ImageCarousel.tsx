@@ -1,4 +1,5 @@
 import { useStore } from '../hooks'
+import Image from 'next/image'
 
 export const ImageCarousel = () => {
   const { product, images } = useStore((store) => store.selectedSku)
@@ -17,10 +18,13 @@ export const ImageCarousel = () => {
         </a>
         {images.map((src, i) => (
           <div key={i} className="carousel-item bg-grey-light active">
-            <img
+            <Image
               src={src}
               className="img-fluid w-75 d-block mx-auto"
-              alt={product?.name}
+              alt={product?.name || ''}
+              width={300}
+              height={300}
+              priority
             />
           </div>
         ))}
