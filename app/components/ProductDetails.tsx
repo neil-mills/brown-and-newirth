@@ -1,3 +1,4 @@
+'use client'
 import { useStore } from '@/app/hooks'
 import {
   VariationOptions,
@@ -8,8 +9,10 @@ import {
   DiamondCentreCaratFilter,
   DiamondOriginFilter,
 } from '@/app/components'
+import { useEffect, useState } from 'react'
 
 export const ProductDetails = () => {
+  const [showAddToBasket, setShowAddToBasket] = useState<boolean>(false)
   const {
     variations,
     size: selectedSize,
@@ -17,9 +20,20 @@ export const ProductDetails = () => {
     product,
     sku,
   } = useStore((store) => store.selectedSku)
+
+  const showSize = !product?.attributes?.['pa_type-2']?.length
+
+  useEffect(() => {
+    const show = !showSize
+      ? selectedMetal !== ''
+      : selectedSize !== '' && selectedMetal !== ''
+    setShowAddToBasket(show)
+  }, [selectedSize, selectedMetal, showSize])
+
   if (!variations) return null
   const isDiamond =
     product?.attributes?.pa_diamond && product?.attributes?.['pa_centre-carat']
+
   return (
     <>
       <BackLink />
@@ -36,8 +50,8 @@ export const ProductDetails = () => {
         {sku && (
           <>
             <DataTable />
-            <VariationOptions />
-            {selectedSize && selectedMetal && <AddToBasket />}
+            <VariationOptions showSize={showSize} />
+            {showAddToBasket && <AddToBasket />}
           </>
         )}
       </div>

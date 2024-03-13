@@ -34,6 +34,8 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
       variations,
       images,
       otherOptions,
+      metal: '',
+      size: '',
       diamondOrigin: searchParams.get('pa_diamond') || '',
       centreCarat: searchParams.get('pa_centre-carat') || '',
     })
@@ -61,10 +63,12 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
       <div className="col col-right h-100">
         {sku && (
           <>
-            <div className="row row-pad-sm align-items-center">
-              <ResultsFilter />
-              <ResultsTabs />
-            </div>
+            {sku && (
+              <div className="row row-pad-sm align-items-center">
+                <ResultsFilter />
+                <ResultsTabs />
+              </div>
+            )}
             <div className="tab-content">
               <div
                 className="tab-pane fade show active"

@@ -5,7 +5,7 @@ import { ChangeEvent, useEffect } from 'react'
 import { sizesMap } from '@/app/maps'
 import { Variation } from '@/app/types'
 
-export const VariationOptions = () => {
+export const VariationOptions = ({ showSize }: { showSize: boolean }) => {
   const {
     variations,
     size: selectedSize,
@@ -15,7 +15,6 @@ export const VariationOptions = () => {
   const { sizes, metals } = useVariationOptions()
   const setSize = useStore((store) => store.setSize)
   const setMetal = useStore((store) => store.setMetal)
-
   useEffect(() => {
     let selectedVariation: Variation | null = null
     if (selectedSize) {
@@ -23,7 +22,6 @@ export const VariationOptions = () => {
         Object.entries(sizesMap).find(([key, value]) =>
           value.includes(selectedSize)
         )?.[0] || null
-      console.log(sizeRange)
       if (sizeRange) {
         selectedVariation =
           variations.find(
@@ -38,16 +36,18 @@ export const VariationOptions = () => {
 
   return (
     <div className="row row-pad-sm mb-16px">
-      <div className="col-sm col-pad-sm mb-3 mb-sm-0">
-        <Select
-          options={sizes}
-          value={selectedSize}
-          defaultLabel="Size"
-          onChange={(event: ChangeEvent<HTMLSelectElement>) =>
-            setSize(event.target.value)
-          }
-        />
-      </div>
+      {showSize && (
+        <div className="col-sm col-pad-sm mb-3 mb-sm-0">
+          <Select
+            options={sizes}
+            value={selectedSize}
+            defaultLabel="Size"
+            onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+              setSize(event.target.value)
+            }
+          />
+        </div>
+      )}
       <div className="col-sm col-pad-sm mb-3 mb-sm-0">
         <Select
           options={metals}
