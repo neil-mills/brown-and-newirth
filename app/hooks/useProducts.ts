@@ -10,7 +10,7 @@ interface Result {
 
 export const useProducts = (
   category: string,
-  filters: Record<string, string> | null
+  filters: Record<ProductAttributes, string>
 ): Result => {
   let products: Product[] = []
   const { data, error, isLoading } = useGetData()
@@ -22,7 +22,9 @@ export const useProducts = (
     if (filters) {
       Object.entries(filters).forEach(([filter, value]) => {
         products = products.filter((product) =>
-          product?.attributes?.[filter as ProductAttributes]?.includes(value)
+          product?.attributes?.[filter as ProductAttributes]?.includes(
+            value as never
+          )
         )
       })
     }

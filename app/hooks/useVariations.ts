@@ -3,7 +3,7 @@ import { useStore } from '@/app/hooks'
 import { getUniqueArrayValues } from '@/app/utils'
 
 export const useVariations = (
-  filters: Record<string, string> | null
+  filters: Record<VariationAttributes, string> | null
 ): Variation[] => {
   const { variations } = useStore((store) => store.selectedSku)
 

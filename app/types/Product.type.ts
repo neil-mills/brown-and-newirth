@@ -18,6 +18,7 @@ type StockStatus = 'instock'
 type VariationSize = 'a-q' | 'r-z' | 'z'
 type VariationGauge = 'light' | 'medium' | 'heavy' | 'super-heavy'
 type DiamondQuality = 'GSI' | 'HSI' | 'D-FVS' | 'GVS'
+export type DiamondOrigin = 'NATURAL' | 'LAB GROWN'
 export type ProductStyle =
   | 'Halo'
   | 'Other'
@@ -33,7 +34,7 @@ export interface Product {
   sku: string
   category: string
   attributes: {
-    pa_metal_code: MetalCode[]
+    'pa_metal-code': MetalCode[]
     pa_gauge?: ('Light' | 'Medium' | 'Heavy' | 'Super Heavy')[]
     'pa_total-carat': ('0.410' | string)[]
     'pa_centre-carat': ('0.330' | string)[]
@@ -77,7 +78,7 @@ export interface Product {
     )[]
     pa_shaped?: ('Pinch' | 'Twist' | 'Curved' | 'Cutaway')[]
     'pa_diamond-set'?: 'Yes' | 'No'
-    pa_diamond?: ('NATURAL' | 'LAB GROWN')[]
+    pa_diamond?: DiamondOrigin[]
   }
   collection: string | null
   image: string
