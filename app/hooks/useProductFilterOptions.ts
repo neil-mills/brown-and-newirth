@@ -5,13 +5,14 @@ import { getUniqueArrayValues } from '@/app/utils'
 
 const map = {
   pa_shape: shapesMap,
+  pa_shaped: shapesMap,
   pa_profile: profilesMap,
   pa_diamond: diamondOriginsMap,
 }
 
 interface Props {
-  filter: 'pa_shape' | 'pa_profile' | 'pa_diamond'
-  category?: string | undefined
+  filter: 'pa_shape' | 'pa_shaped' | 'pa_profile' | 'pa_diamond'
+  category?: string | undefined | null
   productId?: string | undefined
 }
 

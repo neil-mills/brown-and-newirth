@@ -22,11 +22,14 @@ export const useProducts = (
   const { data, error, isLoading } = useGetData()
 
   if (!isLoading && !error && data) {
-    products = data.filter(
-      (product) =>
-        product.attributes.pa_style?.includes(category as ProductStyle) ||
-        product.attributes['pa_type-2']?.includes(category as ProductType)
-    )
+    products =
+      category === 'Shaped'
+        ? data.filter((product) => product.attributes.pa_shaped?.length)
+        : data.filter(
+            (product) =>
+              product.attributes.pa_style?.includes(category as ProductStyle) ||
+              product.attributes['pa_type-2']?.includes(category as ProductType)
+          )
     if (filters) {
       Object.entries(filters).forEach(([filter, value]) => {
         products = products.filter((product) =>
