@@ -25,6 +25,7 @@ export interface Images<T> {
   large: T
 }
 export type DiamondOrigin = 'NATURAL' | 'LAB GROWN'
+export type ProductType = 'DRESS RING' | 'PENDANT' | 'EARRING' | 'BRACELET'
 export type ProductStyle =
   | 'Halo'
   | 'Other'
@@ -48,7 +49,7 @@ export interface Product {
     pa_width: string[]
     pa_size: ProductSize[]
     pa_style?: ProductStyle[]
-    'pa_type-2'?: ('DRESS RING' | 'PENDANT' | 'EARRING' | 'BRACELET')[]
+    'pa_type-2'?: ProductType[]
     pa_profile?: (
       | 'Flat'
       | 'CLASSIC COURT'
