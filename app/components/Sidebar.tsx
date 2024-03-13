@@ -26,7 +26,7 @@ const Sidebar = () => {
           <Image
             src="/img/svg/icon-doc.svg"
             alt="Orders"
-            width={13.5}
+            width={13}
             height={21}
           />
         </Link>
@@ -38,7 +38,7 @@ const Sidebar = () => {
           <Image
             src="/img/svg/icon-cog.svg"
             alt="Settings"
-            width={14.61}
+            width={14}
             height={21}
           />
         </Link>
