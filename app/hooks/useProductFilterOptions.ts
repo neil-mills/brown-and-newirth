@@ -1,16 +1,18 @@
-import { useGetData } from '.'
+import { useGetData } from '@/app/hooks'
 import {
   Mapping,
   ProductStyle,
   ProductType,
   Product,
   ProductAttributes,
+  ProductPatterns,
 } from '@/app/types'
 import {
   shapesMap,
   shapedMap,
   profilesMap,
   diamondOriginsMap,
+  patternMap,
 } from '@/app/maps'
 import { getUniqueArrayValues } from '@/app/utils'
 
@@ -19,6 +21,7 @@ const map = {
   pa_shaped: shapedMap,
   pa_profile: profilesMap,
   pa_diamond: diamondOriginsMap,
+  pa_pattern: patternMap,
 }
 
 interface Props {
@@ -46,8 +49,13 @@ export const useProductFilterOptions = ({
     if (category) {
       filteredProducts = products.filter(
         (product: Product) =>
-          product.attributes.pa_style?.includes(category as ProductStyle) ||
-          product.attributes['pa_type-2']?.includes(category as ProductType)
+          product.attributes?.pa_style?.includes(category as ProductStyle) ||
+          product.attributes?.['pa_type-2']?.includes(
+            category as ProductType
+          ) ||
+          product.attributes?.['pa_pattern']?.includes(
+            category as ProductPatterns
+          )
       )
     }
     if (productId) {

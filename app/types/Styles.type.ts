@@ -13,7 +13,7 @@ export type Styles =
   | 'FULL SET'
   | 'HALF SET'
   | 'Shaped'
-  | 'Plains'
+  | 'PLAIN'
   | 'Patterns'
   | 'Ceramic'
   | 'Diamond'

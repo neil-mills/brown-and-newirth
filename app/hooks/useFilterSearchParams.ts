@@ -4,6 +4,7 @@ import {
   shapesMap,
   shapedMap,
   diamondSetMap,
+  profilesMap,
 } from '@/app/maps'
 import { Map } from '@/app/types'
 import { searchParamsToObject } from '@/app/utils'
@@ -14,6 +15,7 @@ const map: { [key: string]: Map } = {
   pa_shape: shapesMap,
   pa_shaped: shapedMap,
   'pa_diamond-set': diamondSetMap,
+  pa_profile: profilesMap,
 }
 
 export const useFilterSearchParams = (

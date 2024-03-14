@@ -101,7 +101,7 @@ export const stylesMap: StyleMap = {
     image: '/img/09_shaped.png',
     filter: ['diamond-set', 'shape'],
   },
-  Plains: {
+  PLAIN: {
     label: 'Plains',
     slug: 'plains',
     image: '/img/05_plains.png',

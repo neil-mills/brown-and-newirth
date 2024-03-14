@@ -1,6 +1,8 @@
-import { Map } from '../types'
+import { Mapping, ProductProfiles } from '@/app/types'
 
-export const profilesMap: Map = {
+type PatternMap = { [K in ProductProfiles]: Mapping }
+
+export const profilesMap: PatternMap = {
   BARREL: {
     label: 'Barrel',
     image: '/img/svg/icon-profile-barrel.svg',

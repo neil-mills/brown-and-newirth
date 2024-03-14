@@ -34,6 +34,20 @@ export type ProductStyle =
   | 'Three Stone'
   | 'Five Stone'
   | 'Trilogy'
+export type ProductShoulders = 'Plain' | 'Diamond'
+export type ProductPatterns =
+  | 'PLAIN'
+  | 'CELTIC'
+  | 'CERAMIC'
+  | 'CONTEMPORARY'
+  | 'SPARKLE'
+export type ProductProfiles =
+  | 'Flat'
+  | 'CLASSIC COURT'
+  | 'MODERN COURT'
+  | 'BARREL'
+  | 'D SHAPED'
+  | 'OTHER'
 
 export interface Product {
   productId: number
@@ -50,14 +64,7 @@ export interface Product {
     pa_size: ProductSize[]
     pa_style?: ProductStyle[]
     'pa_type-2'?: ProductType[]
-    pa_profile?: (
-      | 'Flat'
-      | 'CLASSIC COURT'
-      | 'MODERN COURT'
-      | 'BARREL'
-      | 'D SHAPED'
-      | string
-    )[]
+    pa_profile?: ProductProfiles[]
     pa_shape?: (
       | 'Marquise'
       | 'Brilliant'
@@ -70,9 +77,9 @@ export interface Product {
       | 'Pear'
       | string
     )[]
-    pa_shoulders?: ('Plain' | 'Diamond')[]
+    pa_shoulders?: ProductShoulders[]
     pa_finish?: ('Matte' | 'Polished' | 'Matte &amp; Polished')[]
-    pa_pattern?: ('PLAIN' | 'CELTIC' | 'CERAMIC' | 'CONTEMPORARY' | 'SPARKLE')[]
+    pa_pattern?: ProductPatterns[]
     pa_coverage?: ('Third' | 'Half' | 'Three Quarter' | 'Full')[]
     pa_setting?: (
       | 'PAVE'

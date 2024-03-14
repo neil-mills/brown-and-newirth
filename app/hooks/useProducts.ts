@@ -5,6 +5,7 @@ import {
   ProductType,
   ProductAttributes,
   Images,
+  ProductPatterns,
 } from '@/app/types'
 import { useGetData } from '@/app/hooks'
 
@@ -27,8 +28,15 @@ export const useProducts = (
         ? data.filter((product) => product.attributes.pa_shaped?.length)
         : data.filter(
             (product) =>
-              product.attributes.pa_style?.includes(category as ProductStyle) ||
-              product.attributes['pa_type-2']?.includes(category as ProductType)
+              product?.attributes?.pa_style?.includes(
+                category as ProductStyle
+              ) ||
+              product?.attributes?.['pa_type-2']?.includes(
+                category as ProductType
+              ) ||
+              product?.attributes?.['pa_pattern']?.includes(
+                category as ProductPatterns
+              )
           )
     if (filters) {
       Object.entries(filters).forEach(([filter, value]) => {

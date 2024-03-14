@@ -19,14 +19,16 @@ interface Props {
 const ProductCategoryPage = ({ params: { slug } }: Props) => {
   const searchParams = useSearchParams()
   const filters = useFilterSearchParams(searchParams.toString())
+  console.log(filters)
   const [category, categoryData] = useCategory(slug)
   const hasShapeFilter = stylesMap[category as Styles].filter.includes('shape')
   const showShapeFilter =
     (hasShapeFilter && category !== 'Shaped') ||
     (hasShapeFilter &&
       category === 'Shaped' &&
-      searchParams.get('pa_diamond-set')) !== undefined
-
+      searchParams.get('pa_diamond-set') !== undefined)
+  const showProfileFilter =
+    stylesMap[category as Styles].filter.includes('profile')
   if (!category || !categoryData) {
     return notFound()
   }
@@ -38,7 +40,7 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
           <CategoryBanner category={categoryData} />
           {category === 'Shaped' && <DiamondSetFilter />}
           {showShapeFilter && <ShapeFilterMenu category={category} />}
-          <ProfileFilterMenu category={category} />
+          {showProfileFilter && <ProfileFilterMenu category={category} />}
         </div>
       </div>
       <div className="col col-right h-100">
