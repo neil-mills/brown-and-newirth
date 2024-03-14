@@ -1,12 +1,12 @@
 'use client'
 import { ProductGrid, TitleBar } from '@/app/components'
 import { useVariations } from '@/app/hooks'
-import { VariationAttributes } from '@/app/types'
+import { Filters } from '@/app/types'
 
 export const FilteredVariations = ({
   filters,
 }: {
-  filters: Record<VariationAttributes, string> | null
+  filters: Filters | null
 }) => {
   const variations = useVariations(filters)
   return (

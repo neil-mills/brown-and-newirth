@@ -39,7 +39,7 @@ export const useProduct = ({ sku, productId }: Props): ReturnValues => {
 
     if (product) {
       if (productId) {
-        const skus = getUniqueArrayValues(
+        const skus = getUniqueArrayValues<string[]>(
           product.variations.map((variation) => variation.sku)
         )
         variations =
@@ -58,15 +58,15 @@ export const useProduct = ({ sku, productId }: Props): ReturnValues => {
 
       if (variations?.length) {
         images = {
-          thumbnail: getUniqueArrayValues(
+          thumbnail: getUniqueArrayValues<string[]>(
             variations.map(
               (variation) => variation['variation-images'].thumbnail
             )
           ),
-          medium: getUniqueArrayValues(
+          medium: getUniqueArrayValues<string[]>(
             variations.map((variation) => variation['variation-images'].medium)
           ),
-          large: getUniqueArrayValues(
+          large: getUniqueArrayValues<string[]>(
             variations.map((variation) => variation['variation-images'].large)
           ),
         }
@@ -82,17 +82,17 @@ export const useProduct = ({ sku, productId }: Props): ReturnValues => {
             (variation) => variation.sku === sku
           )
           const images: Images<string[]> = {
-            thumbnail: getUniqueArrayValues(
+            thumbnail: getUniqueArrayValues<string[]>(
               variations.map(
                 (variation) => variation['variation-images'].thumbnail
               )
             ),
-            medium: getUniqueArrayValues(
+            medium: getUniqueArrayValues<string[]>(
               variations.map(
                 (variation) => variation['variation-images'].medium
               )
             ),
-            large: getUniqueArrayValues(
+            large: getUniqueArrayValues<string[]>(
               variations.map((variation) => variation['variation-images'].large)
             ),
           }

@@ -4,8 +4,9 @@ import {
   ProductStyle,
   ProductType,
   Product,
-  ProductAttributes,
   ProductPatterns,
+  Filters,
+  Map,
 } from '@/app/types'
 import {
   shapesMap,
@@ -16,7 +17,16 @@ import {
 } from '@/app/maps'
 import { getUniqueArrayValues } from '@/app/utils'
 
-const map = {
+type ProductFilterAttributes =
+  | 'pa_shape'
+  | 'pa_shaped'
+  | 'pa_profile'
+  | 'pa_diamond'
+  | 'pa_pattern'
+
+type ProductFilterAttributesMap = { [K in ProductFilterAttributes]: Map }
+
+const map: ProductFilterAttributesMap = {
   pa_shape: shapesMap,
   pa_shaped: shapedMap,
   pa_profile: profilesMap,
@@ -25,8 +35,8 @@ const map = {
 }
 
 interface Props {
-  filter: 'pa_shape' | 'pa_shaped' | 'pa_profile' | 'pa_diamond'
-  filters?: Record<string, string> | null
+  filter: ProductFilterAttributes
+  filters?: Filters | null
   category?: string | undefined | null
   productId?: string | undefined
 }
@@ -67,15 +77,15 @@ export const useProductFilterOptions = ({
       Object.entries(filters).forEach(([filterKey, value]) => {
         if (filterKey !== filter) {
           filteredProducts = filteredProducts?.filter((product) =>
-            product?.attributes?.[filterKey as ProductAttributes]?.includes(
-              value as never
-            )
+            product?.attributes?.[
+              filterKey as ProductFilterAttributes
+            ]?.includes(value as never)
           )
         }
       })
     }
     if (filteredProducts) {
-      filterOptions = getUniqueArrayValues(
+      filterOptions = getUniqueArrayValues<string[]>(
         filteredProducts?.reduce((acc, product) => {
           if (product?.attributes?.[filter]) {
             acc = [...acc, ...product.attributes[filter]!]

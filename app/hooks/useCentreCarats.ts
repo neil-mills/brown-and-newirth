@@ -23,7 +23,7 @@ export const useCentreCarats = (): Mapping[] => {
         (variation) => variation?.attributes?.['pa_centre-carat']
       )
     ) {
-      centreCaratOptions = getUniqueArrayValues(
+      centreCaratOptions = getUniqueArrayValues<string[]>(
         variations
           .filter(
             (variation) => variation.attributes.pa_diamond === diamondOrigin

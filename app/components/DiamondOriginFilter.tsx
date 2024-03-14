@@ -1,5 +1,5 @@
 'use client'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useProductFilterOptions, useStore } from '@/app/hooks'
 import classNames from 'classnames'
 import { formatSearchParams, searchParamsToObject } from '../utils'

@@ -19,7 +19,6 @@ interface Props {
 const ProductCategoryPage = ({ params: { slug } }: Props) => {
   const searchParams = useSearchParams()
   const filters = useFilterSearchParams(searchParams.toString())
-  console.log(filters)
   const [category, categoryData] = useCategory(slug)
   const hasShapeFilter = stylesMap[category as Styles].filter.includes('shape')
   const showShapeFilter =

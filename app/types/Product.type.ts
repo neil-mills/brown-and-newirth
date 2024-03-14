@@ -16,7 +16,7 @@ type ProductSize = 'A-Q' | 'R-Z' | 'Z+'
 type Status = 'publish'
 type StockStatus = 'instock'
 export type VariationSize = 'a-q' | 'r-z' | 'z'
-type VariationGauge = 'light' | 'medium' | 'heavy' | 'super-heavy'
+export type VariationGauge = 'light' | 'medium' | 'heavy' | 'super-heavy'
 type DiamondQuality = 'GSI' | 'HSI' | 'D-FVS' | 'GVS'
 
 export interface Images<T> {

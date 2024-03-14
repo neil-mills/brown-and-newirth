@@ -8,8 +8,10 @@ import {
   BackLink,
   DiamondCentreCaratFilter,
   DiamondOriginFilter,
+  GaugeFilter,
 } from '@/app/components'
 import { useEffect, useState } from 'react'
+import WidthFilter from './WidthFilter'
 
 export const ProductDetails = () => {
   const [showAddToBasket, setShowAddToBasket] = useState<boolean>(false)
@@ -39,12 +41,14 @@ export const ProductDetails = () => {
       <BackLink />
       <div className="col-left-inner d-flex flex-column justify-content-between has-border">
         <ImageCarousel />
-        {!sku && isDiamond && (
+        {!sku && (
           <>
             <p className="fw-300">Filter By:</p>
-            <DiamondOriginFilter />
+            <GaugeFilter />
+            {isDiamond && <DiamondOriginFilter />}
             <hr />
-            <DiamondCentreCaratFilter />
+            <WidthFilter />
+            {/* <DiamondCentreCaratFilter /> */}
           </>
         )}
         {sku && (
