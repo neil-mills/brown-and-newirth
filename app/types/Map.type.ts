@@ -4,6 +4,7 @@ export interface Mapping {
   class?: string
   disabled?: boolean
   slug: string
+  filter?: string[]
 }
 
 export interface Map {
