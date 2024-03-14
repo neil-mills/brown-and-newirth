@@ -15,7 +15,7 @@ export const ShapeFilterMenu = ({ category }: { category: string }) => {
   return (
     <>
       <TitleBar>Choose your shape</TitleBar>
-      <FilterGrid type="pa_shape" filters={shapes} />
+      <FilterGrid type={filter} filters={shapes} />
     </>
   )
 }

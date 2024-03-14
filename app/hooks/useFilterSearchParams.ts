@@ -1,4 +1,9 @@
-import { centreCaratsMap, diamondOriginsMap, shapesMap } from '@/app/maps'
+import {
+  centreCaratsMap,
+  diamondOriginsMap,
+  shapesMap,
+  shapedMap,
+} from '@/app/maps'
 import { Map } from '@/app/types'
 import { searchParamsToObject } from '@/app/utils'
 
@@ -6,6 +11,7 @@ const map: { [key: string]: Map } = {
   pa_diamond: diamondOriginsMap,
   'pa_centre-carat': centreCaratsMap,
   pa_shape: shapesMap,
+  pa_shaped: shapedMap,
 }
 
 export const useFilterSearchParams = (

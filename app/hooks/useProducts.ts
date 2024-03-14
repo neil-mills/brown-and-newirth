@@ -60,6 +60,5 @@ export const useProducts = (
       return { ...product, images }
     })
   }
-  console.log(products)
   return { products, isLoading, error }
 }

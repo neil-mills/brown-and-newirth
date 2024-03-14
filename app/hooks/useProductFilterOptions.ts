@@ -1,11 +1,16 @@
 import { useGetData } from '.'
 import { Mapping, ProductStyle, ProductType, Product } from '@/app/types'
-import { shapesMap, profilesMap, diamondOriginsMap } from '@/app/maps'
+import {
+  shapesMap,
+  shapedMap,
+  profilesMap,
+  diamondOriginsMap,
+} from '@/app/maps'
 import { getUniqueArrayValues } from '@/app/utils'
 
 const map = {
   pa_shape: shapesMap,
-  pa_shaped: shapesMap,
+  pa_shaped: shapedMap,
   pa_profile: profilesMap,
   pa_diamond: diamondOriginsMap,
 }
