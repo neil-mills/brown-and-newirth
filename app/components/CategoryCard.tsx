@@ -24,14 +24,13 @@ export const CategoryCard = ({ item }: Props) => {
         href={`/category/${item.slug}`}
         className="product-grid-item style-1 letter-spacing bg-cover d-flex flex-column justify-content-between position-relative"
       >
-        {/* <Image
-          src={isStyle(item) ? item.image : '/img/01_solitaires.png'}
-          alt={item.label}
-          fill
+        <Image
+          width={114}
+          height={114}
           className="img-fluid w-100"
-          sizes="(max-width: 480px) auto, (max-width: 768px) auto, auto"
-        /> */}
-        <img className="img-fluid w-100" src={item.image} alt={item.label} />
+          src={item?.image || ''}
+          alt={item.label}
+        />
         <div>{item.label}</div>
       </Link>
     </div>
