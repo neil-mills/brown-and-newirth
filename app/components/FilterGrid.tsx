@@ -1,5 +1,6 @@
-import { usePathname, useRouter } from 'next/navigation'
-import { Mapping } from '../types'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { Mapping } from '@/app/types'
+import { formatSearchParams } from '@/app/utils'
 
 export const FilterGrid = ({
   type,
@@ -10,6 +11,14 @@ export const FilterGrid = ({
 }) => {
   const router = useRouter()
   const pathname = usePathname()
+  const searchParams = useSearchParams()
+
+  const handleClick = (shape: string) => {
+    const query = formatSearchParams(searchParams.toString(), {
+      [type]: shape,
+    })
+    router.push(`${pathname}?${query}`)
+  }
 
   return (
     <div className="row row-pad-sm row-panels-sm justify-content-center">
@@ -20,7 +29,7 @@ export const FilterGrid = ({
         >
           <button
             className="btn btn-icon bg-gradient-grey w-100"
-            onClick={() => router.push(`${pathname}?${type}=${filter.slug}`)}
+            onClick={() => handleClick(filter.slug)}
           >
             <p className="pt-2 mb-0">{filter.label}</p>
             <div className="icon-wrapper-square d-flex align-items-center justify-content-center px-4 pb-2">

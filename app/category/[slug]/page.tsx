@@ -1,5 +1,7 @@
 'use client'
 import { notFound, useSearchParams } from 'next/navigation'
+import { stylesMap } from '@/app/maps'
+import { Styles } from '@/app/types'
 import {
   BackLink,
   CategoryBanner,
@@ -8,6 +10,7 @@ import {
   FilteredProducts,
 } from '@/app/components'
 import { useCategory, useFilterSearchParams } from '@/app/hooks'
+import DiamondSetFilter from '@/app/components/DiamondSetFilter'
 
 interface Props {
   params: { slug: string }
@@ -17,6 +20,13 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
   const searchParams = useSearchParams()
   const filters = useFilterSearchParams(searchParams.toString())
   const [category, categoryData] = useCategory(slug)
+  const hasShapeFilter = stylesMap[category as Styles].filter.includes('shape')
+  const showShapeFilter =
+    (hasShapeFilter && category !== 'Shaped') ||
+    (hasShapeFilter &&
+      category === 'Shaped' &&
+      searchParams.get('pa_diamond-set')) !== undefined
+
   if (!category || !categoryData) {
     return notFound()
   }
@@ -26,7 +36,8 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
         <BackLink />
         <div className="col-left-inner flex-grow-1 d-flex flex-column p-0">
           <CategoryBanner category={categoryData} />
-          <ShapeFilterMenu category={category} />
+          {category === 'Shaped' && <DiamondSetFilter />}
+          {showShapeFilter && <ShapeFilterMenu category={category} />}
           <ProfileFilterMenu category={category} />
         </div>
       </div>

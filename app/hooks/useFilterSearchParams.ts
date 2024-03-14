@@ -3,6 +3,7 @@ import {
   diamondOriginsMap,
   shapesMap,
   shapedMap,
+  diamondSetMap,
 } from '@/app/maps'
 import { Map } from '@/app/types'
 import { searchParamsToObject } from '@/app/utils'
@@ -12,6 +13,7 @@ const map: { [key: string]: Map } = {
   'pa_centre-carat': centreCaratsMap,
   pa_shape: shapesMap,
   pa_shaped: shapedMap,
+  'pa_diamond-set': diamondSetMap,
 }
 
 export const useFilterSearchParams = (

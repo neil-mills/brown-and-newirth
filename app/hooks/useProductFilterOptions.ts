@@ -1,5 +1,11 @@
 import { useGetData } from '.'
-import { Mapping, ProductStyle, ProductType, Product } from '@/app/types'
+import {
+  Mapping,
+  ProductStyle,
+  ProductType,
+  Product,
+  ProductAttributes,
+} from '@/app/types'
 import {
   shapesMap,
   shapedMap,
@@ -17,12 +23,14 @@ const map = {
 
 interface Props {
   filter: 'pa_shape' | 'pa_shaped' | 'pa_profile' | 'pa_diamond'
+  filters?: Record<string, string> | null
   category?: string | undefined | null
   productId?: string | undefined
 }
 
 export const useProductFilterOptions = ({
   filter,
+  filters,
   category,
   productId,
 }: Props): {
@@ -46,6 +54,17 @@ export const useProductFilterOptions = ({
       filteredProducts = products.filter(
         (product: Product) => product.productId === parseInt(productId)
       )
+    }
+    if (filters) {
+      Object.entries(filters).forEach(([filterKey, value]) => {
+        if (filterKey !== filter) {
+          filteredProducts = filteredProducts?.filter((product) =>
+            product?.attributes?.[filterKey as ProductAttributes]?.includes(
+              value as never
+            )
+          )
+        }
+      })
     }
     if (filteredProducts) {
       filterOptions = getUniqueArrayValues(
