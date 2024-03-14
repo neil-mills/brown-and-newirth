@@ -1,4 +1,4 @@
-import { ProductStyle, Mapping } from '../types'
+import { Mapping, Styles } from '../types'
 import { useGetData } from './'
 import { stylesMap } from '../maps'
 
@@ -28,13 +28,25 @@ export const useStyles = (): {
       )
     )
     styles = productStyles.map((style) => {
-      const map = stylesMap?.[style]
+      const map = stylesMap?.[style as Styles]
       return {
         label: map?.label || '',
         slug: map?.slug || '',
         image: map?.image || '',
       }
     })
+
+    styles = [
+      ...styles,
+      stylesMap.Shaped,
+      stylesMap['HALF SET'],
+      stylesMap['FULL SET'],
+      stylesMap.Patterns,
+      stylesMap.Diamond,
+      stylesMap.Ceramic,
+      stylesMap.Plains,
+      stylesMap['Two Colour'],
+    ]
   }
 
   return { styles, isLoading, error }
