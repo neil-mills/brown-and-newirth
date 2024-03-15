@@ -3,7 +3,7 @@ import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { formatSearchParams } from '@/app/utils'
 import { Widths } from '@/app/types'
 
-const WidthFilter = () => {
+export const WidthFilter = () => {
   const searchParams = useSearchParams()
   const filters = useFilterSearchParams(searchParams.toString())
   const [widths, availableWidths] = useWidths({ filters })
@@ -36,5 +36,3 @@ const WidthFilter = () => {
     </div>
   )
 }
-
-export default WidthFilter

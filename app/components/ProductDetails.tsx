@@ -9,11 +9,16 @@ import {
   DiamondCentreCaratFilter,
   DiamondOriginFilter,
   GaugeFilter,
+  WidthFilter,
 } from '@/app/components'
 import { useEffect, useState } from 'react'
-import WidthFilter from './WidthFilter'
+import { FilterLayers } from '@/app/types'
 
-export const ProductDetails = () => {
+export const ProductDetails = ({
+  filterLayers,
+}: {
+  filterLayers: FilterLayers[]
+}) => {
   const [showAddToBasket, setShowAddToBasket] = useState<boolean>(false)
   const {
     variations,
@@ -44,11 +49,13 @@ export const ProductDetails = () => {
         {!sku && (
           <>
             <p className="fw-300">Filter By:</p>
-            <GaugeFilter />
-            {isDiamond && <DiamondOriginFilter />}
+            {filterLayers.includes('pa_gauge') && <GaugeFilter />}
+            {filterLayers.includes('pa_diamond') && <DiamondOriginFilter />}
             <hr />
-            <WidthFilter />
-            {isDiamond && <DiamondCentreCaratFilter />}
+            {filterLayers.includes('pa_width') && <WidthFilter />}
+            {filterLayers.includes('pa_centre-carat') && (
+              <DiamondCentreCaratFilter />
+            )}
           </>
         )}
         {sku && (

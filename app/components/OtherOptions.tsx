@@ -1,8 +1,14 @@
-import React from 'react'
 import { ProductGrid } from '@/app/components'
-import { useOtherOptions } from '../hooks'
+import { useStore } from '@/app/hooks'
 
 export const OtherOptions = () => {
-  const products = useOtherOptions()
-  return <ProductGrid type="product" items={products} />
+  const { otherOptions } = useStore((store) => store.selectedSku)
+  return (
+    <ProductGrid
+      style="product"
+      type="variation"
+      label="code"
+      items={otherOptions}
+    />
+  )
 }
