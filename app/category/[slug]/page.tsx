@@ -8,6 +8,7 @@ import {
   ShapeFilterMenu,
   ProfileFilterMenu,
   FilteredProducts,
+  PatternFilter,
 } from '@/app/components'
 import { useCategory, useFilterSearchParams } from '@/app/hooks'
 import DiamondSetFilter from '@/app/components/DiamondSetFilter'
@@ -20,7 +21,12 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
   const searchParams = useSearchParams()
   const filters = useFilterSearchParams(searchParams.toString())
   const [category, categoryData] = useCategory(slug)
-  const hasShapeFilter = stylesMap[category as Styles].filter.includes('shape')
+  const showPatternFilter =
+    stylesMap[category as Styles].filterLayers.includes('pa_pattern')
+  const showDiamondSetFilter =
+    stylesMap[category as Styles].filterLayers.includes('pa_diamond-set')
+  const hasShapeFilter =
+    stylesMap[category as Styles].filterLayers.includes('pa_shape')
   const showShapeFilter =
     (hasShapeFilter && category !== 'Shaped') ||
     (hasShapeFilter &&
@@ -28,7 +34,7 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
       searchParams.get('pa_diamond-set'))
 
   const showProfileFilter =
-    stylesMap[category as Styles].filter.includes('profile')
+    stylesMap[category as Styles].filterLayers.includes('pa_profile')
   if (!category || !categoryData) {
     return notFound()
   }
@@ -38,9 +44,10 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
         <BackLink />
         <div className="col-left-inner flex-grow-1 d-flex flex-column p-0">
           <CategoryBanner category={categoryData} />
-          {category === 'Shaped' && <DiamondSetFilter />}
+          {showDiamondSetFilter && <DiamondSetFilter />}
           {showShapeFilter && <ShapeFilterMenu category={category} />}
           {showProfileFilter && <ProfileFilterMenu category={category} />}
+          {showPatternFilter && <PatternFilter category={category} />}
         </div>
       </div>
       <div className="col col-right h-100">

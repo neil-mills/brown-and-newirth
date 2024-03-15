@@ -23,10 +23,19 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
   const sku = idParam === 'sku' ? id : null
   const setSelectedSku = useStore((store) => store.setSelectedSku)
   const setSearchParams = useStore((store) => store.setSearchParams)
-
+  const searchByCode = searchParams.get('search') === 'code'
   const filters = useFilterSearchParams(searchParams.toString())
-  const { product, variations, images, otherOptions, isLoading, error } =
-    useProduct({ productId, sku })
+  const {
+    product,
+    filterLayers,
+    category,
+    variations,
+    images,
+    otherOptions,
+    isLoading,
+    error,
+  } = useProduct({ productId, sku })
+  console.log({ category, filterLayers })
   useEffect(() => {
     setSelectedSku({
       sku,
@@ -58,17 +67,16 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
   return (
     <>
       <div className="col-left is-single h-100 d-flex flex-column">
-        <ProductDetails />
+        <ProductDetails filterLayers={filterLayers} />
       </div>
       <div className="col col-right h-100">
-        {sku && (
+        {searchByCode && (
           <>
-            {sku && (
-              <div className="row row-pad-sm align-items-center">
-                <ResultsFilter />
-                <ResultsTabs />
-              </div>
-            )}
+            <div className="row row-pad-sm align-items-center">
+              <ResultsFilter />
+              <ResultsTabs />
+            </div>
+
             <div className="tab-content">
               <div
                 className="tab-pane fade show active"
