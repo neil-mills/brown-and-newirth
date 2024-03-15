@@ -22,7 +22,7 @@ export const SearchByCode = () => {
         product.variations.some((variation) => variation.sku === code)
       )
       if (product) {
-        router.push(`/products/${code}`)
+        router.push(`/products/sku/${code}?search=code`)
       } else {
         setIsInvalidCode(true)
       }
