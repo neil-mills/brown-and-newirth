@@ -1,6 +1,8 @@
-import { Product, Variation, Images } from '@/app/types'
+import { FilterLayers } from './../types/FilterLayers.type'
+import { Product, Variation, Images, Styles } from '@/app/types'
 import { useGetData } from '@/app/hooks'
-import { getUniqueArrayValues } from '../utils'
+import { getUniqueArrayValues, productToVariation } from '@/app/utils'
+import { stylesMap } from '@/app/maps'
 
 interface ReturnValues {
   isLoading: boolean
@@ -9,6 +11,8 @@ interface ReturnValues {
   variations: Variation[]
   images: Images<string[]>
   otherOptions: Variation[]
+  category: Styles[] | null
+  filterLayers: FilterLayers[]
 }
 
 interface Props {
@@ -21,6 +25,9 @@ export const useProduct = ({ sku, productId }: Props): ReturnValues => {
   let variations: Variation[] = []
   let images: Images<string[]> = { thumbnail: [], medium: [], large: [] }
   let otherOptions: Variation[] = []
+  let category: Styles[] | null = null
+  let filterLayers: FilterLayers[] = []
+
   const { data: products, error, isLoading } = useGetData()
   if (!isLoading && !error) {
     if (productId) {
@@ -38,22 +45,36 @@ export const useProduct = ({ sku, productId }: Props): ReturnValues => {
     }
 
     if (product) {
+      const productVariations = product?.variations?.length
+        ? product.variations
+        : [productToVariation(product)]
       if (productId) {
         const skus = getUniqueArrayValues<string[]>(
-          product.variations.map((variation) => variation.sku)
+          productVariations.map((variation) => variation.sku)
         )
         variations =
           skus.map(
             (sku) =>
-              product!.variations.filter(
-                (variation) => variation.sku === sku
-              )[0]
+              productVariations.filter((variation) => variation.sku === sku)[0]
           ) || []
       }
       if (sku) {
         variations = sku
-          ? product.variations.filter((variation) => variation.sku === sku)
+          ? productVariations.filter((variation) => variation.sku === sku)
           : []
+      }
+
+      category =
+        product?.attributes?.['pa_type-2'] ||
+        product?.attributes?.pa_style ||
+        product?.attributes?.pa_pattern ||
+        null
+
+      if (category) {
+        category.forEach((cat) => {
+          filterLayers = [...filterLayers, ...stylesMap[cat].filterLayers]
+        })
+        filterLayers = getUniqueArrayValues<FilterLayers[]>(filterLayers)
       }
 
       if (variations?.length) {
@@ -72,13 +93,13 @@ export const useProduct = ({ sku, productId }: Props): ReturnValues => {
         }
         const otherSkus = Array.from(
           new Set(
-            product.variations
+            productVariations
               .filter((variation) => variation.sku !== variations[0].sku)
               .map((variation) => variation.sku)
           )
         )
         otherOptions = otherSkus.map((sku) => {
-          const variations = product!.variations.filter(
+          const variations = productVariations.filter(
             (variation) => variation.sku === sku
           )
           const images: Images<string[]> = {
@@ -105,5 +126,14 @@ export const useProduct = ({ sku, productId }: Props): ReturnValues => {
       }
     }
   }
-  return { product, variations, images, otherOptions, isLoading, error }
+  return {
+    product,
+    category,
+    filterLayers,
+    variations,
+    images,
+    otherOptions,
+    isLoading,
+    error,
+  }
 }

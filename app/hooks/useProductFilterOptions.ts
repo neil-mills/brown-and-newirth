@@ -1,19 +1,12 @@
 import { useGetData } from '@/app/hooks'
-import {
-  Mapping,
-  ProductStyle,
-  ProductType,
-  Product,
-  ProductPatterns,
-  Filters,
-  Map,
-} from '@/app/types'
+import { Mapping, Product, Filters, Map, Styles } from '@/app/types'
 import {
   shapesMap,
   shapedMap,
   profilesMap,
   diamondOriginsMap,
   patternMap,
+  stylesMap,
 } from '@/app/maps'
 import { getUniqueArrayValues } from '@/app/utils'
 
@@ -37,7 +30,7 @@ const map: ProductFilterAttributesMap = {
 interface Props {
   filter: ProductFilterAttributes
   filters?: Filters | null
-  category?: string | undefined | null
+  category?: Styles | undefined | null
   productId?: string | undefined
 }
 
@@ -52,21 +45,23 @@ export const useProductFilterOptions = ({
   error: Error | null
 } => {
   const filterMap = map[filter]
-  const { data: products, error, isLoading } = useGetData()
+  const { data: products = [], error, isLoading } = useGetData()
   let filterOptions: Mapping[] = []
   let filteredProducts = products
   if (!isLoading && !error && products) {
     if (category) {
       filteredProducts = products.filter(
         (product: Product) =>
-          product.attributes?.pa_style?.includes(category as ProductStyle) ||
-          product.attributes?.['pa_type-2']?.includes(
-            category as ProductType
-          ) ||
-          product.attributes?.['pa_pattern']?.includes(
-            category as ProductPatterns
-          )
+          product.attributes?.pa_style?.includes(category as Styles) ||
+          product.attributes?.['pa_type-2']?.includes(category as Styles) ||
+          (product?.attributes?.pa_pattern &&
+            !product.attributes.pa_pattern.includes('PLAIN'))
       )
+      stylesMap[category].filterLayers.forEach((filterLayer) => {
+        filteredProducts = filteredProducts.filter(
+          (product) => product?.attributes?.[filterLayer]
+        )
+      })
     }
     if (productId) {
       filteredProducts = products.filter(
@@ -92,7 +87,9 @@ export const useProductFilterOptions = ({
           }
           return acc
         }, [] as string[])
-      ).map((filter) => filterMap[filter])
+      )
+        .map((filter) => filterMap[filter])
+        .filter((filter) => filter !== undefined)
     }
   }
   return { filterOptions, isLoading, error }
