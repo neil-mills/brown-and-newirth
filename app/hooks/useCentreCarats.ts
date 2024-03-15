@@ -6,9 +6,7 @@ import { getUniqueArrayValues } from '../utils'
 export const useCentreCarats = (): Mapping[] => {
   let centreCarats: string[] = []
   let centreCaratOptions: string[] = []
-  const { product, variations, diamondOrigin } = useStore(
-    (store) => store.selectedSku
-  )
+  const { product, diamondOrigin } = useStore((store) => store.selectedSku)
 
   if (product) {
     centreCarats = product.attributes['pa_centre-carat']
@@ -18,13 +16,13 @@ export const useCentreCarats = (): Mapping[] => {
     centreCaratOptions = centreCarats
     if (
       diamondOrigin &&
-      variations?.length &&
-      variations.every(
+      product?.variations?.length &&
+      product?.variations?.every(
         (variation) => variation?.attributes?.['pa_centre-carat']
       )
     ) {
       centreCaratOptions = getUniqueArrayValues<string[]>(
-        variations
+        product.variations
           .filter(
             (variation) => variation.attributes.pa_diamond === diamondOrigin
           )
