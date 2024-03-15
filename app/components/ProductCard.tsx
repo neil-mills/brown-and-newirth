@@ -4,14 +4,13 @@ import { useRouter } from 'next/navigation'
 import { CreatedLosenge } from '@/app/components'
 
 interface Props {
+  type: 'product' | 'variation'
+  style: 'product' | 'variation'
+  label?: 'code'
   item: Variation | Product
 }
 
-const isVariation = (item: Product | Variation): item is Variation => {
-  return (item as Variation)['variation-id'] !== undefined
-}
-
-export const ProductCard = ({ item }: Props) => {
+export const ProductCard = ({ item, type, style, label }: Props) => {
   const router = useRouter()
   let carouselImages: string[] = []
   if (item?.images?.medium) {
@@ -22,23 +21,30 @@ export const ProductCard = ({ item }: Props) => {
   }
 
   const isCreated =
-    (isVariation(item) && item.attributes.pa_diamond === 'LAB GROWN') ||
-    (!isVariation && item.attributes.pa_diamond?.includes('LAB GROWN'))
+    (type === 'variation' && item.attributes.pa_diamond === 'LAB GROWN') ||
+    (type === 'product' && item.attributes.pa_diamond?.includes('LAB GROWN'))
 
   return (
     <div className="col-6 col-sm-4 col-lg-6 col-xxl-4 col-product-grid">
       <div className="product-grid-item style-2 bg-grey-light position-relative">
-        <Image
-          className="img-fluid w-100"
-          src={item?.images?.medium?.[0] ? item.images.medium[0] : ''}
-          width={245}
-          height={300}
-          quality={100}
-          sizes="(max-width: 220px) 100vw, (max-width: 240px) 50vw, 33vw"
-          alt={item.name}
-        />
-
-        <div className="product-grid-item-overlay position-absolute bg-white">
+        {style === 'product' && (
+          <Image
+            className="img-fluid w-100"
+            src={item?.images?.medium?.[0] ? item.images.medium[0] : ''}
+            width={245}
+            height={300}
+            quality={100}
+            sizes="(max-width: 220px) 100vw, (max-width: 240px) 50vw, 33vw"
+            alt={item.name}
+          />
+        )}
+        <div
+          className={`${
+            style === 'variation'
+              ? 'product-grid-item-overlay position-relative bg-white has-border visible'
+              : 'product-grid-item-overlay position-absolute bg-white'
+          }`}
+        >
           <div
             id={item.sku}
             className="carousel carousel-crossfade bg-grey-light mb-3"
@@ -92,13 +98,19 @@ export const ProductCard = ({ item }: Props) => {
             )}
             {isCreated && <CreatedLosenge />}
           </div>
-          {isVariation(item) && <p>{item.sku}</p>}
+          {/* <div className="d-flex d-lg-block d-xl-flex justify-content-between mb-3">
+        <p className="mb-0">G/H Si</p>
+        <p className="ms-xl-2">
+          carat 0.25<sup>ct</sup>
+        </p>
+      </div> */}
+          {label === 'code' && <p>{item.sku}</p>}
           <button
             className="btn btn-border w-100"
             onClick={() =>
               router.push(
                 `/products/${
-                  isVariation(item)
+                  type === 'variation'
                     ? `sku/${item.sku}`
                     : `productId/${item.productId}`
                 }`

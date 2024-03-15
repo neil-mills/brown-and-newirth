@@ -1,13 +1,13 @@
 'use client'
 import { ProductGrid, TitleBar } from '@/app/components'
 import { useProducts } from '@/app/hooks'
-import { Filters } from '../types'
+import { Filters, Styles } from '@/app/types'
 
 export const FilteredProducts = ({
   category,
   filters,
 }: {
-  category: string
+  category: Styles
   filters: Filters | null
 }) => {
   const { products, isLoading, error } = useProducts(category, filters)
@@ -15,7 +15,7 @@ export const FilteredProducts = ({
   return (
     <>
       <TitleBar>Results ({products.length})</TitleBar>
-      <ProductGrid type="product" items={products} />
+      <ProductGrid type="product" style="product" items={products} />
     </>
   )
 }
