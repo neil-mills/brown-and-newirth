@@ -3,6 +3,8 @@ import { useStore } from '@/app/hooks'
 import { widthMap } from '@/app/maps'
 import { Widths, Mapping, Filters, Variation } from '@/app/types'
 
+type FilterAttributes = 'pa_gauge'
+
 export const useWidths = ({
   filters,
 }: {
@@ -22,8 +24,8 @@ export const useWidths = ({
         if (filter !== 'pa_width') {
           filteredVariations = filteredVariations.filter(
             (variation) =>
-              variation?.attributes?.[filter as never] &&
-              variation.attributes[filter as never] === value
+              variation?.attributes?.[filter as FilterAttributes] &&
+              variation.attributes[filter as FilterAttributes] === value
           )
         }
       })

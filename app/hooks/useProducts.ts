@@ -6,6 +6,7 @@ import {
   ProductAttributes,
   Images,
   ProductPatterns,
+  Filters,
 } from '@/app/types'
 import { useGetData } from '@/app/hooks'
 
@@ -17,7 +18,7 @@ interface Result {
 
 export const useProducts = (
   category: string,
-  filters: Record<ProductAttributes, string> | null
+  filters: Filters | null
 ): Result => {
   let products: Product[] = []
   const { data, error, isLoading } = useGetData()

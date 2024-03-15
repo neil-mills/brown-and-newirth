@@ -44,7 +44,7 @@ export const useStyles = (): {
       stylesMap.Patterns,
       stylesMap.Diamond,
       stylesMap.Ceramic,
-      stylesMap.Plains,
+      stylesMap.PLAIN,
       stylesMap['Two Colour'],
     ]
   }

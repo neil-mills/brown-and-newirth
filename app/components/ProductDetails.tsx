@@ -48,7 +48,7 @@ export const ProductDetails = () => {
             {isDiamond && <DiamondOriginFilter />}
             <hr />
             <WidthFilter />
-            {/* <DiamondCentreCaratFilter /> */}
+            {isDiamond && <DiamondCentreCaratFilter />}
           </>
         )}
         {sku && (
