@@ -25,7 +25,8 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
     (hasShapeFilter && category !== 'Shaped') ||
     (hasShapeFilter &&
       category === 'Shaped' &&
-      searchParams.get('pa_diamond-set') !== undefined)
+      searchParams.get('pa_diamond-set'))
+
   const showProfileFilter =
     stylesMap[category as Styles].filter.includes('profile')
   if (!category || !categoryData) {
