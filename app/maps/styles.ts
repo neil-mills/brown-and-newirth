@@ -1,134 +1,149 @@
-import { Styles } from '@/app/types'
+import { Styles, FilterLayers, Mapping } from '@/app/types'
 
-interface Map {
-  label: string
-  slug: string
-  image: string
-  filter: (
-    | 'shape'
-    | 'setting'
-    | 'diamond-set'
-    | 'profile'
-    | 'style'
-    | 'colour'
-  )[]
+interface StyleMapping extends Mapping {
+  filterLayers: FilterLayers[]
 }
 
-type StyleMap = { [K in Styles]: Map }
+type StyleMap = { [K in Styles]: StyleMapping }
 
 export const stylesMap: StyleMap = {
   Halo: {
     label: 'Halos',
     slug: 'halo',
     image: '/img/02_halos.png',
-    filter: ['shape'],
+    filterLayers: ['pa_shape', 'pa_diamond', 'pa_centre-carat'],
   },
   Solitaire: {
     label: 'Solitaires',
     slug: 'solitaire',
     image: '/img/01_solitaires.png',
-    filter: ['shape'],
+    filterLayers: ['pa_shape', 'pa_diamond', 'pa_total-carat'],
   },
   Cluster: {
     label: 'Clusters',
     slug: 'cluster',
     image: '/img/03_clusters.png',
-    filter: ['shape'],
+    filterLayers: ['pa_shape', 'pa_diamond', 'pa_total-carat'],
   },
   'Three Stone': {
     label: '3-Stones',
     slug: '3-stone',
     image: '/img/04_3-stones.png',
-    filter: ['shape'],
+    filterLayers: ['pa_shape', 'pa_diamond', 'pa_centre-carat'],
   },
   'Five Stone': {
     label: '5-Stones',
     slug: '5-stone',
     image: '/img/04_3-stones.png',
-    filter: ['shape'],
+    filterLayers: ['pa_shape', 'pa_diamond', 'pa_centre-carat'],
   },
   Trilogy: {
     label: 'Trilogies',
     slug: 'trilogy',
     image: '/img/04_3-stones.png',
-    filter: ['shape'],
+    filterLayers: ['pa_shape', 'pa_diamond', 'pa_centre-carat'],
   },
   Other: {
     label: 'Others',
     slug: 'other',
     image: '/img/04_3-stones.png',
-    filter: ['shape'],
+    filterLayers: ['pa_shape', 'pa_diamond', 'pa_centre-carat'],
   },
   BRACELET: {
     label: 'Bracelets',
     slug: 'bracelet',
     image: '/img/16_bracelets.png',
-    filter: ['shape'],
+    filterLayers: ['pa_shape', 'pa_diamond', 'pa_centre-carat'],
   },
   EARRING: {
     label: 'Earrings',
     slug: 'earring',
     image: '/img/14_earrings.png',
-    filter: ['shape'],
+    filterLayers: ['pa_shape', 'pa_diamond', 'pa_centre-carat'],
   },
   PENDANT: {
     label: 'Pendants',
     slug: 'pendant',
     image: '/img/15_pendants.png',
-    filter: ['shape'],
+    filterLayers: ['pa_shape', 'pa_diamond', 'pa_centre-carat'],
   },
   'DRESS RING': {
     label: 'Dress',
     slug: 'dress',
     image: '/img/13_dress.png',
-    filter: ['shape'],
+    filterLayers: ['pa_coverage', 'pa_shape', 'pa_setting'],
   },
   'FULL SET': {
     label: 'Full set',
     slug: 'full-set',
     image: '/img/12_full-set.png',
-    filter: ['shape', 'setting'],
+    filterLayers: ['pa_shape', 'pa_setting', 'pa_diamond', 'pa_total-carat'],
   },
   'HALF SET': {
     label: 'Half set',
     slug: 'half-set',
     image: '/img/11_half-set.png',
-    filter: ['shape', 'setting'],
+    filterLayers: ['pa_shape', 'pa_setting', 'pa_diamond', 'pa_total-carat'],
   },
   Shaped: {
     label: 'Shaped',
     slug: 'shaped',
     image: '/img/09_shaped.png',
-    filter: ['diamond-set', 'shape'],
+    filterLayers: ['pa_diamond-set', 'pa_shape'],
   },
   PLAIN: {
     label: 'Plains',
     slug: 'plains',
     image: '/img/05_plains.png',
-    filter: ['profile'],
+    filterLayers: ['pa_profile', 'pa_gauge', 'pa_width'],
   },
   Patterns: {
     label: 'Patterns',
     slug: 'patterns',
     image: '/img/06_patterns.png',
-    filter: ['style'],
+    filterLayers: ['pa_pattern', 'pa_gauge', 'pa_width'],
   },
-  Ceramic: {
+  CERAMIC: {
     label: 'Ceramic',
     slug: 'ceramic',
     image: '/img/08_ceramic.png',
-    filter: ['colour'],
+    filterLayers: ['pa_gauge', 'pa_width'],
+  },
+  CELTIC: {
+    label: 'Celtic',
+    slug: 'celtic',
+    filterLayers: ['pa_gauge', 'pa_width'],
+  },
+  CONTEMPORARY: {
+    label: 'Contemporary',
+    slug: 'contemporary',
+    filterLayers: ['pa_gauge', 'pa_width'],
+  },
+  SPARKLE: {
+    label: 'Sparkle',
+    slug: 'sparkle',
+    filterLayers: ['pa_gauge', 'pa_width'],
+  },
+  'MIXED METAL': {
+    label: 'Mixed Metal',
+    slug: 'mixed-metal',
+    filterLayers: ['pa_gauge', 'pa_width'],
+  },
+  TRINITY: {
+    label: 'Trinity',
+    slug: 'trinity',
+    filterLayers: ['pa_gauge', 'pa_width'],
   },
   Diamond: {
     label: 'Diamond',
     slug: 'diamond',
     image: '/img/10_diamond.png',
-    filter: ['shape'],
+    filterLayers: ['pa_shape', 'pa_setting'],
   },
   'Two Colour': {
     label: '2-Colour',
     slug: '2-colour',
     image: '/img/07_2-colour.png',
-    filter: ['profile'],
+    filterLayers: ['pa_style', 'pa_gauge', 'pa_width'],
   },
 }

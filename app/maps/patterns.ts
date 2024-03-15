@@ -3,11 +3,6 @@ import { Mapping, ProductPatterns } from '../types'
 type PatternMap = { [K in ProductPatterns]: Mapping }
 
 export const patternMap: PatternMap = {
-  PLAIN: {
-    label: 'Plain',
-    image: '/img/svg/icon-shape-curved.svg',
-    slug: 'plain',
-  },
   CELTIC: {
     label: 'Celtic',
     image: '/img/svg/icon-shape-cutaway.svg',
@@ -27,5 +22,15 @@ export const patternMap: PatternMap = {
     label: 'Sparkle',
     image: '/img/svg/icon-shape-wishbone.svg',
     slug: 'sparkle',
+  },
+  TRINITY: {
+    label: 'Trinity',
+    image: '/img/svg/icon-shape-wishbone.svg',
+    slug: 'trinity',
+  },
+  'MIXED METAL': {
+    label: 'Mixed Metal',
+    image: '/img/svg/icon-shape-wishbone.svg',
+    slug: 'mixed-metal',
   },
 }

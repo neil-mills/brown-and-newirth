@@ -3,6 +3,10 @@ import { VariationGauge, Mapping } from '@/app/types'
 type GaugeMap = { [K in VariationGauge]: Mapping }
 
 export const gaugeMap: GaugeMap = {
+  ultralight: {
+    label: 'Ultra Light',
+    slug: 'ultra-light',
+  },
   light: {
     label: 'Light',
     slug: 'light',
