@@ -1,3 +1,5 @@
+import { Styles } from '@/app/types'
+
 type MetalCode =
   | '9W'
   | '18W'
@@ -13,10 +15,25 @@ type MetalCode =
   | 'PLT'
 
 type ProductSize = 'A-Q' | 'R-Z' | 'Z+'
-type Status = 'publish'
-type StockStatus = 'instock'
+export interface VariationAttributes {
+  'pa_metal-code': string
+  'pa_total-carat'?: string
+  'pa_centre-carat'?: string
+  'pa_diamond-quality'?: string
+  pa_diamond?: string
+  pa_gauge?: VariationGauge
+  pa_width: string
+  pa_size: VariationSize
+}
+export type VariationStatus = 'publish'
+export type VariationStockStatus = 'instock'
 export type VariationSize = 'a-q' | 'r-z' | 'z'
-export type VariationGauge = 'light' | 'medium' | 'heavy' | 'super-heavy'
+export type VariationGauge =
+  | 'ultralight'
+  | 'light'
+  | 'medium'
+  | 'heavy'
+  | 'super-heavy'
 type DiamondQuality = 'GSI' | 'HSI' | 'D-FVS' | 'GVS'
 
 export interface Images<T> {
@@ -26,21 +43,14 @@ export interface Images<T> {
 }
 export type DiamondOrigin = 'NATURAL' | 'LAB GROWN'
 export type ProductType = 'DRESS RING' | 'PENDANT' | 'EARRING' | 'BRACELET'
-export type ProductStyle =
-  | 'Halo'
-  | 'Other'
-  | 'Cluster'
-  | 'Solitaire'
-  | 'Three Stone'
-  | 'Five Stone'
-  | 'Trilogy'
 export type ProductShoulders = 'Plain' | 'Diamond'
 export type ProductPatterns =
-  | 'PLAIN'
   | 'CELTIC'
   | 'CERAMIC'
   | 'CONTEMPORARY'
   | 'SPARKLE'
+  | 'TRINITY'
+  | 'MIXED METAL'
 export type ProductProfiles =
   | 'Flat'
   | 'CLASSIC COURT'
@@ -62,8 +72,8 @@ export interface Product {
     'pa_diamond-quality'?: DiamondQuality[]
     pa_width: string[]
     pa_size: ProductSize[]
-    pa_style?: ProductStyle[]
-    'pa_type-2'?: ProductType[]
+    pa_style?: Styles[]
+    'pa_type-2'?: Styles[]
     pa_profile?: ProductProfiles[]
     pa_shape?: (
       | 'Marquise'
@@ -79,7 +89,7 @@ export interface Product {
     )[]
     pa_shoulders?: ProductShoulders[]
     pa_finish?: ('Matte' | 'Polished' | 'Matte &amp; Polished')[]
-    pa_pattern?: ProductPatterns[]
+    pa_pattern?: Styles[]
     pa_coverage?: ('Third' | 'Half' | 'Three Quarter' | 'Full')[]
     pa_setting?: (
       | 'PAVE'
@@ -106,22 +116,13 @@ export interface Variation {
   'variation-id': number
   name: string
   slug: string
-  status: Status
+  status: VariationStatus
   sku: string
   price: number
   'sale-price': number
-  'stock-status': StockStatus
+  'stock-status': VariationStockStatus
   'variation-images': Images<string>
   images?: Images<string[]>
-  attributes: {
-    'pa_metal-code': string
-    'pa_total-carat'?: string
-    'pa_centre-carat'?: string
-    'pa_diamond-quality'?: string
-    pa_diamond?: string
-    pa_gauge?: VariationGauge
-    pa_width: string
-    pa_size: VariationSize
-  }
+  attributes: VariationAttributes
   productId?: number
 }

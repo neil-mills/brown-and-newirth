@@ -1,4 +1,4 @@
-export type FilterAttributes =
+export type FilterAttributeKeys =
   | 'pa_diamond'
   | 'pa_centre-carat'
   | 'pa_shape'
@@ -7,8 +7,9 @@ export type FilterAttributes =
   | 'pa_profile'
   | 'pa_gauge'
   | 'pa_width'
+  | 'pa_pattern'
 
-export type VariationAttributes =
+export type VariationAttributeKeys =
   | 'pa_metal-code'
   | 'pa_total-carat'
   | 'pa_centre-carat'
@@ -19,7 +20,7 @@ export type VariationAttributes =
   | 'pa_width'
   | 'pa_size'
 
-export type ProductAttributes =
+export type ProductAttributeKeys =
   | 'pa_metal-code'
   | 'pa_gauge'
   | 'pa_total-carat'
@@ -40,13 +41,13 @@ export type ProductAttributes =
   | 'pa_diamond'
 
 export type Filters = {
-  [TKey in FilterAttributes]?: string
+  [TKey in FilterAttributeKeys]?: string
 }
 
 export type ProductFilters = {
-  [TKey in ProductAttributes]?: string
+  [TKey in ProductAttributeKeys]?: string
 }
 
 export type VariationFilters = {
-  [TKey in VariationAttributes]?: string
+  [TKey in VariationAttributeKeys]?: string
 }

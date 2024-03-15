@@ -1,0 +1,13 @@
+export type FilterLayers =
+  | 'pa_shape'
+  | 'pa_setting'
+  | 'pa_diamond'
+  | 'pa_centre-carat'
+  | 'pa_total-carat'
+  | 'pa_diamond-set'
+  | 'pa_gauge'
+  | 'pa_width'
+  | 'pa_profile'
+  | 'pa_style'
+  | 'pa_coverage'
+  | 'pa_pattern'
