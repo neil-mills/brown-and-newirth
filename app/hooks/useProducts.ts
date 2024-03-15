@@ -1,14 +1,13 @@
-import { getUniqueArrayValues } from '@/app/utils'
+import { getUniqueArrayValues, productToVariation } from '@/app/utils'
 import {
   Product,
-  ProductStyle,
-  ProductType,
-  ProductAttributes,
+  ProductAttributeKeys,
   Images,
-  ProductPatterns,
   Filters,
+  Styles,
 } from '@/app/types'
 import { useGetData } from '@/app/hooks'
+import { stylesMap } from '@/app/maps'
 
 interface Result {
   products: Product[]
@@ -17,53 +16,73 @@ interface Result {
 }
 
 export const useProducts = (
-  category: string,
+  category: Styles,
   filters: Filters | null
 ): Result => {
+  console.log(filters)
   let products: Product[] = []
   const { data, error, isLoading } = useGetData()
 
   if (!isLoading && !error && data) {
-    products =
-      category === 'Shaped'
-        ? data.filter((product) => product.attributes.pa_shaped?.length)
-        : data.filter(
-            (product) =>
-              product?.attributes?.pa_style?.includes(
-                category as ProductStyle
-              ) ||
-              product?.attributes?.['pa_type-2']?.includes(
-                category as ProductType
-              ) ||
-              product?.attributes?.['pa_pattern']?.includes(
-                category as ProductPatterns
-              )
-          )
+    if (['Shaped', 'Patterns', 'PLAIN'].includes(category)) {
+      if (category === 'Shaped') {
+        products = data.filter(
+          (product) => product.attributes.pa_shaped?.length
+        )
+      }
+      if (category === 'Patterns') {
+        products = data.filter(
+          (product) =>
+            product?.attributes?.pa_pattern &&
+            !product.attributes.pa_pattern.includes('PLAIN')
+        )
+      }
+      if (category === 'PLAIN') {
+        products = data.filter(
+          (product) =>
+            product?.attributes?.pa_pattern &&
+            product.attributes.pa_pattern.includes('PLAIN')
+        )
+      }
+    } else {
+      products =
+        category === 'Shaped'
+          ? data.filter((product) => product.attributes.pa_shaped?.length)
+          : data.filter(
+              (product) =>
+                product?.attributes?.pa_style?.includes(category) ||
+                product?.attributes?.['pa_type-2']?.includes(category)
+            )
+    }
+
+    stylesMap[category].filterLayers.forEach((filterLayer) => {
+      console.log(filterLayer)
+      products = products.filter(
+        (product) => product?.attributes?.[filterLayer]
+      )
+    })
     if (filters) {
       Object.entries(filters).forEach(([filter, value]) => {
         products = products.filter((product) =>
-          product?.attributes?.[filter as ProductAttributes]?.includes(
+          product?.attributes?.[filter as ProductAttributeKeys]?.includes(
             value as never
           )
         )
       })
     }
     products = products.map((product) => {
+      const variations = !product?.variations?.length
+        ? [productToVariation(product)]
+        : product.variations
       const images: Images<string[]> = {
         thumbnail: getUniqueArrayValues(
-          product.variations.map(
-            (variation) => variation['variation-images'].thumbnail
-          )
+          variations.map((variation) => variation['variation-images'].thumbnail)
         ),
         medium: getUniqueArrayValues(
-          product.variations.map(
-            (variation) => variation['variation-images'].medium
-          )
+          variations.map((variation) => variation['variation-images'].medium)
         ),
         large: getUniqueArrayValues(
-          product.variations.map(
-            (variation) => variation['variation-images'].large
-          )
+          variations.map((variation) => variation['variation-images'].large)
         ),
       }
       return { ...product, images }

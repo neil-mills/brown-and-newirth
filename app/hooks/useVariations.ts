@@ -1,27 +1,30 @@
 import {
-  VariationAttributes,
+  VariationAttributeKeys,
   Variation,
   Images,
   Widths,
   Filters,
 } from '@/app/types'
 import { useStore } from '@/app/hooks'
-import { getUniqueArrayValues } from '@/app/utils'
+import { getUniqueArrayValues, productToVariation } from '@/app/utils'
 import { widthMap } from '@/app/maps'
 
 export const useVariations = (filters: Filters | null): Variation[] => {
-  //this is first variation matching each unique sku of product
   const { product } = useStore((store) => store.selectedSku)
   let filteredVariations: Variation[] = []
-  if (product?.variations) {
-    filteredVariations = product.variations
+  if (product) {
+    const productVariations = product?.variations?.length
+      ? product.variations
+      : [productToVariation(product)]
+    filteredVariations = productVariations
     if (filters && Object.keys(filters)) {
       Object.entries(filters).forEach(([filter, value]) => {
         if (filter === 'pa_centre-carat') value = value.replace('.', '-')
         if (filter !== 'pa_width') {
           filteredVariations = filteredVariations.filter(
             (variation) =>
-              variation?.attributes?.[filter as VariationAttributes] === value
+              variation?.attributes?.[filter as VariationAttributeKeys] ===
+              value
           )
         } else {
           filteredVariations = filteredVariations.filter((variation) => {

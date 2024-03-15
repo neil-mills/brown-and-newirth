@@ -2,6 +2,7 @@ import { getUniqueArrayValues } from './../utils/getUniqueArrayValues'
 import { useStore } from '@/app/hooks'
 import { widthMap } from '@/app/maps'
 import { Widths, Mapping, Filters, Variation } from '@/app/types'
+import { productToVariation } from '../utils'
 
 type FilterAttributes = 'pa_gauge'
 
@@ -17,8 +18,11 @@ export const useWidths = ({
 
   const { product } = useStore((store) => store.selectedSku)
   let filteredVariations: Variation[] = []
-  if (product?.variations) {
-    filteredVariations = product.variations
+  if (product) {
+    const productVariations = product?.variations?.length
+      ? product.variations
+      : [productToVariation(product)]
+    filteredVariations = productVariations
     if (filters) {
       Object.entries(filters).forEach(([filter, value]) => {
         if (filter !== 'pa_width') {

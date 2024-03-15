@@ -1,6 +1,6 @@
 import { Map, Mapping, Variation, Filters } from '@/app/types'
 import { useStore } from '@/app/hooks'
-import { getUniqueArrayValues } from '@/app/utils'
+import { getUniqueArrayValues, productToVariation } from '@/app/utils'
 import { widthMap, gaugeMap } from '@/app/maps'
 
 interface Props {
@@ -24,8 +24,11 @@ export const useVariationFilterOptions = ({
   let filteredVariations: Variation[] = []
   const filterMap = map[filter]
   const { product } = useStore((store) => store.selectedSku)
-  if (product?.variations) {
-    filteredVariations = product.variations
+  if (product) {
+    const productVariations = product?.variations?.length
+      ? product.variations
+      : [productToVariation(product)]
+    filteredVariations = productVariations
     if (filters) {
       Object.entries(filters).forEach(([filter, value]) => {
         filteredVariations = filteredVariations.filter(
@@ -36,10 +39,11 @@ export const useVariationFilterOptions = ({
       })
     }
     options = getUniqueArrayValues<string[]>(
-      product.variations
+      productVariations
         .filter((variation) => variation?.attributes?.[filter])
         .map((variation) => variation.attributes[filter]!)
     ).map((value) => filterMap[value])
   }
+
   return options
 }
