@@ -43,6 +43,7 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
       variations,
       images,
       otherOptions,
+      filterLayers,
       metal: '',
       size: '',
       diamondOrigin: searchParams.get('pa_diamond') || '',
@@ -58,6 +59,7 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
     sku,
     searchParams,
     setSearchParams,
+    filterLayers,
   ])
 
   if (isLoading) return <p>Loading</p>

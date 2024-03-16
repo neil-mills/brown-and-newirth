@@ -12,7 +12,7 @@ export const FilteredVariations = ({
   return (
     <>
       <TitleBar>Results ({variations.length})</TitleBar>
-      <ProductGrid type="variation" style="variation" items={variations} />
+      <ProductGrid style="variation" items={variations} />
     </>
   )
 }

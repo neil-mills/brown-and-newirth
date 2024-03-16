@@ -1,16 +1,18 @@
 import Image from 'next/image'
-import { Product, Variation } from '@/app/types'
+import { Product, Variation, isProduct, isVariation } from '@/app/types'
 import { useRouter } from 'next/navigation'
 import { CreatedLosenge } from '@/app/components'
+import { useStore } from '@/app/hooks'
+import { formatCarat, formatWidth } from '@/app/utils'
 
 interface Props {
-  type: 'product' | 'variation'
   style: 'product' | 'variation'
   label?: 'code'
-  item: Variation | Product
+  item: Product | Variation
 }
 
-export const ProductCard = ({ item, type, style, label }: Props) => {
+export const ProductCard = ({ item, label, style }: Props) => {
+  const { filterLayers } = useStore((store) => store.selectedSku)
   const router = useRouter()
   let carouselImages: string[] = []
   if (item?.images?.medium) {
@@ -21,8 +23,8 @@ export const ProductCard = ({ item, type, style, label }: Props) => {
   }
 
   const isCreated =
-    (type === 'variation' && item.attributes.pa_diamond === 'LAB GROWN') ||
-    (type === 'product' && item.attributes.pa_diamond?.includes('LAB GROWN'))
+    (isVariation(item) && item.attributes.pa_diamond === 'LAB GROWN') ||
+    (isProduct(item) && item.attributes.pa_diamond?.includes('LAB GROWN'))
 
   return (
     <div className="col-6 col-sm-4 col-lg-6 col-xxl-4 col-product-grid">
@@ -98,19 +100,37 @@ export const ProductCard = ({ item, type, style, label }: Props) => {
             )}
             {isCreated && <CreatedLosenge />}
           </div>
-          {/* <div className="d-flex d-lg-block d-xl-flex justify-content-between mb-3">
-        <p className="mb-0">G/H Si</p>
-        <p className="ms-xl-2">
-          carat 0.25<sup>ct</sup>
-        </p>
-      </div> */}
+          {isVariation(item) && (
+            <div className="d-flex d-lg-block d-xl-flex justify-content-between mb-3">
+              {filterLayers?.includes('pa_diamond') && (
+                <p className="mb-0">G/H Si</p>
+              )}
+              {filterLayers?.includes('pa_width') && (
+                <p className="mb-0">
+                  {formatWidth(item.attributes['pa_width'])}
+                </p>
+              )}
+              {filterLayers?.includes('pa_centre-carat') && (
+                <p className="ms-xl-2">
+                  carat {formatCarat(item.attributes['pa_centre-carat'])}
+                  <sup>ct</sup>
+                </p>
+              )}
+              {filterLayers?.includes('pa_total-carat') && (
+                <p className="ms-xl-2">
+                  Total carat {item.attributes['pa_total-carat']}
+                  <sup>ct</sup>
+                </p>
+              )}
+            </div>
+          )}
           {label === 'code' && <p>{item.sku}</p>}
           <button
             className="btn btn-border w-100"
             onClick={() =>
               router.push(
                 `/products/${
-                  type === 'variation'
+                  isVariation(item)
                     ? `sku/${item.sku}`
                     : `productId/${item.productId}`
                 }`

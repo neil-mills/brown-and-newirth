@@ -1,2 +1,4 @@
-export const formatWidth = (width: string): string =>
-  `${width.split('-').join('.')}mm`
+export const formatWidth = (width: string | undefined): string => {
+  if (!width) return ''
+  return `${parseFloat(width.split('-').join('.'))}mm`
+}

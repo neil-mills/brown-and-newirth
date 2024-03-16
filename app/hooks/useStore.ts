@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Images, Product, Variation } from '@/app/types'
+import { Images, Product, Variation, FilterLayers } from '@/app/types'
 import { mountStoreDevtool } from 'simple-zustand-devtools'
 
 interface SelectedSku {
@@ -11,6 +11,7 @@ interface SelectedSku {
   otherOptions: Variation[]
   diamondOrigin?: string
   centreCarat?: string
+  filterLayers?: FilterLayers[]
   size?: string
   metal?: string
 }
@@ -44,6 +45,7 @@ export const useStore = create<Store>((set) => ({
     otherOptions: [],
     diamondOrigin: '',
     centreCarat: '',
+    filterLayers: [],
     size: '',
     metal: '',
   },

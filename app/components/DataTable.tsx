@@ -27,7 +27,6 @@ export const DataTable = () => {
                 </div>
               </div>
             )}
-
             <div className="col-6 col-sm-4">
               <div className="px-2 px-xl-3 pb-2 pb-sm-3">
                 <h6>Diamond Quality</h6>
