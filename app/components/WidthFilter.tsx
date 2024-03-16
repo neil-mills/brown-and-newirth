@@ -1,12 +1,15 @@
-import { useFilterSearchParams, useWidths } from '@/app/hooks'
-import { useSearchParams, usePathname, useRouter } from 'next/navigation'
-import { formatSearchParams } from '@/app/utils'
+import { useFilterSearchParams, useRangeFilter } from '@/app/hooks'
 import { Widths } from '@/app/types'
+import { formatSearchParams } from '@/app/utils'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 export const WidthFilter = () => {
   const searchParams = useSearchParams()
   const filters = useFilterSearchParams(searchParams.toString())
-  const [widths, availableWidths] = useWidths({ filters })
+  const [widths, availableWidths] = useRangeFilter<Widths>({
+    rangeFilter: 'pa_width',
+    filters,
+  })
   const pathname = usePathname()
   const router = useRouter()
 

@@ -1,6 +1,7 @@
 export type FilterAttributeKeys =
   | 'pa_diamond'
   | 'pa_centre-carat'
+  | 'pa_total-carat'
   | 'pa_shape'
   | 'pa_shaped'
   | 'pa_diamond-set'
@@ -14,7 +15,6 @@ export type VariationAttributeKeys =
   | 'pa_total-carat'
   | 'pa_centre-carat'
   | 'pa_diamond-quality'
-  | 'pa_centre-carat'
   | 'pa_diamond'
   | 'pa_gauge'
   | 'pa_width'

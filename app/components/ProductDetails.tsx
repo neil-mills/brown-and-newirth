@@ -6,7 +6,7 @@ import {
   AddToBasket,
   ImageCarousel,
   BackLink,
-  DiamondCentreCaratFilter,
+  DiamondCaratFilter,
   DiamondOriginFilter,
   GaugeFilter,
   WidthFilter,
@@ -38,8 +38,6 @@ export const ProductDetails = ({
   }, [selectedSize, selectedMetal, showSize])
 
   if (!variations) return null
-  const isDiamond =
-    product?.attributes?.pa_diamond && product?.attributes?.['pa_centre-carat']
 
   return (
     <>
@@ -54,7 +52,10 @@ export const ProductDetails = ({
             <hr />
             {filterLayers.includes('pa_width') && <WidthFilter />}
             {filterLayers.includes('pa_centre-carat') && (
-              <DiamondCentreCaratFilter />
+              <DiamondCaratFilter attribute="pa_centre-carat" />
+            )}
+            {filterLayers.includes('pa_total-carat') && (
+              <DiamondCaratFilter attribute="pa_total-carat" />
             )}
           </>
         )}

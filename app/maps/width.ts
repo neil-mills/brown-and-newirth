@@ -6,9 +6,9 @@ interface WidthMapping extends Mapping {
   end?: number
 }
 
-type WidthMap = { [K in Widths]: WidthMapping }
+export type WidthMapType = { [K in Widths]: WidthMapping }
 
-export const widthMap: WidthMap = {
+export const widthMap: WidthMapType = {
   '1.5': {
     label: '1.5mm',
     slug: '1.5',

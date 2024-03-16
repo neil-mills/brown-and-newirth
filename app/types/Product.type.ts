@@ -15,6 +15,7 @@ type MetalCode =
   | 'PLT'
 
 type ProductSize = 'A-Q' | 'R-Z' | 'Z+'
+
 export interface VariationAttributes {
   'pa_metal-code': string
   'pa_total-carat'?: string
