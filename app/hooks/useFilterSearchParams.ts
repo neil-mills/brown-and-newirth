@@ -1,5 +1,5 @@
 import {
-  centreCaratsMap,
+  caratMap,
   diamondOriginsMap,
   shapesMap,
   shapedMap,
@@ -18,7 +18,8 @@ type FilterSearchParamsMap = {
 
 const map: FilterSearchParamsMap = {
   pa_diamond: diamondOriginsMap,
-  'pa_centre-carat': centreCaratsMap,
+  'pa_centre-carat': caratMap,
+  'pa_total-carat': caratMap,
   pa_shape: shapesMap,
   pa_shaped: shapedMap,
   'pa_diamond-set': diamondSetMap,

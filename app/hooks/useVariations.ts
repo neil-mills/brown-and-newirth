@@ -1,74 +1,91 @@
 import {
   VariationAttributeKeys,
   Variation,
-  Images,
-  Widths,
   Filters,
+  RangeFilterAttribute,
 } from '@/app/types'
 import { useStore } from '@/app/hooks'
 import { getUniqueArrayValues, productToVariation } from '@/app/utils'
-import { widthMap } from '@/app/maps'
+import { rangeFilterMap } from '@/app/maps'
 
-export const useVariations = (filters: Filters | null): Variation[] => {
+interface Props {
+  filterByAttribute: VariationAttributeKeys
+  filters: Filters | null
+}
+
+export const useVariations = ({
+  filterByAttribute,
+  filters,
+}: Props): Variation[] => {
   const { product } = useStore((store) => store.selectedSku)
+  const rangeAttributes: RangeFilterAttribute[] = [
+    'pa_width',
+    'pa_total-carat',
+    'pa_centre-carat',
+  ]
   let filteredVariations: Variation[] = []
   if (product) {
     const productVariations = product?.variations?.length
       ? product.variations
       : [productToVariation(product)]
     filteredVariations = productVariations
+
     if (filters && Object.keys(filters)) {
       Object.entries(filters).forEach(([filter, value]) => {
-        if (filter === 'pa_centre-carat') value = value.replace('.', '-')
-        if (filter !== 'pa_width') {
+        if (rangeAttributes.includes(filter as RangeFilterAttribute))
+          value = value.replace('.', '-')
+        if (!rangeAttributes.includes(filter as RangeFilterAttribute)) {
           filteredVariations = filteredVariations.filter(
             (variation) =>
               variation?.attributes?.[filter as VariationAttributeKeys] ===
               value
           )
         } else {
+          value = value.replace('-', '.')
           filteredVariations = filteredVariations.filter((variation) => {
-            const numericWidth = variation?.attributes?.pa_width
-              ? parseFloat(variation.attributes.pa_width)
+            const numericValue = variation?.attributes?.[
+              filter as RangeFilterAttribute
+            ]
+              ? parseFloat(
+                  variation.attributes[
+                    filter as VariationAttributeKeys
+                  ]!.replace('-', '.')
+                )
               : null
-            const map = widthMap[value as Widths]
+            const map = rangeFilterMap[filter as RangeFilterAttribute]
+            const { start, end } = map[value]
+            const allKeys = Object.keys(map)
+            const lastOption = parseFloat(allKeys[allKeys.length - 1])
+
             return (
-              (numericWidth &&
-                numericWidth < 8 &&
-                numericWidth >= map.start &&
-                numericWidth <= map.end!) ||
-              (numericWidth && numericWidth >= 8 && numericWidth >= map.start)
+              (numericValue &&
+                numericValue < lastOption &&
+                numericValue >= start! &&
+                numericValue <= end!) ||
+              (numericValue && numericValue >= 8 && numericValue >= start!)
             )
           })
         }
       })
     }
-    filteredVariations = getUniqueArrayValues<string[]>(
+
+    const productSkus = getUniqueArrayValues<string[]>(
       filteredVariations.map((variation) => variation.sku)
-    ).map(
+    )
+
+    filteredVariations = productSkus.map(
       (sku) =>
         filteredVariations.filter((variation) => variation.sku === sku)[0]
     )
-    //need to group variations by sku and output first one in group
-    filteredVariations = filteredVariations.map((variation) => {
-      const skuVariations = product.variations.filter(
-        (v) => v.sku === variation.sku
-      )
-      const images: Images<string[]> = {
-        thumbnail: getUniqueArrayValues(
-          skuVariations.map(
-            (variation) => variation['variation-images'].thumbnail
-          )
-        ),
-        medium: getUniqueArrayValues(
-          skuVariations.map((variation) => variation['variation-images'].medium)
-        ),
-        large: getUniqueArrayValues(
-          skuVariations.map((variation) => variation['variation-images'].large)
-        ),
-      }
-      return { ...variation, images }
-    })
+
+    filteredVariations = filteredVariations.map((variation) => ({
+      ...variation,
+      images: {
+        thumbnail: [variation['variation-images'].thumbnail],
+        medium: [variation['variation-images'].medium],
+        large: [variation['variation-images'].large],
+      },
+    }))
   }
 
   return filteredVariations

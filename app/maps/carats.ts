@@ -1,13 +1,8 @@
-import { Mapping, Carats } from '@/app/types'
+import { Mapping, Map, Carats } from '@/app/types'
 
-interface CaratMapping extends Mapping {
-  start: number
-  end?: number
-}
+export type CaratMapType = { [K in Carats]: Mapping }
 
-export type CaratMapType = { [K in Carats]: CaratMapping }
-
-export const caratMap: CaratMapType = {
+export const caratMap: Map = {
   '0.25': {
     label: '0.25',
     slug: '0.25',

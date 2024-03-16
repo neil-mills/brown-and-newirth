@@ -1,8 +1,9 @@
 import { FilterLayers } from './../types/FilterLayers.type'
 import { Product, Variation, Images, Styles } from '@/app/types'
-import { useGetData } from '@/app/hooks'
+import { useFilterSearchParams, useGetData } from '@/app/hooks'
 import { getUniqueArrayValues, productToVariation } from '@/app/utils'
 import { stylesMap } from '@/app/maps'
+import { useSearchParams } from 'next/navigation'
 
 interface ReturnValues {
   isLoading: boolean
@@ -27,6 +28,9 @@ export const useProduct = ({ sku, productId }: Props): ReturnValues => {
   let otherOptions: Variation[] = []
   let category: Styles[] | null = null
   let filterLayers: FilterLayers[] = []
+  const searchParams = useSearchParams()
+  const filters = useFilterSearchParams(searchParams.toString())
+  console.log({ filters })
 
   const { data: products, error, isLoading } = useGetData()
   if (!isLoading && !error) {

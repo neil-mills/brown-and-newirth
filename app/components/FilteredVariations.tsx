@@ -8,7 +8,7 @@ export const FilteredVariations = ({
 }: {
   filters: Filters | null
 }) => {
-  const variations = useVariations(filters)
+  const variations = useVariations({ filterByAttribute: 'pa_width', filters })
   return (
     <>
       <TitleBar>Results ({variations.length})</TitleBar>

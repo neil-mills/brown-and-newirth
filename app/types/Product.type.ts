@@ -17,14 +17,14 @@ type MetalCode =
 type ProductSize = 'A-Q' | 'R-Z' | 'Z+'
 
 export interface VariationAttributes {
-  'pa_metal-code': string
+  'pa_metal-code'?: string
   'pa_total-carat'?: string
   'pa_centre-carat'?: string
   'pa_diamond-quality'?: string
   pa_diamond?: string
   pa_gauge?: VariationGauge
-  pa_width: string
-  pa_size: VariationSize
+  pa_width?: string
+  pa_size?: VariationSize
 }
 export type VariationStatus = 'publish'
 export type VariationStockStatus = 'instock'

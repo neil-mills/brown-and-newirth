@@ -35,7 +35,7 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
     isLoading,
     error,
   } = useProduct({ productId, sku })
-  console.log({ category, filterLayers })
+  // console.log({ category, filterLayers })
   useEffect(() => {
     setSelectedSku({
       sku,
@@ -91,11 +91,10 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
             </div>
           </>
         )}
-        {productId && (
-          <Suspense>
-            <FilteredVariations filters={filters} />
-          </Suspense>
-        )}
+
+        <Suspense>
+          <FilteredVariations filters={filters} />
+        </Suspense>
       </div>
     </>
   )

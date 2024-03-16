@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { Product, Variation, isProduct, isVariation } from '@/app/types'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { CreatedLosenge } from '@/app/components'
 import { useStore } from '@/app/hooks'
 import { formatCarat, formatWidth } from '@/app/utils'
@@ -12,6 +12,7 @@ interface Props {
 }
 
 export const ProductCard = ({ item, label, style }: Props) => {
+  const searchParams = useSearchParams()
   const { filterLayers } = useStore((store) => store.selectedSku)
   const router = useRouter()
   let carouselImages: string[] = []
@@ -103,7 +104,10 @@ export const ProductCard = ({ item, label, style }: Props) => {
           {isVariation(item) && (
             <div className="d-flex d-lg-block d-xl-flex justify-content-between mb-3">
               {filterLayers?.includes('pa_diamond') && (
-                <p className="mb-0">G/H Si</p>
+                <>
+                  <p className="mb-0">G/H Si</p>
+                  <p>{item.sku}</p>
+                </>
               )}
               {filterLayers?.includes('pa_width') && (
                 <p className="mb-0">
@@ -118,7 +122,7 @@ export const ProductCard = ({ item, label, style }: Props) => {
               )}
               {filterLayers?.includes('pa_total-carat') && (
                 <p className="ms-xl-2">
-                  Total carat {item.attributes['pa_total-carat']}
+                  Total carat {formatCarat(item.attributes['pa_total-carat'])}
                   <sup>ct</sup>
                 </p>
               )}
@@ -131,7 +135,7 @@ export const ProductCard = ({ item, label, style }: Props) => {
               router.push(
                 `/products/${
                   isVariation(item)
-                    ? `sku/${item.sku}`
+                    ? `sku/${item.sku}?${searchParams.toString()}`
                     : `productId/${item.productId}`
                 }`
               )

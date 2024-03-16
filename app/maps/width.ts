@@ -1,14 +1,8 @@
-import { Widths, Mapping } from '@/app/types'
+import { Widths, Mapping, Map } from '@/app/types'
 
-interface WidthMapping extends Mapping {
-  slug: Widths
-  start: number
-  end?: number
-}
+export type WidthMapType = { [K in Widths]: Mapping }
 
-export type WidthMapType = { [K in Widths]: WidthMapping }
-
-export const widthMap: WidthMapType = {
+export const widthMap: Map = {
   '1.5': {
     label: '1.5mm',
     slug: '1.5',

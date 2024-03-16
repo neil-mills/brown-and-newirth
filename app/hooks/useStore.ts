@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Images, Product, Variation, FilterLayers } from '@/app/types'
+import { Images, Product, Variation, VariationAttributeKeys } from '@/app/types'
 import { mountStoreDevtool } from 'simple-zustand-devtools'
 
 interface SelectedSku {
@@ -11,7 +11,7 @@ interface SelectedSku {
   otherOptions: Variation[]
   diamondOrigin?: string
   centreCarat?: string
-  filterLayers?: FilterLayers[]
+  filterLayers: VariationAttributeKeys[]
   size?: string
   metal?: string
 }

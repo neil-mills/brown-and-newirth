@@ -1,6 +1,6 @@
 import React from 'react'
 import { useStore } from '@/app/hooks'
-import { formatCarat } from '@/app/utils'
+import { formatCarat, formatWidth } from '@/app/utils'
 import { diamondOriginsMap } from '../maps'
 
 export const DataTable = () => {
@@ -79,7 +79,7 @@ export const DataTable = () => {
               <div className="px-2 px-xl-3 pt-2 pt-sm-3">
                 <h6>Width</h6>
                 <p className="fw-300">
-                  {variation?.attributes?.['pa_width'] || ''} mm
+                  {formatWidth(variation?.attributes?.['pa_width'] || '')}
                 </p>
               </div>
             </div>

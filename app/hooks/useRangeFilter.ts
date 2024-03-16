@@ -1,10 +1,11 @@
 import { useStore } from '@/app/hooks'
-import { widthMap, caratMap, CaratMapType, WidthMapType } from '@/app/maps'
+import { rangeFilterMap } from '@/app/maps'
 import {
   Mapping,
   Filters,
   VariationAttributeKeys,
   Variation,
+  RangeFilterAttribute,
 } from '@/app/types'
 import { productToVariation, getUniqueArrayValues } from '@/app/utils'
 
@@ -13,23 +14,11 @@ interface Props {
   filters: Filters | null
 }
 
-type RangeFilterAttribute = 'pa_width' | 'pa_centre-carat' | 'pa_total-carat'
-
-type RangeFilterMaps = {
-  [K in RangeFilterAttribute]: CaratMapType | WidthMapType
-}
-
-const maps: RangeFilterMaps = {
-  pa_width: widthMap,
-  'pa_centre-carat': caratMap,
-  'pa_total-carat': caratMap,
-}
-
 export const useRangeFilter = <T>({
   rangeFilter,
   filters,
 }: Props): [Mapping[], T[]] => {
-  const allOptions = Object.entries(maps[rangeFilter])
+  const allOptions = Object.entries(rangeFilterMap[rangeFilter])
     .sort(([a], [b]) => parseFloat(a) - parseFloat(b))
     .map(([_key, mapping]) => mapping)
   let availableOptions: T[] = []
@@ -63,18 +52,18 @@ export const useRangeFilter = <T>({
             variation.attributes[rangeFilter as VariationAttributeKeys]
         )
         .map((option) => {
-          const numericOption = parseFloat(option as string)
+          const numericOption = parseFloat(option?.replace('-', '.') as string)
           const allOptionKeys = Object.keys(allOptions)
           const lastOption = parseFloat(allOptionKeys[allOptionKeys.length - 1])
-          const rangeMap = maps[rangeFilter]
+          const rangeMap = rangeFilterMap[rangeFilter]
           const index =
             numericOption < lastOption
               ? Object.entries(rangeMap).findIndex(
                   ([_widthKey, { start, end }]) =>
-                    numericOption >= start && numericOption <= end!
+                    numericOption >= start! && numericOption <= end!
                 )
               : Object.entries(rangeMap).findIndex(
-                  ([_widthKey, { start }]) => numericOption >= start
+                  ([_widthKey, { start }]) => numericOption >= start!
                 )
           return Object.keys(rangeMap)[index]
         })
