@@ -23,7 +23,9 @@ export const DataTable = () => {
               <div className="col-6 col-sm-4">
                 <div className="px-2 px-xl-3 pb-2 pb-sm-3">
                   <h6>Width</h6>
-                  <p className="fw-300">{variation?.attributes?.pa_width}</p>
+                  <p className="fw-300">
+                    {formatWidth(variation?.attributes?.pa_width || '')}
+                  </p>
                 </div>
               </div>
             )}
