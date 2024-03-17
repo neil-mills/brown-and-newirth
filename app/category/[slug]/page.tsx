@@ -9,18 +9,26 @@ import {
   ProfileFilterMenu,
   FilteredProducts,
   PatternFilter,
+  DiamondSetFilter,
 } from '@/app/components'
-import { useCategory, useFilterSearchParams } from '@/app/hooks'
-import DiamondSetFilter from '@/app/components/DiamondSetFilter'
+import { useCategory, useFilterSearchParams, useStore } from '@/app/hooks'
 
 interface Props {
   params: { slug: string }
 }
 
 const ProductCategoryPage = ({ params: { slug } }: Props) => {
+  const setFilterLayers = useStore((store) => store.setFilterLayers)
   const searchParams = useSearchParams()
   const filters = useFilterSearchParams(searchParams.toString())
   const [category, categoryData] = useCategory(slug)
+  if (!category || !categoryData) {
+    return notFound()
+  }
+  const { filterLayers } = stylesMap[category]
+
+  setFilterLayers(filterLayers)
+
   const showPatternFilter =
     stylesMap[category as Styles].filterLayers.includes('pa_pattern')
   const showDiamondSetFilter =
@@ -35,9 +43,7 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
 
   const showProfileFilter =
     stylesMap[category as Styles].filterLayers.includes('pa_profile')
-  if (!category || !categoryData) {
-    return notFound()
-  }
+
   return (
     <>
       <div className="col-left h-100 d-flex flex-column">

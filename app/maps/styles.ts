@@ -1,7 +1,7 @@
-import { Styles, FilterLayers, Mapping } from '@/app/types'
+import { Styles, Mapping, VariationAttributeKeys } from '@/app/types'
 
 interface StyleMapping extends Mapping {
-  filterLayers: FilterLayers[]
+  filterLayers: VariationAttributeKeys[]
 }
 
 type StyleMap = { [K in Styles]: StyleMapping }
@@ -89,7 +89,7 @@ export const stylesMap: StyleMap = {
     label: 'Shaped',
     slug: 'shaped',
     image: '/img/09_shaped.png',
-    filterLayers: ['pa_diamond-set', 'pa_shape'],
+    filterLayers: ['pa_diamond-set', 'pa_shape', 'pa_width'],
   },
   PLAIN: {
     label: 'Plains',

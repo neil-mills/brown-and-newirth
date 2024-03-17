@@ -4,7 +4,7 @@ import { TitleBar } from '@/app/components'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 type DiamondSet = 'yes' | 'no'
-const DiamondSetFilter = () => {
+export const DiamondSetFilter = () => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -51,5 +51,3 @@ const DiamondSetFilter = () => {
     </>
   )
 }
-
-export default DiamondSetFilter

@@ -1,9 +1,15 @@
 import { FilterLayers } from './../types/FilterLayers.type'
-import { Product, Variation, Images, Styles } from '@/app/types'
-import { useFilterSearchParams, useGetData } from '@/app/hooks'
+import {
+  Product,
+  Variation,
+  Images,
+  Styles,
+  VariationAttributeKeys,
+} from '@/app/types'
+import { useGetData } from '@/app/hooks'
 import { getUniqueArrayValues, productToVariation } from '@/app/utils'
 import { stylesMap } from '@/app/maps'
-import { useSearchParams } from 'next/navigation'
+import { Style } from 'util'
 
 interface ReturnValues {
   isLoading: boolean
@@ -13,7 +19,7 @@ interface ReturnValues {
   images: Images<string[]>
   otherOptions: Variation[]
   category: Styles[] | null
-  filterLayers: FilterLayers[]
+  filterLayers: VariationAttributeKeys[]
 }
 
 interface Props {
@@ -27,10 +33,7 @@ export const useProduct = ({ sku, productId }: Props): ReturnValues => {
   let images: Images<string[]> = { thumbnail: [], medium: [], large: [] }
   let otherOptions: Variation[] = []
   let category: Styles[] | null = null
-  let filterLayers: FilterLayers[] = []
-  const searchParams = useSearchParams()
-  const filters = useFilterSearchParams(searchParams.toString())
-  console.log({ filters })
+  let filterLayers: VariationAttributeKeys[] = []
 
   const { data: products, error, isLoading } = useGetData()
   if (!isLoading && !error) {
@@ -73,7 +76,13 @@ export const useProduct = ({ sku, productId }: Props): ReturnValues => {
         product?.attributes?.pa_style ||
         product?.attributes?.pa_pattern ||
         null
-
+      if (
+        !category &&
+        product?.attributes?.pa_shaped &&
+        product.attributes.pa_shaped.length
+      ) {
+        category = ['Shaped']
+      }
       if (category) {
         category.forEach((cat) => {
           filterLayers = [...filterLayers, ...stylesMap[cat].filterLayers]

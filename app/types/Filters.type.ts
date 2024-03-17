@@ -1,3 +1,12 @@
+// 'pa_metal-code'?: string
+// 'pa_total-carat'?: string
+// 'pa_centre-carat'?: string
+// 'pa_diamond-quality'?: string
+// pa_diamond?: string
+// pa_gauge?: VariationGauge
+// pa_width?: string
+// pa_size?: VariationSize
+
 export type FilterAttributeKeys =
   | 'pa_diamond'
   | 'pa_centre-carat'
@@ -9,8 +18,11 @@ export type FilterAttributeKeys =
   | 'pa_gauge'
   | 'pa_width'
   | 'pa_pattern'
+  | 'pa_diamond-set'
+  | 'pa_profile'
 
 export type VariationAttributeKeys =
+  | 'pa_shape'
   | 'pa_metal-code'
   | 'pa_total-carat'
   | 'pa_centre-carat'
@@ -19,6 +31,10 @@ export type VariationAttributeKeys =
   | 'pa_gauge'
   | 'pa_width'
   | 'pa_size'
+  | 'pa_coverage'
+  | 'pa_pattern'
+  | 'pa_diamond-set'
+  | 'pa_profile'
 
 export type ProductAttributeKeys =
   | 'pa_metal-code'

@@ -14,11 +14,7 @@ import {
 import { useEffect, useState } from 'react'
 import { FilterLayers } from '@/app/types'
 
-export const ProductDetails = ({
-  filterLayers,
-}: {
-  filterLayers: FilterLayers[]
-}) => {
+export const ProductDetails = () => {
   const [showAddToBasket, setShowAddToBasket] = useState<boolean>(false)
   const {
     variations,
@@ -26,8 +22,10 @@ export const ProductDetails = ({
     metal: selectedMetal,
     product,
     sku,
+    filterLayers,
   } = useStore((store) => store.selectedSku)
 
+  console.log({ filterLayers })
   const showSize = !product?.attributes?.['pa_type-2']?.length
 
   useEffect(() => {

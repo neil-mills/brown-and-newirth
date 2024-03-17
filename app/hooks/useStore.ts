@@ -22,6 +22,7 @@ interface Store {
   setSearchParams: (searchParams: string) => void
   setSelectedSku: (selectedSku: SelectedSku) => void
   setSearchQuery: (search: string) => void
+  setFilterLayers: (filterLayers: VariationAttributeKeys[]) => void
   setSize: (size: string) => void
   setMetal: (metal: string) => void
   setVariation: (variation: Variation) => void
@@ -57,6 +58,11 @@ export const useStore = create<Store>((set) => ({
     set((store) => ({ ...store, searchParams })),
   setSearchQuery: (search: string) =>
     set((store) => ({ ...store, productsQuery: { search } })),
+  setFilterLayers: (filterLayers: VariationAttributeKeys[]) =>
+    set((store) => ({
+      ...store,
+      selectedSku: { ...store.selectedSku, filterLayers },
+    })),
   setSize: (size: string) =>
     set((store) => ({
       ...store,

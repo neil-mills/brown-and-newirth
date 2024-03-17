@@ -23,6 +23,32 @@ export const ProductCard = ({ item, label, style }: Props) => {
         : item.images.medium
   }
 
+  const hasSecondFilterLayer = filterLayers.some(
+    (filter) =>
+      ['pa_gauge', 'pa_centre-carat', 'pa_total-carat'].includes(filter) ||
+      (isProduct(item) &&
+        filterLayers.includes('pa_diamond') &&
+        item?.attributes?.pa_diamond &&
+        item.attributes.pa_diamond.length > 1) ||
+      (isProduct(item) &&
+        filterLayers.includes('pa_width') &&
+        item.attributes.pa_width.length > 1) ||
+      (isProduct(item) &&
+        filterLayers.includes('pa_centre-carat') &&
+        item?.attributes?.['pa_centre-carat'] &&
+        item.attributes['pa_centre-carat'].length > 1) ||
+      (isProduct(item) &&
+        filterLayers.includes('pa_total-carat') &&
+        item?.attributes?.['pa_total-carat'] &&
+        item.attributes['pa_total-carat'].length > 1)
+  )
+
+  const url = isVariation(item)
+    ? `sku/${item.sku}?${searchParams.toString()}`
+    : hasSecondFilterLayer
+    ? `productId/${item.productId}`
+    : `sku/${item.sku}`
+
   const isCreated =
     (isVariation(item) && item.attributes.pa_diamond === 'LAB GROWN') ||
     (isProduct(item) && item.attributes.pa_diamond?.includes('LAB GROWN'))
@@ -131,15 +157,7 @@ export const ProductCard = ({ item, label, style }: Props) => {
           {label === 'code' && <p>{item.sku}</p>}
           <button
             className="btn btn-border w-100"
-            onClick={() =>
-              router.push(
-                `/products/${
-                  isVariation(item)
-                    ? `sku/${item.sku}?${searchParams.toString()}`
-                    : `productId/${item.productId}`
-                }`
-              )
-            }
+            onClick={() => router.push(`/products/${url}`)}
           >
             <span>View</span>
           </button>

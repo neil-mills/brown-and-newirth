@@ -29,7 +29,6 @@ export const useVariations = ({
       ? product.variations
       : [productToVariation(product)]
     filteredVariations = productVariations
-
     if (filters && Object.keys(filters)) {
       Object.entries(filters).forEach(([filter, value]) => {
         if (rangeAttributes.includes(filter as RangeFilterAttribute))

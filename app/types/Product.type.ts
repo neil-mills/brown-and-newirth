@@ -68,8 +68,8 @@ export interface Product {
   attributes: {
     'pa_metal-code': MetalCode[]
     pa_gauge?: ('Light' | 'Medium' | 'Heavy' | 'Super Heavy')[]
-    'pa_total-carat': ('0.410' | string)[]
-    'pa_centre-carat': ('0.330' | string)[]
+    'pa_total-carat'?: ('0.410' | string)[]
+    'pa_centre-carat'?: ('0.330' | string)[]
     'pa_diamond-quality'?: DiamondQuality[]
     pa_width: string[]
     pa_size: ProductSize[]

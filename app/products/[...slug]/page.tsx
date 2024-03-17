@@ -69,7 +69,7 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
   return (
     <>
       <div className="col-left is-single h-100 d-flex flex-column">
-        <ProductDetails filterLayers={filterLayers} />
+        <ProductDetails />
       </div>
       <div className="col col-right h-100">
         {searchByCode && (
