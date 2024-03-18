@@ -2,8 +2,9 @@
 import { FilterGrid, TitleBar } from '@/app/components'
 import { useFilterSearchParams, useProductFilterOptions } from '@/app/hooks'
 import { useSearchParams } from 'next/navigation'
+import { Styles } from '@/app/types'
 
-export const ProfileFilterMenu = ({ category }: { category: string }) => {
+export const ProfileFilterMenu = ({ category }: { category: Styles }) => {
   const searchParams = useSearchParams()
   const filters = useFilterSearchParams(searchParams.toString())
   const {

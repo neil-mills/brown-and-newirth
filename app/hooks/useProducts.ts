@@ -3,7 +3,7 @@ import {
   Product,
   ProductAttributeKeys,
   Images,
-  Filters,
+  ProductFilters,
   Styles,
 } from '@/app/types'
 import { useGetData } from '@/app/hooks'
@@ -17,9 +17,8 @@ interface Result {
 
 export const useProducts = (
   category: Styles,
-  filters: Filters | null
+  filters: ProductFilters | null
 ): Result => {
-  console.log(filters)
   let products: Product[] = []
   const { data, error, isLoading } = useGetData()
 

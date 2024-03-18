@@ -2,8 +2,9 @@
 import { FilterGrid, TitleBar } from '@/app/components'
 import { useFilterSearchParams, useProductFilterOptions } from '../hooks'
 import { useSearchParams } from 'next/navigation'
+import { Styles } from '@/app/types'
 
-export const ShapeFilterMenu = ({ category }: { category: string }) => {
+export const ShapeFilterMenu = ({ category }: { category: Styles }) => {
   const searchParams = useSearchParams()
   const filter = category === 'Shaped' ? 'pa_shaped' : 'pa_shape'
   const shapeCategory = category === 'Shaped' ? null : category

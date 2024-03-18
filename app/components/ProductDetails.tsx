@@ -12,7 +12,6 @@ import {
   WidthFilter,
 } from '@/app/components'
 import { useEffect, useState } from 'react'
-import { FilterLayers } from '@/app/types'
 
 export const ProductDetails = () => {
   const [showAddToBasket, setShowAddToBasket] = useState<boolean>(false)

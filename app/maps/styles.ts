@@ -1,7 +1,7 @@
-import { Styles, Mapping, VariationAttributeKeys } from '@/app/types'
+import { Styles, Mapping, FilterLayerKeys } from '@/app/types'
 
 interface StyleMapping extends Mapping {
-  filterLayers: VariationAttributeKeys[]
+  filterLayers: FilterLayerKeys[]
 }
 
 type StyleMap = { [K in Styles]: StyleMapping }

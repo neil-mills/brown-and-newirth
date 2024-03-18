@@ -13,7 +13,7 @@ export const SearchByStyle = () => {
   return (
     <>
       <TitleBar>Search by style</TitleBar>
-      <ProductGrid type="style" items={allStyles} />
+      <ProductGrid items={allStyles} />
     </>
   )
 }

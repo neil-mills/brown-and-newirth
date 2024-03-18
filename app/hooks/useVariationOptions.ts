@@ -23,7 +23,7 @@ export const useVariationOptions = () => {
     }
     if (variations[0]?.attributes['pa_metal-code']) {
       metals = getUniqueArrayValues<string[]>(
-        variations.map((variation) => variation.attributes['pa_metal-code'])
+        variations.map((variation) => variation.attributes['pa_metal-code']!)
       ).map((metal) => ({ label: metalsMap?.[metal] || '', value: metal }))
     }
   }

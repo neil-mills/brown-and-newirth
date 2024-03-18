@@ -1,15 +1,13 @@
-import { FilterLayers } from './../types/FilterLayers.type'
 import {
   Product,
   Variation,
   Images,
   Styles,
-  VariationAttributeKeys,
+  FilterLayerKeys,
 } from '@/app/types'
 import { useGetData } from '@/app/hooks'
 import { getUniqueArrayValues, productToVariation } from '@/app/utils'
 import { stylesMap } from '@/app/maps'
-import { Style } from 'util'
 
 interface ReturnValues {
   isLoading: boolean
@@ -19,7 +17,7 @@ interface ReturnValues {
   images: Images<string[]>
   otherOptions: Variation[]
   category: Styles[] | null
-  filterLayers: VariationAttributeKeys[]
+  filterLayers: FilterLayerKeys[]
 }
 
 interface Props {
@@ -33,7 +31,7 @@ export const useProduct = ({ sku, productId }: Props): ReturnValues => {
   let images: Images<string[]> = { thumbnail: [], medium: [], large: [] }
   let otherOptions: Variation[] = []
   let category: Styles[] | null = null
-  let filterLayers: VariationAttributeKeys[] = []
+  let filterLayers: FilterLayerKeys[] = []
 
   const { data: products, error, isLoading } = useGetData()
   if (!isLoading && !error) {
@@ -87,7 +85,7 @@ export const useProduct = ({ sku, productId }: Props): ReturnValues => {
         category.forEach((cat) => {
           filterLayers = [...filterLayers, ...stylesMap[cat].filterLayers]
         })
-        filterLayers = getUniqueArrayValues<FilterLayers[]>(filterLayers)
+        filterLayers = getUniqueArrayValues<FilterLayerKeys[]>(filterLayers)
       }
 
       if (variations?.length) {

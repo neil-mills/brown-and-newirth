@@ -9,11 +9,11 @@ import {
   widthMap,
   patternMap,
 } from '@/app/maps'
-import { Map, Filters, FilterAttributeKeys } from '@/app/types'
+import { Map, Filters, SearchParamKeys } from '@/app/types'
 import { searchParamsToObject } from '@/app/utils'
 
 type FilterSearchParamsMap = {
-  [K in FilterAttributeKeys]: Map
+  [K in SearchParamKeys]: Map
 }
 
 const map: FilterSearchParamsMap = {
@@ -37,12 +37,12 @@ export const useFilterSearchParams = (
   if (!searchParams || Object.keys(searchParams).length === 0) return filters
   filters = Object.entries(searchParams).reduce((acc, [key, value]) => {
     if (Object.keys(map).includes(key)) {
-      const index = Object.entries(map[key as FilterAttributeKeys]).findIndex(
+      const index = Object.entries(map[key as SearchParamKeys]).findIndex(
         ([_key, mapping]) => mapping.slug === value
       )
       acc = {
         ...acc,
-        [key]: Object.keys(map[key as FilterAttributeKeys])[index],
+        [key]: Object.keys(map[key as SearchParamKeys])[index],
       }
     }
     return acc

@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { Images, Product, Variation, VariationAttributeKeys } from '@/app/types'
+import { FilterLayerKeys, Images, Product, Variation } from '@/app/types'
 import { mountStoreDevtool } from 'simple-zustand-devtools'
 
 interface SelectedSku {
@@ -11,7 +11,7 @@ interface SelectedSku {
   otherOptions: Variation[]
   diamondOrigin?: string
   centreCarat?: string
-  filterLayers: VariationAttributeKeys[]
+  filterLayers: FilterLayerKeys[]
   size?: string
   metal?: string
 }
@@ -22,7 +22,7 @@ interface Store {
   setSearchParams: (searchParams: string) => void
   setSelectedSku: (selectedSku: SelectedSku) => void
   setSearchQuery: (search: string) => void
-  setFilterLayers: (filterLayers: VariationAttributeKeys[]) => void
+  setFilterLayers: (filterLayers: FilterLayerKeys[]) => void
   setSize: (size: string) => void
   setMetal: (metal: string) => void
   setVariation: (variation: Variation) => void
@@ -58,7 +58,7 @@ export const useStore = create<Store>((set) => ({
     set((store) => ({ ...store, searchParams })),
   setSearchQuery: (search: string) =>
     set((store) => ({ ...store, productsQuery: { search } })),
-  setFilterLayers: (filterLayers: VariationAttributeKeys[]) =>
+  setFilterLayers: (filterLayers: FilterLayerKeys[]) =>
     set((store) => ({
       ...store,
       selectedSku: { ...store.selectedSku, filterLayers },

@@ -9,7 +9,7 @@ import {
 import { Fragment } from 'react'
 
 interface Props {
-  style: 'product' | 'variation'
+  style?: 'product' | 'variation'
   label?: 'code'
   items: Product[] | Variation[] | Mapping[]
 }
@@ -20,7 +20,12 @@ export const ProductGrid = ({ items, label, style }: Props) => {
       {items.map((item, i) => (
         <Fragment key={i}>
           {isProduct(item) || isVariation(item) ? (
-            <ProductCard key={i} item={item} style={style} label={label} />
+            <ProductCard
+              key={i}
+              item={item}
+              style={style || 'product'}
+              label={label}
+            />
           ) : (
             <CategoryCard key={i} item={item} />
           )}

@@ -1,12 +1,12 @@
 'use client'
 import { ProductGrid, TitleBar } from '@/app/components'
 import { useVariations } from '@/app/hooks'
-import { Filters } from '@/app/types'
+import { VariationFilters } from '@/app/types'
 
 export const FilteredVariations = ({
   filters,
 }: {
-  filters: Filters | null
+  filters: VariationFilters | null
 }) => {
   const variations = useVariations({ filterByAttribute: 'pa_width', filters })
   return (

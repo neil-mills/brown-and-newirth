@@ -16,6 +16,7 @@ const map: FilterMap = {
   pa_gauge: gaugeMap,
   pa_width: widthMap,
 }
+
 export const useVariationFilterOptions = ({
   filter,
   filters,

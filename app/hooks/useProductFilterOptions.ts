@@ -1,5 +1,12 @@
 import { useGetData } from '@/app/hooks'
-import { Mapping, Product, Filters, Map, Styles } from '@/app/types'
+import {
+  Mapping,
+  Product,
+  Filters,
+  Map,
+  Styles,
+  ProductFilterAttributeKeys,
+} from '@/app/types'
 import {
   shapesMap,
   shapedMap,
@@ -10,14 +17,7 @@ import {
 } from '@/app/maps'
 import { getUniqueArrayValues } from '@/app/utils'
 
-type ProductFilterAttributes =
-  | 'pa_shape'
-  | 'pa_shaped'
-  | 'pa_profile'
-  | 'pa_diamond'
-  | 'pa_pattern'
-
-type ProductFilterAttributesMap = { [K in ProductFilterAttributes]: Map }
+type ProductFilterAttributesMap = { [K in ProductFilterAttributeKeys]: Map }
 
 const map: ProductFilterAttributesMap = {
   pa_shape: shapesMap,
@@ -28,7 +28,7 @@ const map: ProductFilterAttributesMap = {
 }
 
 interface Props {
-  filter: ProductFilterAttributes
+  filter: ProductFilterAttributeKeys
   filters?: Filters | null
   category?: Styles | undefined | null
   productId?: string | undefined
@@ -73,7 +73,7 @@ export const useProductFilterOptions = ({
         if (filterKey !== filter) {
           filteredProducts = filteredProducts?.filter((product) =>
             product?.attributes?.[
-              filterKey as ProductFilterAttributes
+              filterKey as ProductFilterAttributeKeys
             ]?.includes(value as never)
           )
         }
