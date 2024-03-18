@@ -48,8 +48,6 @@ export const ProductCard = ({ item, label, style }: Props) => {
     })
   }
 
-  console.log({ productId: item.productId, hasSecondFilterLayer })
-
   const url = isVariation(item)
     ? `sku/${item.sku}?${searchParams.toString()}`
     : hasSecondFilterLayer
