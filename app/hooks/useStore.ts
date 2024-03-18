@@ -1,5 +1,11 @@
 import { create } from 'zustand'
-import { FilterLayerKeys, Images, Product, Variation } from '@/app/types'
+import {
+  BasketItem,
+  FilterLayerKeys,
+  Images,
+  Product,
+  Variation,
+} from '@/app/types'
 import { mountStoreDevtool } from 'simple-zustand-devtools'
 
 interface SelectedSku {
@@ -18,15 +24,15 @@ interface SelectedSku {
 interface Store {
   productsQuery: ProductsQuery
   selectedSku: SelectedSku
+  basket: BasketItem[]
   searchParams: string
   setSearchParams: (searchParams: string) => void
   setSelectedSku: (selectedSku: SelectedSku) => void
-  setSearchQuery: (search: string) => void
+  setBasket: (basket: BasketItem[]) => void
   setFilterLayers: (filterLayers: FilterLayerKeys[]) => void
   setSize: (size: string) => void
   setMetal: (metal: string) => void
   setVariation: (variation: Variation) => void
-  setDiamondOrigin: (diamond: string) => void
   setCarat: (carat: string) => void
 }
 
@@ -41,7 +47,7 @@ export const useStore = create<Store>((set) => ({
     sku: null,
     product: null,
     variations: [],
-    variation: null,
+    variationId: null,
     images: { thumbnail: [], medium: [], large: [] },
     otherOptions: [],
     diamondOrigin: '',
@@ -50,14 +56,14 @@ export const useStore = create<Store>((set) => ({
     size: '',
     metal: '',
   },
+  basket: [],
   searchParams: '',
   productsQuery: {} as ProductsQuery,
   setSelectedSku: (selectedSku: SelectedSku) =>
     set((store) => ({ ...store, selectedSku })),
+  setBasket: (basket: BasketItem[]) => set((store) => ({ ...store, basket })),
   setSearchParams: (searchParams: string) =>
     set((store) => ({ ...store, searchParams })),
-  setSearchQuery: (search: string) =>
-    set((store) => ({ ...store, productsQuery: { search } })),
   setFilterLayers: (filterLayers: FilterLayerKeys[]) =>
     set((store) => ({
       ...store,
@@ -72,11 +78,6 @@ export const useStore = create<Store>((set) => ({
     set((store) => ({
       ...store,
       selectedSku: { ...store.selectedSku, metal },
-    })),
-  setDiamondOrigin: (diamondOrigin: string) =>
-    set((store) => ({
-      ...store,
-      selectedSku: { ...store.selectedSku, diamondOrigin },
     })),
   setVariation: (variation: Variation) =>
     set((store) => ({

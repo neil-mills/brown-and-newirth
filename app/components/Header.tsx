@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { BasketLink } from '@/app/components'
 
-const Nav = () => {
+export const Header = () => {
   return (
     <>
       <div className="nav-strip bg-cream"></div>
@@ -42,19 +43,7 @@ const Nav = () => {
               height={16}
             />
           </a>
-          <a
-            href="/"
-            className="btn nav-btn h-100 d-flex align-items-center text-sm px-lg-4 px-xxl-5"
-          >
-            <span className="d-none d-lg-inline-block">Basket (2)</span>
-            <Image
-              className="d-block d-lg-none mx-auto"
-              src="/img/svg/icon-basket.svg"
-              alt="Basket"
-              width={16}
-              height={16}
-            />
-          </a>
+          <BasketLink />
         </div>
         <Link className="navbar-logo position-absolute" href="/">
           <Image
@@ -68,5 +57,3 @@ const Nav = () => {
     </>
   )
 }
-
-export default Nav
