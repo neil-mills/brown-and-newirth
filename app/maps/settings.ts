@@ -30,7 +30,7 @@ export const settingMap: SettingMap = {
   },
   CHANNEL: {
     label: 'Channel',
-    slug: 'bar',
+    slug: 'channel',
     image: '/img/svg/icon-setting-channel.svg',
   },
   MIXED: {
