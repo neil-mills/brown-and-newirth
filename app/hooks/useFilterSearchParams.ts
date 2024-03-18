@@ -8,6 +8,7 @@ import {
   gaugeMap,
   widthMap,
   patternMap,
+  settingMap,
 } from '@/app/maps'
 import { Map, Filters, SearchParamKeys } from '@/app/types'
 import { searchParamsToObject } from '@/app/utils'
@@ -27,6 +28,7 @@ const map: FilterSearchParamsMap = {
   pa_gauge: gaugeMap,
   pa_width: widthMap,
   pa_pattern: patternMap,
+  pa_setting: settingMap,
 }
 
 export const useFilterSearchParams = (

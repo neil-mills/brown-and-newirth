@@ -51,6 +51,7 @@ export type SearchParamKeys =
   | 'pa_gauge'
   | 'pa_width'
   | 'pa_pattern'
+  | 'pa_setting'
 
 export type Filters = {
   [TKey in FilterLayerKeys]?: string

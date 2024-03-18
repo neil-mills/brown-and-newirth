@@ -95,9 +95,7 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
           </>
         )}
 
-        <Suspense>
-          <FilteredVariations filters={filters} />
-        </Suspense>
+        <FilteredVariations filters={filters} />
       </div>
     </>
   )
