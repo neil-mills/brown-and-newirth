@@ -1,7 +1,6 @@
-import React from 'react'
 import { useStore } from '@/app/hooks'
-import { formatCarat, formatWidth } from '@/app/utils'
-import { diamondOriginsMap } from '../maps'
+import { formatCarat, formatDiamondQuality, formatWidth } from '@/app/utils'
+import { diamondOriginsMap } from '@/app/maps'
 
 export const DataTable = () => {
   const { product, variations } = useStore((store) => store.selectedSku)
@@ -33,7 +32,9 @@ export const DataTable = () => {
               <div className="px-2 px-xl-3 pb-2 pb-sm-3">
                 <h6>Diamond Quality</h6>
                 <p className="fw-300">
-                  {variation?.attributes?.['pa_diamond-quality']}
+                  {formatDiamondQuality(
+                    variation?.attributes?.['pa_diamond-quality']
+                  )}
                 </p>
               </div>
             </div>

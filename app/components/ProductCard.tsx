@@ -10,7 +10,7 @@ import {
 import { useRouter, useSearchParams } from 'next/navigation'
 import { CreatedLosenge } from '@/app/components'
 import { useStore } from '@/app/hooks'
-import { formatCarat, formatWidth } from '@/app/utils'
+import { formatCarat, formatWidth, formatDiamondQuality } from '@/app/utils'
 
 interface Props {
   style: 'product' | 'variation'
@@ -134,10 +134,15 @@ export const ProductCard = ({ item, label, style }: Props) => {
           </div>
           {isVariation(item) && (
             <div className="d-flex d-lg-block d-xl-flex justify-content-between mb-3">
-              {filterLayers?.includes('pa_diamond') && (
+              {filterLayers?.some((filterLayer) =>
+                ['pa_centre-carat', 'pa_total-carat'].includes(filterLayer)
+              ) && (
                 <>
-                  <p className="mb-0">G/H Si</p>
-                  <p>{item.sku}</p>
+                  <p className="mb-0">
+                    {formatDiamondQuality(
+                      item?.attributes?.['pa_diamond-quality']
+                    )}
+                  </p>
                 </>
               )}
               {filterLayers?.includes('pa_width') && (

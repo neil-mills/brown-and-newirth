@@ -20,7 +20,7 @@ export interface VariationAttributes {
   'pa_metal-code'?: string
   'pa_total-carat'?: string
   'pa_centre-carat'?: string
-  'pa_diamond-quality'?: string
+  'pa_diamond-quality'?: VariationDiamondQuality
   pa_diamond?: string
   pa_gauge?: VariationGauge
   pa_width?: string
@@ -35,7 +35,8 @@ export type VariationGauge =
   | 'medium'
   | 'heavy'
   | 'super-heavy'
-type DiamondQuality = 'GSI' | 'HSI' | 'D-FVS' | 'GVS'
+export type ProductDiamondQuality = 'GSI' | 'HSI' | 'D-FVS' | 'GVS'
+export type VariationDiamondQuality = 'gsi' | 'hsi' | 'd-fvs' | 'gvs'
 
 export interface Images<T> {
   thumbnail: T
@@ -78,7 +79,7 @@ export interface Product {
     pa_gauge?: ('Light' | 'Medium' | 'Heavy' | 'Super Heavy')[]
     'pa_total-carat'?: ('0.410' | string)[]
     'pa_centre-carat'?: ('0.330' | string)[]
-    'pa_diamond-quality'?: DiamondQuality[]
+    'pa_diamond-quality'?: ProductDiamondQuality[]
     pa_width: string[]
     pa_size: ProductSize[]
     pa_style?: Styles[]
