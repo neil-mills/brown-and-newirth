@@ -17,7 +17,7 @@ export const useVariations = ({
   filterByAttribute,
   filters,
 }: Props): Variation[] => {
-  const { product } = useStore((store) => store.selectedSku)
+  const { product, filterLayers } = useStore((store) => store.selectedSku)
   const rangeAttributes: RangeFilterAttribute[] = [
     'pa_width',
     'pa_total-carat',
@@ -85,6 +85,18 @@ export const useVariations = ({
         large: [variation['variation-images'].large],
       },
     }))
+    let sortBy: RangeFilterAttribute | null = null
+    if (filterLayers.includes('pa_width')) sortBy = 'pa_width'
+    if (filterLayers.includes('pa_total-carat')) sortBy = 'pa_total-carat'
+    if (filterLayers.includes('pa_centre-carat')) sortBy = 'pa_centre-carat'
+
+    if (sortBy) {
+      filteredVariations = filteredVariations.sort(
+        (a, b) =>
+          parseInt(a.attributes[sortBy]!.replace('-', '.')) -
+          parseInt(b.attributes[sortBy]!.replace('-', '.'))
+      )
+    }
   }
 
   return filteredVariations
