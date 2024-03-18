@@ -22,6 +22,7 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
   const productId = idParam === 'productId' ? id : null
   const sku = idParam === 'sku' ? id : null
   const setSelectedSku = useStore((store) => store.setSelectedSku)
+  const resetSelectedSku = useStore((store) => store.resetSelectedSku)
   const setSearchParams = useStore((store) => store.setSearchParams)
   const searchByCode = searchParams.get('search') === 'code'
   const filters = useFilterSearchParams(searchParams.toString())
@@ -50,6 +51,7 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
       centreCarat: searchParams.get('pa_centre-carat') || '',
     })
     setSearchParams(searchParams.toString())
+    return () => resetSelectedSku()
   }, [
     setSelectedSku,
     product,
@@ -60,6 +62,7 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
     searchParams,
     setSearchParams,
     filterLayers,
+    resetSelectedSku,
   ])
 
   if (isLoading) return <p>Loading</p>

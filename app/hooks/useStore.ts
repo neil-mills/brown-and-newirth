@@ -28,6 +28,7 @@ interface Store {
   searchParams: string
   setSearchParams: (searchParams: string) => void
   setSelectedSku: (selectedSku: SelectedSku) => void
+  resetSelectedSku: () => void
   setBasket: (basket: BasketItem[]) => void
   setFilterLayers: (filterLayers: FilterLayerKeys[]) => void
   setSize: (size: string) => void
@@ -42,20 +43,21 @@ interface ProductsQuery {
   category?: string
 }
 
+const selectedSku = {
+  sku: null,
+  product: null,
+  variations: [],
+  variationId: null,
+  images: { thumbnail: [], medium: [], large: [] },
+  otherOptions: [],
+  diamondOrigin: '',
+  centreCarat: '',
+  filterLayers: [],
+  size: '',
+  metal: '',
+}
 export const useStore = create<Store>((set) => ({
-  selectedSku: {
-    sku: null,
-    product: null,
-    variations: [],
-    variationId: null,
-    images: { thumbnail: [], medium: [], large: [] },
-    otherOptions: [],
-    diamondOrigin: '',
-    centreCarat: '',
-    filterLayers: [],
-    size: '',
-    metal: '',
-  },
+  selectedSku,
   basket: [],
   searchParams: '',
   productsQuery: {} as ProductsQuery,
@@ -84,6 +86,7 @@ export const useStore = create<Store>((set) => ({
       ...store,
       selectedSku: { ...store.selectedSku, variation },
     })),
+  resetSelectedSku: () => set((store) => ({ ...store, selectedSku })),
   setCarat: (carat: string) =>
     set((store) => ({
       ...store,
