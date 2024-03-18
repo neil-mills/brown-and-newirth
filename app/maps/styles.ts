@@ -53,13 +53,13 @@ export const stylesMap: StyleMap = {
     label: 'Bracelets',
     slug: 'bracelet',
     image: '/img/16_bracelets.png',
-    filterLayers: ['pa_shape', 'pa_diamond', 'pa_centre-carat'],
+    filterLayers: ['pa_shape', 'pa_diamond', 'pa_total-carat'],
   },
   EARRING: {
     label: 'Earrings',
     slug: 'earring',
     image: '/img/14_earrings.png',
-    filterLayers: ['pa_shape', 'pa_diamond', 'pa_centre-carat'],
+    filterLayers: ['pa_shape', 'pa_diamond', 'pa_total-carat'],
   },
   PENDANT: {
     label: 'Pendants',
