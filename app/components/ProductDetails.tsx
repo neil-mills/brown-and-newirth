@@ -44,9 +44,15 @@ export const ProductDetails = () => {
         {!sku && (
           <>
             <p className="fw-300">Filter By:</p>
-            {filterLayers.includes('pa_gauge') && <GaugeFilter />}
-            {filterLayers.includes('pa_diamond') && <DiamondOriginFilter />}
-            <hr />
+            {filterLayers.some((filterLayer) =>
+              ['pa_gauge', 'pa_diamond'].includes(filterLayer)
+            ) && (
+              <>
+                {filterLayers.includes('pa_gauge') && <GaugeFilter />}
+                {filterLayers.includes('pa_diamond') && <DiamondOriginFilter />}
+                <hr />
+              </>
+            )}
             {filterLayers.includes('pa_width') && <WidthFilter />}
             {filterLayers.includes('pa_centre-carat') && (
               <DiamondCaratFilter attribute="pa_centre-carat" />
