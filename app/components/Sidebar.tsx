@@ -1,8 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
 
-const Sidebar = () => {
+export const Sidebar = () => {
   return (
     <div className="sidebar position-relative bg-grey-light h-100 d-flex flex-column justify-content-between">
       <div className="sidebar-links fw-300">
@@ -95,5 +94,3 @@ const Sidebar = () => {
     </div>
   )
 }
-
-export default Sidebar

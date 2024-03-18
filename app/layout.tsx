@@ -3,8 +3,7 @@ import '@/app/globals.css'
 import Head from 'next/head'
 import QueryProvider from '@/lib/QueryProvider'
 import InstallBootstrap from './components/InstallBootstrap'
-import Header from './components/Header'
-import Sidebar from './components/Sidebar'
+import { Header, Sidebar } from '@/app/components'
 
 export const metadata: Metadata = {
   title: 'Brown & Newirth',
