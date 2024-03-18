@@ -53,18 +53,15 @@ export const useRangeFilter = <T>({
         )
         .map((option) => {
           const numericOption = parseFloat(option?.replace('-', '.') as string)
-          const allOptionKeys = Object.keys(allOptions)
-          const lastOption = parseFloat(allOptionKeys[allOptionKeys.length - 1])
+          const lastOption = allOptions[allOptions.length - 1].start
           const rangeMap = rangeFilterMap[rangeFilter]
           const index =
-            numericOption < lastOption
+            numericOption < lastOption!
               ? Object.entries(rangeMap).findIndex(
                   ([_widthKey, { start, end }]) =>
                     numericOption >= start! && numericOption <= end!
                 )
-              : Object.entries(rangeMap).findIndex(
-                  ([_widthKey, { start }]) => numericOption >= start!
-                )
+              : Object.keys(rangeMap).length - 1
           return Object.keys(rangeMap)[index]
         })
         .filter((option) => option !== undefined)

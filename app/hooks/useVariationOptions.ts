@@ -26,6 +26,7 @@ export const useVariationOptions = () => {
         variations.map((variation) => variation.attributes['pa_metal-code']!)
       ).map((metal) => ({ label: metalsMap?.[metal] || '', value: metal }))
     }
+    console.log({ metals })
   }
 
   return { widths, sizes, metals }

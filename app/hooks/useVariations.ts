@@ -1,5 +1,6 @@
 import {
   VariationAttributeKeys,
+  FilterLayerKeys,
   Variation,
   Filters,
   RangeFilterAttribute,
@@ -9,7 +10,7 @@ import { getUniqueArrayValues, productToVariation } from '@/app/utils'
 import { rangeFilterMap } from '@/app/maps'
 
 interface Props {
-  filterByAttribute: VariationAttributeKeys
+  filterByAttribute: FilterLayerKeys
   filters: Filters | null
 }
 
@@ -55,14 +56,11 @@ export const useVariations = ({
             const { start, end } = map[value]
             const allKeys = Object.keys(map)
             const lastOption = parseFloat(allKeys[allKeys.length - 1])
-
-            return (
-              (numericValue &&
-                numericValue < lastOption &&
-                numericValue >= start! &&
-                numericValue <= end!) ||
-              (numericValue && numericValue >= 8 && numericValue >= start!)
-            )
+            if (numericValue && numericValue < lastOption) {
+              return numericValue >= start! && numericValue <= end!
+            }
+            if (numericValue && !end && numericValue >= lastOption) return true
+            return false
           })
         }
       })
@@ -72,10 +70,30 @@ export const useVariations = ({
       filteredVariations.map((variation) => variation.sku)
     )
 
-    filteredVariations = productSkus.map(
-      (sku) =>
-        filteredVariations.filter((variation) => variation.sku === sku)[0]
-    )
+    let uniqueAtts: string[] = []
+    filteredVariations.forEach((variation) => {
+      if (variation?.attributes?.[filterByAttribute as VariationAttributeKeys])
+        uniqueAtts.push(
+          variation.attributes[filterByAttribute as VariationAttributeKeys]!
+        )
+    })
+    uniqueAtts = getUniqueArrayValues<string[]>(uniqueAtts)
+
+    const groupedFilteredVariations: Variation[] = []
+    productSkus.forEach((sku) => {
+      uniqueAtts.forEach((attr) => {
+        const variation = filteredVariations.find(
+          (variation) =>
+            variation.sku === sku &&
+            variation.attributes[
+              filterByAttribute as VariationAttributeKeys
+            ] === attr
+        )
+        if (variation) groupedFilteredVariations.push(variation)
+      })
+    })
+
+    filteredVariations = groupedFilteredVariations
 
     filteredVariations = filteredVariations.map((variation) => ({
       ...variation,
