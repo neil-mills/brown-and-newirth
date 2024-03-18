@@ -9,8 +9,13 @@ import {
 } from '@/app/types'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { CreatedLosenge } from '@/app/components'
-import { useStore } from '@/app/hooks'
-import { formatCarat, formatWidth, formatDiamondQuality } from '@/app/utils'
+import { useFilterSearchParams, useStore } from '@/app/hooks'
+import {
+  formatCarat,
+  formatWidth,
+  formatDiamondQuality,
+  formatSearchParams,
+} from '@/app/utils'
 
 interface Props {
   style: 'product' | 'variation'
@@ -47,9 +52,13 @@ export const ProductCard = ({ item, label, style }: Props) => {
         hasSecondFilterLayer = true
     })
   }
-
+  const params = isVariation(item)
+    ? formatSearchParams(searchParams.toString(), {
+        'variation-id': item['variation-id'].toString(),
+      })
+    : ''
   const url = isVariation(item)
-    ? `sku/${item.sku}?${searchParams.toString()}`
+    ? `sku/${item.sku}?${params}`
     : hasSecondFilterLayer
     ? `productId/${item.productId}`
     : `sku/${item.sku}`
@@ -147,7 +156,7 @@ export const ProductCard = ({ item, label, style }: Props) => {
               )}
               {filterLayers?.includes('pa_width') && (
                 <p className="mb-0">
-                  {formatWidth(item.attributes['pa_width'])}
+                  {item.sku} {formatWidth(item.attributes['pa_width'])}
                 </p>
               )}
               {filterLayers?.includes('pa_centre-carat') && (

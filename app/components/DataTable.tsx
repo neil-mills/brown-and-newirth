@@ -1,11 +1,25 @@
 import { useStore } from '@/app/hooks'
-import { formatCarat, formatDiamondQuality, formatWidth } from '@/app/utils'
+import {
+  formatCarat,
+  formatDiamondQuality,
+  formatWidth,
+  upperCaseFirst,
+} from '@/app/utils'
 import { diamondOriginsMap } from '@/app/maps'
+import { useSearchParams } from 'next/navigation'
 
 export const DataTable = () => {
   const { product, variations } = useStore((store) => store.selectedSku)
+  const searchParams = useSearchParams()
+  const variationId = searchParams.get('variation-id')
+  // console.log({ variationId, variations })
   if (!product) return null
-  const variation = variations[0]
+  const variation = variationId
+    ? variations.find(
+        (variation) => variation['variation-id'] === parseInt(variationId)
+      )
+    : variations[0]
+  if (!variation) return null
   return (
     <div className="product-single-data-table position-relative">
       <div className="row g-0">
@@ -90,7 +104,7 @@ export const DataTable = () => {
               <div className="px-2 px-xl-3 pt-2 pt-sm-3">
                 <h6>Gauge</h6>
                 <p className="fw-300">
-                  {variation?.attributes?.['pa_gauge'] || ''}
+                  {upperCaseFirst(variation?.attributes?.['pa_gauge'] || '')}
                 </p>
               </div>
             </div>
