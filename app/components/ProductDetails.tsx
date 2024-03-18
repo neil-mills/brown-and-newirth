@@ -24,7 +24,6 @@ export const ProductDetails = () => {
     filterLayers,
   } = useStore((store) => store.selectedSku)
 
-  console.log({ filterLayers })
   const showSize = !product?.attributes?.['pa_type-2']?.length
 
   useEffect(() => {

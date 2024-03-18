@@ -35,7 +35,7 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
     isLoading,
     error,
   } = useProduct({ productId, sku })
-  // console.log({ category, filterLayers })
+
   useEffect(() => {
     setSelectedSku({
       sku,

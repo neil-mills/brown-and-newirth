@@ -55,7 +55,6 @@ export const useProducts = (
     }
 
     stylesMap[category].filterLayers.forEach((filterLayer) => {
-      console.log(filterLayer)
       products = products.filter(
         (product) => product?.attributes?.[filterLayer]
       )
