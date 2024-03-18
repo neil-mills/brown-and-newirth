@@ -14,7 +14,7 @@ const Nav = () => {
               <span></span>
             </div>
           </div>
-          <a
+          <Link
             href="/"
             className="btn nav-btn h-100 bg-pink d-flex align-items-center text-sm px-lg-4 px-xxl-5"
           >
@@ -26,7 +26,7 @@ const Nav = () => {
               width={16}
               height={16}
             />
-          </a>
+          </Link>
         </div>
         <div className="d-flex h-100 right">
           <a
