@@ -93,8 +93,8 @@ export const useVariations = ({
     if (sortBy) {
       filteredVariations = filteredVariations.sort(
         (a, b) =>
-          parseInt(a.attributes[sortBy]!.replace('-', '.')) -
-          parseInt(b.attributes[sortBy]!.replace('-', '.'))
+          parseInt(a.attributes[sortBy!]!.replace('-', '.')) -
+          parseInt(b.attributes[sortBy!]!.replace('-', '.'))
       )
     }
   }
