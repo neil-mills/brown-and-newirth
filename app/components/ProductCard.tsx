@@ -1,5 +1,12 @@
 import Image from 'next/image'
-import { Product, Variation, isProduct, isVariation } from '@/app/types'
+import {
+  FilterLayerKeys,
+  Product,
+  ProductAttributeKeys,
+  Variation,
+  isProduct,
+  isVariation,
+} from '@/app/types'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { CreatedLosenge } from '@/app/components'
 import { useStore } from '@/app/hooks'
@@ -23,25 +30,25 @@ export const ProductCard = ({ item, label, style }: Props) => {
         : item.images.medium
   }
 
-  const hasSecondFilterLayer = filterLayers.some(
-    (filter) =>
-      ['pa_gauge', 'pa_centre-carat', 'pa_total-carat'].includes(filter) ||
-      (isProduct(item) &&
-        filterLayers.includes('pa_diamond') &&
-        item?.attributes?.pa_diamond &&
-        item.attributes.pa_diamond.length > 1) ||
-      (isProduct(item) &&
-        filterLayers.includes('pa_width') &&
-        item.attributes.pa_width.length > 1) ||
-      (isProduct(item) &&
-        filterLayers.includes('pa_centre-carat') &&
-        item?.attributes?.['pa_centre-carat'] &&
-        item.attributes['pa_centre-carat'].length > 1) ||
-      (isProduct(item) &&
-        filterLayers.includes('pa_total-carat') &&
-        item?.attributes?.['pa_total-carat'] &&
-        item.attributes['pa_total-carat'].length > 1)
-  )
+  let hasSecondFilterLayer = false
+  const filterLayerKeys: FilterLayerKeys[] = [
+    'pa_diamond',
+    'pa_width',
+    'pa_centre-carat',
+    'pa_total-carat',
+  ]
+  if (isProduct(item)) {
+    filterLayerKeys.forEach((filterLayer) => {
+      if (
+        filterLayers.includes(filterLayer) &&
+        item?.attributes?.[filterLayer as ProductAttributeKeys] &&
+        item.attributes[filterLayer as ProductAttributeKeys]!.length > 1
+      )
+        hasSecondFilterLayer = true
+    })
+  }
+
+  console.log({ productId: item.productId, hasSecondFilterLayer })
 
   const url = isVariation(item)
     ? `sku/${item.sku}?${searchParams.toString()}`

@@ -38,6 +38,7 @@ export type ProductFilterAttributeKeys =
   | 'pa_profile'
   | 'pa_diamond'
   | 'pa_pattern'
+  | 'pa_setting'
 
 export type SearchParamKeys =
   | 'pa_diamond'

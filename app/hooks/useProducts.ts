@@ -23,10 +23,26 @@ export const useProducts = (
   const { data, error, isLoading } = useGetData()
 
   if (!isLoading && !error && data) {
-    if (['Shaped', 'Patterns', 'PLAIN'].includes(category)) {
+    if (
+      ['Shaped', 'Patterns', 'PLAIN', 'HALF SET', 'FULL SET'].includes(category)
+    ) {
       if (category === 'Shaped') {
         products = data.filter(
           (product) => product.attributes.pa_shaped?.length
+        )
+      }
+      if (category === 'HALF SET') {
+        products = data.filter(
+          (product) =>
+            product?.attributes?.pa_coverage &&
+            product.attributes.pa_coverage.includes('Half')
+        )
+      }
+      if (category === 'FULL SET') {
+        products = data.filter(
+          (product) =>
+            product?.attributes?.pa_coverage &&
+            product.attributes.pa_coverage.includes('Full')
         )
       }
       if (category === 'Patterns') {

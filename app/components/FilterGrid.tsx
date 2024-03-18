@@ -6,7 +6,7 @@ export const FilterGrid = ({
   type,
   filters,
 }: {
-  type: 'pa_shape' | 'pa_shaped' | 'pa_profile' | 'pa_pattern'
+  type: 'pa_shape' | 'pa_shaped' | 'pa_profile' | 'pa_pattern' | 'pa_setting'
   filters: Mapping[]
 }) => {
   const router = useRouter()

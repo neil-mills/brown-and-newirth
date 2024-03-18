@@ -17,9 +17,9 @@ export const ShapeFilterMenu = ({ category }: { category: Styles }) => {
   if (isLoading) return <p>Loading</p>
   if (error) return <p>{error.message}</p>
   return (
-    <>
+    <div className="mb-225rem">
       <TitleBar>Choose your shape</TitleBar>
       <FilterGrid type={filter} filters={shapes} />
-    </>
+    </div>
   )
 }

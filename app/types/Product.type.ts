@@ -59,6 +59,14 @@ export type ProductProfiles =
   | 'BARREL'
   | 'D SHAPED'
   | 'OTHER'
+export type ProductSettings =
+  | 'PAVE'
+  | 'RUB OVER'
+  | 'CLAW'
+  | 'FOUR CLAW'
+  | 'BAR'
+  | 'CHANNEL'
+  | 'MIXED'
 
 export interface Product {
   productId: number
@@ -92,15 +100,7 @@ export interface Product {
     pa_finish?: ('Matte' | 'Polished' | 'Matte &amp; Polished')[]
     pa_pattern?: Styles[]
     pa_coverage?: ('Third' | 'Half' | 'Three Quarter' | 'Full')[]
-    pa_setting?: (
-      | 'PAVE'
-      | 'RUB OVER'
-      | 'CLAW'
-      | 'FOUR CLAW'
-      | 'BAR'
-      | 'CHANNEL'
-      | 'MIXED'
-    )[]
+    pa_setting?: ProductSettings[]
     pa_shaped?: ('Pinch' | 'Twist' | 'Curved' | 'Cutaway')[]
     'pa_diamond-set'?: 'Yes' | 'No'
     pa_diamond?: DiamondOrigin[]

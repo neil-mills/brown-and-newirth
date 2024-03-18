@@ -14,6 +14,7 @@ import {
   diamondOriginsMap,
   patternMap,
   stylesMap,
+  settingMap,
 } from '@/app/maps'
 import { getUniqueArrayValues } from '@/app/utils'
 
@@ -25,6 +26,7 @@ const map: ProductFilterAttributesMap = {
   pa_profile: profilesMap,
   pa_diamond: diamondOriginsMap,
   pa_pattern: patternMap,
+  pa_setting: settingMap,
 }
 
 interface Props {
@@ -50,13 +52,34 @@ export const useProductFilterOptions = ({
   let filteredProducts = products
   if (!isLoading && !error && products) {
     if (category) {
-      filteredProducts = products.filter(
-        (product: Product) =>
-          product.attributes?.pa_style?.includes(category as Styles) ||
-          product.attributes?.['pa_type-2']?.includes(category as Styles) ||
-          (product?.attributes?.pa_pattern &&
-            !product.attributes.pa_pattern.includes('PLAIN'))
-      )
+      filteredProducts = products.filter((product: Product) => {
+        if (category === 'Patterns') {
+          return (
+            product?.attributes?.pa_pattern &&
+            !product.attributes.pa_pattern.includes('PLAIN')
+          )
+        } else if (category === 'PLAIN') {
+          return (
+            product?.attributes?.pa_pattern &&
+            product.attributes.pa_pattern.includes('PLAIN')
+          )
+        } else if (category === 'HALF SET') {
+          return (
+            product?.attributes?.pa_coverage &&
+            product.attributes.pa_coverage.includes('Half')
+          )
+        } else if (category === 'FULL SET') {
+          return (
+            product?.attributes?.pa_coverage &&
+            product.attributes.pa_coverage.includes('Full')
+          )
+        } else {
+          return (
+            product.attributes?.pa_style?.includes(category as Styles) ||
+            product.attributes?.['pa_type-2']?.includes(category as Styles)
+          )
+        }
+      })
       stylesMap[category].filterLayers.forEach((filterLayer) => {
         filteredProducts = filteredProducts.filter(
           (product) => product?.attributes?.[filterLayer]

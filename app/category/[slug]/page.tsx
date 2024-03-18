@@ -10,6 +10,7 @@ import {
   FilteredProducts,
   PatternFilter,
   DiamondSetFilter,
+  SettingFilterMenu,
 } from '@/app/components'
 import { useCategory, useFilterSearchParams, useStore } from '@/app/hooks'
 
@@ -40,7 +41,8 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
     (hasShapeFilter &&
       category === 'Shaped' &&
       searchParams.get('pa_diamond-set'))
-
+  const showSettingFilter =
+    stylesMap[category as Styles].filterLayers.includes('pa_setting')
   const showProfileFilter =
     stylesMap[category as Styles].filterLayers.includes('pa_profile')
 
@@ -52,6 +54,7 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
           <CategoryBanner category={categoryData} />
           {showDiamondSetFilter && <DiamondSetFilter />}
           {showShapeFilter && <ShapeFilterMenu category={category} />}
+          {showSettingFilter && <SettingFilterMenu category={category} />}
           {showProfileFilter && <ProfileFilterMenu category={category} />}
           {showPatternFilter && <PatternFilter category={category} />}
         </div>

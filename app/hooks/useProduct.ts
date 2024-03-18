@@ -81,6 +81,20 @@ export const useProduct = ({ sku, productId }: Props): ReturnValues => {
       ) {
         category = ['Shaped']
       }
+      if (
+        !category &&
+        product?.attributes?.pa_coverage &&
+        product.attributes.pa_coverage.includes('Half')
+      ) {
+        category = ['HALF SET']
+      }
+      if (
+        !category &&
+        product?.attributes?.pa_coverage &&
+        product.attributes.pa_coverage.includes('Full')
+      ) {
+        category = ['FULL SET']
+      }
       if (category) {
         category.forEach((cat) => {
           filterLayers = [...filterLayers, ...stylesMap[cat].filterLayers]
