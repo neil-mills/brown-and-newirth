@@ -1,19 +1,25 @@
 'use client'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Mapping } from '@/app/types'
-import { formatSearchParams } from '@/app/utils'
+import { getFilterSearchParamUrl } from '@/app/utils'
 import { useEffect, useState } from 'react'
 
-export const FilterGrid = ({
-  type,
-  filters,
-}: {
+interface Sibling {
+  type: string
+  filters: Mapping[]
+}
+
+interface Props {
   type: 'pa_shape' | 'pa_shaped' | 'pa_profile' | 'pa_pattern' | 'pa_setting'
   filters: Mapping[]
-}) => {
+  sibling?: Sibling | null
+}
+
+export const FilterGrid = ({ type, filters, sibling }: Props) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const searchParam = searchParams.get(type)
   const [selectedOptions, setSelectedOptions] = useState<string[]>([])
 
   const handleClick = (value: string) => {
@@ -25,19 +31,21 @@ export const FilterGrid = ({
   }
 
   useEffect(() => {
-    const query = selectedOptions.length
-      ? formatSearchParams(searchParams.toString(), {
-          [type]: selectedOptions.join(','),
-        })
-      : null
-    console.log(query)
+    if (searchParam) {
+      // setSelectedOptions(searchParam.split(','))
+      console.log(searchParam)
+    }
+  }, [searchParam])
 
-    const { protocol, host, pathname } = window.location
-    const newUrl = query
-      ? `${protocol}//${host}${pathname}?${query}`
-      : `${protocol}//${host}${pathname}`
+  useEffect(() => {
+    const newUrl = getFilterSearchParamUrl({
+      type,
+      sibling,
+      selectedOptions,
+      searchParams: window.location.search.replace('?', ''),
+    })
     window.history.pushState({ path: newUrl }, '', newUrl)
-  }, [selectedOptions, router, pathname, searchParams, type])
+  }, [selectedOptions, router, pathname, type, sibling, filters])
 
   return (
     <div className="row row-pad-sm row-panels-sm justify-content-center">

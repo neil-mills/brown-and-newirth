@@ -5,7 +5,12 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Styles } from '@/app/types'
 import { useEffect } from 'react'
 
-export const ShapeFilterMenu = ({ category }: { category: Styles }) => {
+interface Props {
+  category: Styles
+  hasSibling?: boolean
+}
+
+export const ShapeFilterMenu = ({ category, hasSibling = false }: Props) => {
   const searchParams = useSearchParams()
   const filter = category === 'Shaped' ? 'pa_shaped' : 'pa_shape'
   const shapeCategory = category === 'Shaped' ? null : category
@@ -17,7 +22,15 @@ export const ShapeFilterMenu = ({ category }: { category: Styles }) => {
     isLoading,
     error,
   } = useProductFilterOptions({ filter, filters, category: shapeCategory })
-
+  let sibling = null
+  const { filterOptions: settings } = useProductFilterOptions({
+    filter: 'pa_setting',
+    filters,
+    category: shapeCategory,
+  })
+  if (hasSibling) {
+    sibling = { type: 'pa_setting', filters: settings }
+  }
   useEffect(() => {
     shapes.forEach((shape) =>
       router.prefetch(`${pathname}?pa_shape=${shape.slug}`)
@@ -30,7 +43,7 @@ export const ShapeFilterMenu = ({ category }: { category: Styles }) => {
   return (
     <div className="mb-225rem">
       <TitleBar>Choose your shape</TitleBar>
-      <FilterGrid type={filter} filters={shapes} />
+      <FilterGrid type={filter} filters={shapes} sibling={sibling} />
     </div>
   )
 }

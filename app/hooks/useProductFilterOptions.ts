@@ -99,12 +99,16 @@ export const useProductFilterOptions = ({
       )
     }
     if (filters) {
-      Object.entries(filters).forEach(([filterKey, value]) => {
+      Object.entries(filters).forEach(([filterKey, values]) => {
         if (filterKey !== filter) {
-          filteredProducts = filteredProducts?.filter((product) =>
-            product?.attributes?.[
-              filterKey as ProductFilterAttributeKeys
-            ]?.includes(value as never)
+          filteredProducts = filteredProducts?.filter(
+            (product) =>
+              product?.attributes?.[filterKey as ProductFilterAttributeKeys] &&
+              values.some((value) =>
+                product.attributes[
+                  filterKey as ProductFilterAttributeKeys
+                ]?.includes(value as never)
+              )
           )
         }
       })

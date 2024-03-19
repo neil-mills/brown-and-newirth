@@ -53,7 +53,12 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
         <div className="col-left-inner flex-grow-1 d-flex flex-column p-0">
           <CategoryBanner category={categoryData} />
           {showDiamondSetFilter && <DiamondSetFilter />}
-          {showShapeFilter && <ShapeFilterMenu category={category} />}
+          {showShapeFilter && (
+            <ShapeFilterMenu
+              category={category}
+              hasSibling={showSettingFilter}
+            />
+          )}
           {showSettingFilter && <SettingFilterMenu category={category} />}
           {showProfileFilter && <ProfileFilterMenu category={category} />}
           {showPatternFilter && <PatternFilter category={category} />}

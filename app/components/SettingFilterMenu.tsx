@@ -20,6 +20,11 @@ export const SettingFilterMenu = ({ category }: { category: Styles }) => {
     filters,
     category,
   })
+  const { filterOptions: shapes } = useProductFilterOptions({
+    filter: 'pa_shape',
+    filters,
+    category,
+  })
 
   useEffect(() => {
     settings.forEach((setting) =>
@@ -32,7 +37,11 @@ export const SettingFilterMenu = ({ category }: { category: Styles }) => {
   return (
     <div className="mb-225rem">
       <TitleBar>Choose your setting</TitleBar>
-      <FilterGrid type={'pa_setting'} filters={settings} />
+      <FilterGrid
+        type={'pa_setting'}
+        filters={settings}
+        sibling={{ type: 'pa_shape', filters: shapes }}
+      />
     </div>
   )
 }
