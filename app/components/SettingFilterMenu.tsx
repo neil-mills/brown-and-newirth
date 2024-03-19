@@ -1,11 +1,17 @@
-import { useSearchParams } from 'next/navigation'
+'use client'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { useFilterSearchParams, useProductFilterOptions } from '@/app/hooks'
 import { FilterGrid, TitleBar } from '@/app/components'
 import { Styles } from '@/app/types'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 export const SettingFilterMenu = ({ category }: { category: Styles }) => {
   const searchParams = useSearchParams()
   const filters = useFilterSearchParams(searchParams.toString())
+  const router = useRouter()
+  const pathname = usePathname()
+
   const {
     filterOptions: settings,
     isLoading,
@@ -15,6 +21,13 @@ export const SettingFilterMenu = ({ category }: { category: Styles }) => {
     filters,
     category,
   })
+
+  useEffect(() => {
+    settings.forEach((setting) =>
+      router.prefetch(`${pathname}?pa_setting=${setting.slug}`)
+    )
+  }, [settings, router, pathname])
+
   if (isLoading) return <p>Loading</p>
   if (error) return <p>{error.message}</p>
   return (

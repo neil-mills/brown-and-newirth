@@ -1,11 +1,15 @@
-import { useSearchParams } from 'next/navigation'
+'use client'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useFilterSearchParams, useProductFilterOptions } from '@/app/hooks'
 import { FilterGrid, TitleBar } from '@/app/components'
 import { Styles } from '@/app/types'
+import { useEffect } from 'react'
 
 export const PatternFilter = ({ category }: { category: Styles }) => {
   const searchParams = useSearchParams()
   const filters = useFilterSearchParams(searchParams.toString())
+  const router = useRouter()
+  const pathname = usePathname()
   const {
     filterOptions: patterns,
     isLoading,
@@ -15,6 +19,13 @@ export const PatternFilter = ({ category }: { category: Styles }) => {
     filters,
     category,
   })
+
+  useEffect(() => {
+    patterns.forEach((pattern) =>
+      router.prefetch(`${pathname}?pa_pattern=${pattern.slug}`)
+    )
+  }, [patterns, router, pathname])
+
   if (isLoading) return <p>Loading</p>
   if (error) return <p>{error.message}</p>
   return (
