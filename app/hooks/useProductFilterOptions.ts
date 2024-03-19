@@ -63,6 +63,11 @@ export const useProductFilterOptions = ({
             product?.attributes?.pa_pattern &&
             product.attributes.pa_pattern.includes('PLAIN')
           )
+        } else if (category === 'Two Colour') {
+          return (
+            product?.attributes?.pa_pattern &&
+            product.attributes.pa_pattern.includes('MIXED METAL')
+          )
         } else if (category === 'HALF SET') {
           return (
             product?.attributes?.pa_coverage &&

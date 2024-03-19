@@ -24,7 +24,14 @@ export const useProducts = (
 
   if (!isLoading && !error && data) {
     if (
-      ['Shaped', 'Patterns', 'PLAIN', 'HALF SET', 'FULL SET'].includes(category)
+      [
+        'Shaped',
+        'Patterns',
+        'PLAIN',
+        'HALF SET',
+        'FULL SET',
+        'Two Colour',
+      ].includes(category)
     ) {
       if (category === 'Shaped') {
         products = data.filter(
@@ -49,7 +56,16 @@ export const useProducts = (
         products = data.filter(
           (product) =>
             product?.attributes?.pa_pattern &&
-            !product.attributes.pa_pattern.includes('PLAIN')
+            product.attributes.pa_pattern.some(
+              (filter) => !['PLAIN'].includes(filter)
+            )
+        )
+      }
+      if (category === 'Two Colour') {
+        products = data.filter(
+          (product) =>
+            product?.attributes?.pa_pattern &&
+            product.attributes.pa_pattern.includes('MIXED METAL')
         )
       }
       if (category === 'PLAIN') {
@@ -69,12 +85,12 @@ export const useProducts = (
                 product?.attributes?.['pa_type-2']?.includes(category)
             )
     }
-
     stylesMap[category].filterLayers.forEach((filterLayer) => {
       products = products.filter(
         (product) => product?.attributes?.[filterLayer]
       )
     })
+
     if (filters) {
       Object.entries(filters).forEach(([filter, value]) => {
         products = products.filter((product) =>
