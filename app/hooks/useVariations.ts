@@ -31,17 +31,17 @@ export const useVariations = ({
       : [productToVariation(product)]
     filteredVariations = productVariations
     if (filters && Object.keys(filters)) {
-      Object.entries(filters).forEach(([filter, value]) => {
+      Object.entries(filters).forEach(([filter, values]) => {
         if (rangeAttributes.includes(filter as RangeFilterAttribute))
-          value = value.replace('.', '-')
+          values = values.map((value) => value.replace('.', '-'))
         if (!rangeAttributes.includes(filter as RangeFilterAttribute)) {
-          filteredVariations = filteredVariations.filter(
-            (variation) =>
-              variation?.attributes?.[filter as VariationAttributeKeys] ===
-              value
+          filteredVariations = filteredVariations.filter((variation) =>
+            values.includes(
+              variation?.attributes?.[filter as VariationAttributeKeys]!
+            )
           )
         } else {
-          value = value.replace('-', '.')
+          values = values.map((value) => value.replace('-', '.'))
           filteredVariations = filteredVariations.filter((variation) => {
             const numericValue = variation?.attributes?.[
               filter as RangeFilterAttribute
@@ -53,15 +53,27 @@ export const useVariations = ({
                 )
               : null
             const map = rangeFilterMap[filter as RangeFilterAttribute]
-            const { start, end } = map[value]
+
+            const ranges = values.map((value) => {
+              const { start, end } = map[value]
+              return { start, end }
+            })
+
             const allKeys = Object.keys(map).sort(
               (a, b) => parseFloat(a) - parseFloat(b)
             )
             const lastOption = parseFloat(allKeys[allKeys.length - 1])
             if (numericValue && numericValue < lastOption) {
-              return numericValue >= start! && numericValue <= end!
+              for (const range of ranges) {
+                if (
+                  numericValue >= range.start! &&
+                  numericValue <= range.end!
+                ) {
+                  return true
+                }
+              }
+              return false
             }
-            if (numericValue && !end && numericValue >= lastOption) return true
             return false
           })
         }
