@@ -1,6 +1,8 @@
+'use client'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Mapping } from '@/app/types'
 import { formatSearchParams } from '@/app/utils'
+import { useEffect, useState } from 'react'
 
 export const FilterGrid = ({
   type,
@@ -12,13 +14,24 @@ export const FilterGrid = ({
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const [selectedOptions, setSelectedOptions] = useState<string[]>([])
 
-  const handleClick = (shape: string) => {
-    const query = formatSearchParams(searchParams.toString(), {
-      [type]: shape,
-    })
-    router.push(`${pathname}?${query}`)
+  const handleClick = (value: string) => {
+    setSelectedOptions(
+      selectedOptions.includes(value)
+        ? selectedOptions.filter((option) => option !== value)
+        : [value, ...selectedOptions]
+    )
   }
+
+  useEffect(() => {
+    const query = selectedOptions.length
+      ? formatSearchParams(searchParams.toString(), {
+          [type]: selectedOptions.join(','),
+        })
+      : null
+    router.push(query ? `${pathname}?${query}` : pathname)
+  }, [selectedOptions, router, pathname, searchParams, type])
 
   return (
     <div className="row row-pad-sm row-panels-sm justify-content-center">
@@ -30,6 +43,7 @@ export const FilterGrid = ({
           <button
             className="btn btn-icon bg-gradient-grey w-100"
             onClick={() => handleClick(filter.slug)}
+            aria-pressed={selectedOptions.includes(filter.slug)}
           >
             <p className="pt-2 mb-0">{filter.label}</p>
             <div className="icon-wrapper-square d-flex align-items-center justify-content-center px-4 pb-2">

@@ -54,11 +54,11 @@ export type SearchParamKeys =
   | 'pa_setting'
 
 export type Filters = {
-  [TKey in FilterLayerKeys]?: string
+  [TKey in FilterLayerKeys]?: string[]
 }
 
 export type ProductFilters = {
-  [TKey in ProductAttributeKeys]?: string
+  [TKey in ProductAttributeKeys]?: string[]
 }
 
 export type VariationFilters = {

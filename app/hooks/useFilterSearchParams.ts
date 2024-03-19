@@ -37,15 +37,17 @@ export const useFilterSearchParams = (
   const searchParams = searchParamsToObject(searchParamsStr)
   let filters: Filters | null = null
   if (!searchParams || Object.keys(searchParams).length === 0) return filters
-  filters = Object.entries(searchParams).reduce((acc, [key, value]) => {
+  filters = Object.entries(searchParams).reduce((acc, [key, values]) => {
     if (Object.keys(map).includes(key)) {
-      const index = Object.entries(map[key as SearchParamKeys]).findIndex(
-        ([_key, mapping]) => mapping.slug === value
-      )
-      acc = {
-        ...acc,
-        [key]: Object.keys(map[key as SearchParamKeys])[index],
-      }
+      const filterValues = values
+        ? values.split(',').map((value) => {
+            const index = Object.entries(map[key as SearchParamKeys]).findIndex(
+              ([_mapKey, mapping]) => mapping.slug === value
+            )
+            return Object.keys(map[key as SearchParamKeys])[index]
+          })
+        : []
+      acc = { ...acc, [key]: filterValues }
     }
     return acc
   }, {} as Filters)

@@ -92,10 +92,10 @@ export const useProducts = (
     })
 
     if (filters) {
-      Object.entries(filters).forEach(([filter, value]) => {
+      Object.entries(filters).forEach(([filter, values]) => {
         products = products.filter((product) =>
-          product?.attributes?.[filter as ProductAttributeKeys]?.includes(
-            value as never
+          product?.attributes?.[filter as ProductAttributeKeys]?.some(
+            (attrValue) => values.includes(attrValue)
           )
         )
       })
