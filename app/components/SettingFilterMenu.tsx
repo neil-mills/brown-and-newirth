@@ -1,9 +1,8 @@
 'use client'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { usePathname, useSearchParams, useRouter } from 'next/navigation'
 import { useFilterSearchParams, useProductFilterOptions } from '@/app/hooks'
 import { FilterGrid, TitleBar } from '@/app/components'
 import { Styles } from '@/app/types'
-import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 export const SettingFilterMenu = ({ category }: { category: Styles }) => {
