@@ -1,6 +1,6 @@
 'use client'
 import { usePathname, useRouter } from 'next/navigation'
-import { useProductFilterOptions, useStore } from '@/app/hooks'
+import { useProductFilterOptions, useRangeFilter, useStore } from '@/app/hooks'
 import classNames from 'classnames'
 import { formatSearchParams, searchParamsToObject } from '../utils'
 
@@ -10,13 +10,9 @@ export const DiamondOriginFilter = () => {
   const searchParamsObj = searchParamsToObject(searchParams)
   const pathname = usePathname()
   const router = useRouter()
-  const {
-    filterOptions: diamondOrigins,
-    isLoading,
-    error,
-  } = useProductFilterOptions({
-    filter: 'pa_diamond',
-    productId: product?.productId.toString(),
+  const [diamondOrigins, availableDiamondOrigins] = useRangeFilter({
+    rangeFilter: 'pa_diamond',
+    filters: null,
   })
 
   const handleClick = (diamondOrigin: string) => {
@@ -45,6 +41,7 @@ export const DiamondOriginFilter = () => {
                 className={`btn btn-filter ${btnClass} ${diamondOrigin.class} w-100`}
                 // disabled={diamondOrigins.length === 1}
                 onClick={() => handleClick(diamondOrigin.slug)}
+                disabled={!availableDiamondOrigins.includes(diamondOrigin.slug)}
               >
                 <span>{diamondOrigin.label}</span>
               </button>

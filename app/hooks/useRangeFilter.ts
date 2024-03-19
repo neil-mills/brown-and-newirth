@@ -41,31 +41,46 @@ export const useRangeFilter = <T>({
         }
       })
     }
-    availableOptions = getUniqueArrayValues<T[]>(
-      filteredVariations
-        .filter(
-          (variation) =>
-            variation?.attributes?.[rangeFilter as VariationAttributeKeys]
-        )
-        .map(
-          (variation) =>
-            variation.attributes[rangeFilter as VariationAttributeKeys]
-        )
-        .map((option) => {
-          const numericOption = parseFloat(option?.replace('-', '.') as string)
-          const lastOption = allOptions[allOptions.length - 1].start
-          const rangeMap = rangeFilterMap[rangeFilter]
-          const index =
-            numericOption < lastOption!
-              ? Object.entries(rangeMap).findIndex(
-                  ([_widthKey, { start, end }]) =>
-                    numericOption >= start! && numericOption <= end!
-                )
-              : Object.keys(rangeMap).length - 1
-          return Object.keys(rangeMap)[index]
-        })
-        .filter((option) => option !== undefined)
-    )
+    if (
+      ['pa_centre-carat', 'pa_total-carat', 'pa_width'].includes(rangeFilter)
+    ) {
+      availableOptions = getUniqueArrayValues<T[]>(
+        filteredVariations
+          .filter(
+            (variation) =>
+              variation?.attributes?.[rangeFilter as VariationAttributeKeys]
+          )
+          .map(
+            (variation) =>
+              variation.attributes[rangeFilter as VariationAttributeKeys]
+          )
+          .map((option) => {
+            const numericOption = parseFloat(
+              option?.replace('-', '.') as string
+            )
+            const lastOption = allOptions[allOptions.length - 1].start
+            const rangeMap = rangeFilterMap[rangeFilter]
+            const index =
+              numericOption < lastOption!
+                ? Object.entries(rangeMap).findIndex(
+                    ([_widthKey, { start, end }]) =>
+                      numericOption >= start! && numericOption <= end!
+                  )
+                : Object.keys(rangeMap).length - 1
+            return Object.keys(rangeMap)[index]
+          })
+          .filter((option) => option !== undefined)
+      )
+    } else {
+      availableOptions = getUniqueArrayValues<T[]>(
+        filteredVariations
+          .filter(
+            (variation) =>
+              variation?.attributes?.[rangeFilter as VariationAttributeKeys]
+          )
+          .map((variation) => variation.attributes[rangeFilter]!)
+      )
+    }
   }
 
   return [allOptions, availableOptions]
