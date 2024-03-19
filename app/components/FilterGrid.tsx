@@ -30,7 +30,11 @@ export const FilterGrid = ({
           [type]: selectedOptions.join(','),
         })
       : null
-    router.push(query ? `${pathname}?${query}` : pathname)
+    if (query) {
+      const { protocol, host, pathname } = window.location
+      const newUrl = `${protocol}//${host}${pathname}?${query}`
+      window.history.pushState({ path: newUrl }, '', newUrl)
+    }
   }, [selectedOptions, router, pathname, searchParams, type])
 
   return (

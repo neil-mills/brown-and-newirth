@@ -36,7 +36,11 @@ export const DiamondCaratFilter = ({ attribute }: Props) => {
           [attribute]: selectedCarats.join(','),
         })
       : null
-    router.push(query ? `${pathname}?${query}` : pathname)
+    if (query) {
+      const { protocol, host, pathname } = window.location
+      const newUrl = `${protocol}//${host}${pathname}?${query}`
+      window.history.pushState({ path: newUrl }, '', newUrl)
+    }
   }, [router, selectedCarats, attribute, searchParams, pathname])
 
   return (
