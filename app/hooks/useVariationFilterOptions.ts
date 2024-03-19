@@ -31,11 +31,11 @@ export const useVariationFilterOptions = ({
       : [productToVariation(product)]
     filteredVariations = productVariations
     if (filters) {
-      Object.entries(filters).forEach(([filter, value]) => {
+      Object.entries(filters).forEach(([filter, values]) => {
         filteredVariations = filteredVariations.filter(
           (variation) =>
             variation?.attributes?.[filter as FilterAttributes] &&
-            variation.attributes[filter as FilterAttributes] === value
+            values.includes(variation.attributes[filter as FilterAttributes]!)
         )
       })
     }

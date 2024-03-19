@@ -1,12 +1,12 @@
 'use client'
 import { ProductGrid, TitleBar } from '@/app/components'
 import { useStore, useVariations } from '@/app/hooks'
-import { FilterLayerKeys, VariationFilters } from '@/app/types'
+import { FilterLayerKeys, Filters } from '@/app/types'
 
 export const FilteredVariations = ({
   filters,
 }: {
-  filters: VariationFilters | null
+  filters: Filters | null
 }) => {
   const { filterLayers } = useStore((store) => store.selectedSku)
   const filterByAttribute: FilterLayerKeys =

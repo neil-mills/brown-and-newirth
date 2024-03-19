@@ -31,12 +31,12 @@ export const useRangeFilter = <T>({
       : [productToVariation(product)]
     filteredVariations = productVariations
     if (filters) {
-      Object.entries(filters).forEach(([filter, value]) => {
+      Object.entries(filters).forEach(([filter, values]) => {
         if (filter !== rangeFilter) {
           filteredVariations = filteredVariations.filter(
             (variation) =>
               variation?.attributes?.[rangeFilter] &&
-              variation.attributes[rangeFilter] === value
+              values.includes(variation.attributes[rangeFilter]!)
           )
         }
       })
