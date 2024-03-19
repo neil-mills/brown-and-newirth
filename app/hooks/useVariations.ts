@@ -54,7 +54,9 @@ export const useVariations = ({
               : null
             const map = rangeFilterMap[filter as RangeFilterAttribute]
             const { start, end } = map[value]
-            const allKeys = Object.keys(map)
+            const allKeys = Object.keys(map).sort(
+              (a, b) => parseFloat(a) - parseFloat(b)
+            )
             const lastOption = parseFloat(allKeys[allKeys.length - 1])
             if (numericValue && numericValue < lastOption) {
               return numericValue >= start! && numericValue <= end!
@@ -65,7 +67,6 @@ export const useVariations = ({
         }
       })
     }
-
     const productSkus = getUniqueArrayValues<string[]>(
       filteredVariations.map((variation) => variation.sku)
     )
