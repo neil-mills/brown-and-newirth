@@ -56,7 +56,9 @@ export const useProductFilterOptions = ({
         if (category === 'Patterns') {
           return (
             product?.attributes?.pa_pattern &&
-            !product.attributes.pa_pattern.includes('PLAIN')
+            !product.attributes.pa_pattern.some((pattern) =>
+              ['PLAIN', 'MIXED METAL'].includes(pattern)
+            )
           )
         } else if (category === 'PLAIN') {
           return (
