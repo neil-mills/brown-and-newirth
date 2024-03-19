@@ -12,7 +12,6 @@ export const DataTable = () => {
   const { product, variations } = useStore((store) => store.selectedSku)
   const searchParams = useSearchParams()
   const variationId = searchParams.get('variation-id')
-  // console.log({ variationId, variations })
   if (!product) return null
   const variation = variationId
     ? variations.find(
