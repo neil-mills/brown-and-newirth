@@ -1,3 +1,4 @@
+'use client'
 import Image from 'next/image'
 import {
   FilterLayerKeys,
@@ -9,13 +10,14 @@ import {
 } from '@/app/types'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { CreatedLosenge } from '@/app/components'
-import { useFilterSearchParams, useStore } from '@/app/hooks'
+import { useStore } from '@/app/hooks'
 import {
   formatCarat,
   formatWidth,
   formatDiamondQuality,
   formatSearchParams,
 } from '@/app/utils'
+import { useEffect } from 'react'
 
 interface Props {
   style: 'product' | 'variation'
@@ -62,6 +64,10 @@ export const ProductCard = ({ item, label, style }: Props) => {
     : hasSecondFilterLayer
     ? `productId/${item.productId}`
     : `sku/${item.sku}`
+
+  useEffect(() => {
+    router.prefetch(`/products/${url}`)
+  }, [url, router])
 
   const isCreated =
     (isVariation(item) && item.attributes.pa_diamond === 'LAB GROWN') ||
