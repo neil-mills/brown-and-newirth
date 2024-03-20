@@ -2,8 +2,8 @@ import {
   VariationAttributeKeys,
   FilterLayerKeys,
   Variation,
-  Filters,
   RangeFilterAttribute,
+  Filters,
 } from '@/app/types'
 import { useStore } from '@/app/hooks'
 import { getUniqueArrayValues, productToVariation } from '@/app/utils'

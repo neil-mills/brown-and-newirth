@@ -1,19 +1,31 @@
 'use client'
-import { useVariationFilterOptions } from '@/app/hooks'
-import { formatSearchParams } from '@/app/utils'
-import { usePathname, useSearchParams, useRouter } from 'next/navigation'
+import { useRangeFilter, useFilterSearchParams, useStore } from '@/app/hooks'
+import { getFilterSearchParamUrl } from '@/app/utils'
+import { useSearchParams } from 'next/navigation'
+import { VariationGauge } from '@/app/types'
 
 export const GaugeFilter = () => {
+  const storeFilters = useStore((store) => store.filters)
+  const setFilters = useStore((store) => store.setFilters)
   const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const gauges = useVariationFilterOptions({ filter: 'pa_gauge' })
-  const router = useRouter()
+  const filters = useFilterSearchParams(searchParams.toString())
 
-  const handleClick = (gauge: string) => {
-    const query = formatSearchParams(searchParams.toString(), {
-      pa_gauge: gauge,
+  const [gauges, availableGauges] = useRangeFilter<VariationGauge>({
+    rangeFilter: 'pa_gauge',
+    childRangeFilter: 'pa_width',
+    filters,
+  })
+  const handleClick = (value: string) => {
+    const newOptions = storeFilters.pa_gauge.includes(value)
+      ? storeFilters.pa_gauge.filter((option) => option !== value)
+      : [value, ...storeFilters.pa_gauge]
+    const newUrl = getFilterSearchParamUrl({
+      type: 'pa_gauge',
+      childType: 'pa_width',
+      selectedOptions: newOptions,
     })
-    router.push(`${pathname}?${query}`)
+    setFilters({ ...storeFilters, pa_gauge: newOptions, pa_width: [] })
+    window.history.pushState({ path: newUrl }, '', newUrl)
   }
 
   return (
@@ -27,6 +39,8 @@ export const GaugeFilter = () => {
                 isActive ? ' bg-pink' : ''
               } btn-filter btn-border btn-gauge-${gauge.slug} h-100 w-100 px-1`}
               onClick={() => handleClick(gauge.slug)}
+              disabled={!availableGauges.includes(gauge.slug as VariationGauge)}
+              aria-pressed={storeFilters.pa_gauge.includes(gauge.slug)}
             >
               <span>{gauge.label}</span>
             </button>

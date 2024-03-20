@@ -11,11 +11,13 @@ import { productToVariation, getUniqueArrayValues } from '@/app/utils'
 
 interface Props {
   rangeFilter: RangeFilterAttribute
+  childRangeFilter?: RangeFilterAttribute
   filters: Filters | null
 }
 
 export const useRangeFilter = <T>({
   rangeFilter,
+  childRangeFilter,
   filters,
 }: Props): [Mapping[], T[]] => {
   const allOptions = Object.entries(rangeFilterMap[rangeFilter])
@@ -32,11 +34,17 @@ export const useRangeFilter = <T>({
     filteredVariations = productVariations
     if (filters) {
       Object.entries(filters).forEach(([filter, values]) => {
-        if (filter !== rangeFilter) {
+        if (
+          ![rangeFilter, childRangeFilter].includes(
+            filter as RangeFilterAttribute
+          )
+        ) {
           filteredVariations = filteredVariations.filter(
             (variation) =>
-              variation?.attributes?.[rangeFilter] &&
-              values.includes(variation.attributes[rangeFilter]!)
+              variation?.attributes?.[filter as VariationAttributeKeys] &&
+              values.includes(
+                variation.attributes[filter as VariationAttributeKeys]!
+              )
           )
         }
       })

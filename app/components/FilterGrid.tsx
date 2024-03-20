@@ -1,5 +1,4 @@
 'use client'
-import { useSearchParams } from 'next/navigation'
 import { Mapping, ProductFilterAttributeKeys } from '@/app/types'
 import { getFilterSearchParamUrl } from '@/app/utils'
 import { useStore } from '@/app/hooks'
@@ -11,8 +10,6 @@ interface Props {
 }
 
 export const FilterGrid = ({ type, filters, childType }: Props) => {
-  const searchParams = useSearchParams()
-  const searchParam = searchParams.get(type)
   const storeFilters = useStore((store) => store.filters)
   const setFilters = useStore((store) => store.setFilters)
 

@@ -33,6 +33,8 @@ export type ProductAttributeKeys =
   | 'pa_shaped'
 
 export type ProductFilterAttributeKeys =
+  | 'pa_gauge'
+  | 'pa_width'
   | 'pa_shape'
   | 'pa_shaped'
   | 'pa_profile'

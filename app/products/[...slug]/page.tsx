@@ -1,5 +1,5 @@
 'use client'
-import { Suspense, useEffect } from 'react'
+import { useEffect } from 'react'
 import {
   ProductDetails,
   OtherOptions,

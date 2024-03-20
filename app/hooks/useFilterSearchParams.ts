@@ -10,7 +10,7 @@ import {
   patternMap,
   settingMap,
 } from '@/app/maps'
-import { Map, Filters, SearchParamKeys } from '@/app/types'
+import { Map, SearchParamKeys, Filters } from '@/app/types'
 import { searchParamsToObject } from '@/app/utils'
 
 type FilterSearchParamsMap = {

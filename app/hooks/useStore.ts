@@ -68,6 +68,8 @@ export const useStore = create<Store>((set) => ({
   basket: [],
   searchParams: '',
   filters: {
+    pa_gauge: [],
+    pa_width: [],
     pa_shape: [],
     pa_shaped: [],
     pa_profile: [],
