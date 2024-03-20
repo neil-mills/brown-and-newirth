@@ -2,6 +2,7 @@
 import { useRangeFilter, useStore } from '@/app/hooks'
 import classNames from 'classnames'
 import { getFilterSearchParamUrl, searchParamsToObject } from '@/app/utils'
+import { decode } from 'html-entities'
 
 export const DiamondOriginFilter = ({
   childType,
@@ -54,7 +55,7 @@ export const DiamondOriginFilter = ({
                   diamondOrigin.slug
                 )}
               >
-                <span>{diamondOrigin.label}</span>
+                <span>{decode(diamondOrigin.label, { level: 'html5' })}</span>
               </button>
             </div>
           )
