@@ -1,20 +1,32 @@
 'use client'
-import { formatSearchParams } from '@/app/utils'
+import { getFilterSearchParamUrl } from '@/app/utils'
 import { TitleBar } from '@/app/components'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
+import { useStore } from '@/app/hooks'
 
 type DiamondSet = 'yes' | 'no'
 export const DiamondSetFilter = () => {
-  const router = useRouter()
-  const pathname = usePathname()
   const searchParams = useSearchParams()
+  const storeFilters = useStore((store) => store.filters)
+  const setFilters = useStore((store) => store.setFilters)
 
   const diamondSet = searchParams.get('pa_diamond-set')
-  const handleClick = (diamondSet: DiamondSet) => {
-    const query = formatSearchParams(searchParams.toString(), {
-      'pa_diamond-set': diamondSet,
+
+  const handleClick = (value: string) => {
+    const newOptions = storeFilters['pa_diamond-set'].includes(value)
+      ? storeFilters['pa_diamond-set'].filter((option) => option !== value)
+      : [value, ...storeFilters.pa_diamond]
+    const newUrl = getFilterSearchParamUrl({
+      type: 'pa_diamond-set',
+      childType: 'pa_shaped',
+      selectedOptions: newOptions,
     })
-    router.push(`${pathname}?${query}`)
+    setFilters({
+      ...storeFilters,
+      'pa_diamond-set': newOptions,
+      pa_shaped: [],
+    })
+    window.history.pushState({ path: newUrl }, '', newUrl)
   }
 
   return (
