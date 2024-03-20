@@ -14,7 +14,7 @@ interface Props {
   items: Product[] | Variation[] | Mapping[]
 }
 
-export const ProductGrid = ({ items, label, style }: Props) => {
+const ProductGrid = ({ items, label, style }: Props) => {
   return (
     <div className="row row-product-grid text-uppercase text-xs text-center">
       {items.map((item, i) => (
@@ -34,3 +34,5 @@ export const ProductGrid = ({ items, label, style }: Props) => {
     </div>
   )
 }
+
+export default ProductGrid

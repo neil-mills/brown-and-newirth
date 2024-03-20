@@ -1,6 +1,12 @@
 'use client'
-import { TitleBar, ProductGrid } from '@/app/components'
+import { CategoryGridSkeleton, TitleBar } from '@/app/components'
 import { useStyles } from '@/app/hooks'
+import dynamic from 'next/dynamic'
+
+const ProductGrid = dynamic(() => import('@/app/components/ProductGrid'), {
+  ssr: true,
+  loading: () => <CategoryGridSkeleton />,
+})
 
 export const SearchByStyle = () => {
   const { styles, isLoading, error } = useStyles()
@@ -8,7 +14,7 @@ export const SearchByStyle = () => {
     ...styles,
     { label: 'Shaped', slug: 'shaped', image: '/img/09_shaped.png' },
   ]
-  if (isLoading) return <p>Loading</p>
+  // if (isLoading) return null
   if (error) return <p>{error.message}</p>
   return (
     <>
