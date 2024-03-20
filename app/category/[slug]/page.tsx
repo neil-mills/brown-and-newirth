@@ -54,10 +54,7 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
           <CategoryBanner category={categoryData} />
           {showDiamondSetFilter && <DiamondSetFilter />}
           {showShapeFilter && (
-            <ShapeFilterMenu
-              category={category}
-              hasSibling={showSettingFilter}
-            />
+            <ShapeFilterMenu category={category} hasChild={showSettingFilter} />
           )}
           {showSettingFilter && <SettingFilterMenu category={category} />}
           {showProfileFilter && <ProfileFilterMenu category={category} />}

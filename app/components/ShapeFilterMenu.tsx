@@ -1,17 +1,18 @@
 'use client'
 import { FilterGrid, TitleBar } from '@/app/components'
-import { useProductFilterOptions } from '../hooks'
+import { useFilterSearchParams, useProductFilterOptions } from '../hooks'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Styles } from '@/app/types'
 import { useEffect } from 'react'
 
 interface Props {
   category: Styles
-  hasSibling?: boolean
+  hasChild?: boolean
 }
 
-export const ShapeFilterMenu = ({ category, hasSibling = false }: Props) => {
+export const ShapeFilterMenu = ({ category, hasChild = false }: Props) => {
   const searchParams = useSearchParams()
+  const filters = useFilterSearchParams(searchParams.toString())
   const filter = category === 'Shaped' ? 'pa_shaped' : 'pa_shape'
   const shapeCategory = category === 'Shaped' ? null : category
   const router = useRouter()
@@ -22,7 +23,7 @@ export const ShapeFilterMenu = ({ category, hasSibling = false }: Props) => {
     error,
   } = useProductFilterOptions({
     filter,
-    filters: null,
+    filters: hasChild ? null : filters,
     category: shapeCategory,
   })
   useEffect(() => {
@@ -40,7 +41,7 @@ export const ShapeFilterMenu = ({ category, hasSibling = false }: Props) => {
       <FilterGrid
         type={filter}
         filters={shapes}
-        childType={hasSibling ? 'pa_setting' : null}
+        childType={hasChild ? 'pa_setting' : null}
       />
     </div>
   )
