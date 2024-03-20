@@ -1,19 +1,15 @@
-import { Mapping } from '@/app/types'
-
 interface Props {
   type: string
+  childType?: string | null
   selectedOptions: string[]
-  sibling?: { type: string; filters: Mapping[] } | null
-  searchParams: string
 }
 
 export const getFilterSearchParamUrl = ({
   type,
+  childType,
   selectedOptions,
-  sibling,
-  searchParams,
 }: Props) => {
-  if (type === 'pa_setting') console.log(sibling)
+  const searchParams = window.location.search.replace('?', '')
   const allSearchParams = searchParams.toString()
     ? searchParams.toString().split('&')
     : []
@@ -27,16 +23,11 @@ export const getFilterSearchParamUrl = ({
     if (newParams[type] && selectedOptions.length === 0) {
       delete newParams[type]
     }
+    if (childType) {
+      delete newParams[childType]
+    }
     if (selectedOptions.length) {
       newParams[type] = selectedOptions.join(',')
-    }
-    if (sibling && newParams[sibling.type]) {
-      newParams[sibling.type] = newParams[sibling.type]
-        .split(',')
-        .filter((value) =>
-          sibling.filters.some((filter) => filter.slug === value)
-        )
-        .join(',')
     }
     query = Object.entries(newParams)
       .reduce(

@@ -5,6 +5,7 @@ import {
   Images,
   Product,
   Variation,
+  ProductFilterAttributeKeys,
 } from '@/app/types'
 import { mountStoreDevtool } from 'simple-zustand-devtools'
 
@@ -26,6 +27,8 @@ interface Store {
   selectedSku: SelectedSku
   basket: BasketItem[]
   searchParams: string
+  filters: Filters
+  setFilters: (filters: Filters) => void
   setSearchParams: (searchParams: string) => void
   setSelectedSku: (selectedSku: SelectedSku) => void
   resetSelectedSku: () => void
@@ -41,6 +44,10 @@ interface ProductsQuery {
   search?: string
   sku?: string
   category?: string
+}
+
+type Filters = {
+  [TKey in ProductFilterAttributeKeys]: string[]
 }
 
 const selectedSku = {
@@ -60,6 +67,14 @@ export const useStore = create<Store>((set) => ({
   selectedSku,
   basket: [],
   searchParams: '',
+  filters: {
+    pa_shape: [],
+    pa_shaped: [],
+    pa_profile: [],
+    pa_diamond: [],
+    pa_pattern: [],
+    pa_setting: [],
+  },
   productsQuery: {} as ProductsQuery,
   setSelectedSku: (selectedSku: SelectedSku) =>
     set((store) => ({ ...store, selectedSku })),
@@ -71,6 +86,7 @@ export const useStore = create<Store>((set) => ({
       ...store,
       selectedSku: { ...store.selectedSku, filterLayers },
     })),
+  setFilters: (filters: Filters) => set((store) => ({ ...store, filters })),
   setSize: (size: string) =>
     set((store) => ({
       ...store,
