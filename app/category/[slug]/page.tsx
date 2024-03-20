@@ -10,7 +10,6 @@ import {
   FilteredProducts,
   PatternFilter,
   DiamondSetFilter,
-  SettingFilterMenu,
   FilterGridSkeleton,
 } from '@/app/components'
 import { useCategory, useFilterSearchParams, useStore } from '@/app/hooks'
@@ -21,6 +20,14 @@ interface Props {
 
 const ShapeFilterMenu = dynamic(
   () => import('@/app/components/ShapeFilterMenu'),
+  {
+    ssr: false,
+    loading: () => <FilterGridSkeleton />,
+  }
+)
+
+const SettingFilterMenu = dynamic(
+  () => import('@/app/components/SettingFilterMenu'),
   {
     ssr: false,
     loading: () => <FilterGridSkeleton />,

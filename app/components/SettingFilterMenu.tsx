@@ -32,7 +32,6 @@ export const SettingFilterMenu = ({ category }: { category: Styles }) => {
     )
   }, [settings, router, pathname])
 
-  if (isLoading) return <p>Loading</p>
   if (error) return <p>{error.message}</p>
   return (
     <div className="mb-225rem">

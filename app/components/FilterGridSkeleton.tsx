@@ -2,7 +2,7 @@ import { TitleBar } from './TitleBar'
 
 export const FilterGridSkeleton = () => {
   return (
-    <>
+    <div className="mb-225rem">
       <TitleBar>
         <span style={{ visibility: 'hidden' }}>XXXX</span>
       </TitleBar>
@@ -32,6 +32,6 @@ export const FilterGridSkeleton = () => {
           ></div>
         </div>
       </div>
-    </>
+    </div>
   )
 }

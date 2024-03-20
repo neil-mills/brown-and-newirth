@@ -14,7 +14,6 @@ export const SearchByStyle = () => {
     ...styles,
     { label: 'Shaped', slug: 'shaped', image: '/img/09_shaped.png' },
   ]
-  // if (isLoading) return null
   if (error) return <p>{error.message}</p>
   return (
     <>

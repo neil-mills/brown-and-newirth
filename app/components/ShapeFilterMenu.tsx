@@ -32,7 +32,6 @@ const ShapeFilterMenu = ({ category, hasChild = false }: Props) => {
     )
   }, [shapes, router, pathname])
 
-  // if (isLoading) return null
   if (error) return <p>{error.message}</p>
 
   return (
