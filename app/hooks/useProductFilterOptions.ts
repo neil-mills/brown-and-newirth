@@ -17,6 +17,7 @@ import {
   settingMap,
   gaugeMap,
   widthMap,
+  caratMap,
 } from '@/app/maps'
 import { getUniqueArrayValues } from '@/app/utils'
 
@@ -29,8 +30,8 @@ const map: ProductFilterAttributesMap = {
   pa_diamond: diamondOriginsMap,
   pa_pattern: patternMap,
   pa_setting: settingMap,
-  pa_gauge: gaugeMap,
-  pa_width: widthMap,
+  'pa_centre-carat': caratMap,
+  'pa_total-carat': caratMap,
 }
 
 interface Props {
