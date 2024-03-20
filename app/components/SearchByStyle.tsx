@@ -4,7 +4,7 @@ import { useStyles } from '@/app/hooks'
 import dynamic from 'next/dynamic'
 
 const ProductGrid = dynamic(() => import('@/app/components/ProductGrid'), {
-  ssr: true,
+  ssr: false,
   loading: () => <CategoryGridSkeleton />,
 })
 
