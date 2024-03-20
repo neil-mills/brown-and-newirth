@@ -75,7 +75,7 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
         <ProductDetails />
       </div>
       <div className="col col-right h-100">
-        {searchByCode && (
+        {searchByCode ? (
           <>
             <div className="row row-pad-sm align-items-center">
               <ResultsFilter />
@@ -93,9 +93,9 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
               </div>
             </div>
           </>
+        ) : (
+          <FilteredVariations filters={filters} />
         )}
-
-        <FilteredVariations filters={filters} />
       </div>
     </>
   )
