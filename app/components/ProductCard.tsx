@@ -149,37 +149,43 @@ export const ProductCard = ({ item, label, style }: Props) => {
           </div>
           {isVariation(item) && (
             <div className="d-flex d-lg-block d-xl-flex justify-content-between mb-3">
-              {filterLayers?.some((filterLayer) =>
-                ['pa_centre-carat', 'pa_total-carat'].includes(filterLayer)
-              ) && (
+              {label === 'code' ? (
+                <p className="mb-0">{item.sku}</p>
+              ) : (
                 <>
-                  <p className="mb-0">
-                    {formatDiamondQuality(
-                      item?.attributes?.['pa_diamond-quality']
-                    )}
-                  </p>
+                  {filterLayers?.some((filterLayer) =>
+                    ['pa_centre-carat', 'pa_total-carat'].includes(filterLayer)
+                  ) && (
+                    <>
+                      <p className="mb-0">
+                        {formatDiamondQuality(
+                          item?.attributes?.['pa_diamond-quality']
+                        )}
+                      </p>
+                    </>
+                  )}
+                  {filterLayers?.includes('pa_width') && (
+                    <p className="mb-0">
+                      {item.sku} {formatWidth(item.attributes['pa_width'])}
+                    </p>
+                  )}
+                  {filterLayers?.includes('pa_centre-carat') && (
+                    <p className="ms-xl-2">
+                      carat {formatCarat(item.attributes['pa_centre-carat'])}
+                      <sup>ct</sup>
+                    </p>
+                  )}
+                  {filterLayers?.includes('pa_total-carat') && (
+                    <p className="ms-xl-2">
+                      Total carat{' '}
+                      {formatCarat(item.attributes['pa_total-carat'])}
+                      <sup>ct</sup>
+                    </p>
+                  )}
                 </>
-              )}
-              {filterLayers?.includes('pa_width') && (
-                <p className="mb-0">
-                  {item.sku} {formatWidth(item.attributes['pa_width'])}
-                </p>
-              )}
-              {filterLayers?.includes('pa_centre-carat') && (
-                <p className="ms-xl-2">
-                  carat {formatCarat(item.attributes['pa_centre-carat'])}
-                  <sup>ct</sup>
-                </p>
-              )}
-              {filterLayers?.includes('pa_total-carat') && (
-                <p className="ms-xl-2">
-                  Total carat {formatCarat(item.attributes['pa_total-carat'])}
-                  <sup>ct</sup>
-                </p>
               )}
             </div>
           )}
-          {label === 'code' && <p>{item.sku}</p>}
           <button
             className="btn btn-border w-100"
             onClick={() => router.push(`/products/${url}`)}
