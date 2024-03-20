@@ -1,7 +1,8 @@
 'use client'
-import { ProductGrid, TitleBar } from '@/app/components'
+import { TitleBar } from '@/app/components'
 import { useProducts } from '@/app/hooks'
 import { ProductFilters, Styles } from '@/app/types'
+import ProductGrid from '@/app/components/ProductGrid'
 
 export const FilteredProducts = ({
   category,

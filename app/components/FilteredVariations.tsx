@@ -1,7 +1,8 @@
 'use client'
-import { ProductGrid, TitleBar } from '@/app/components'
+import { TitleBar } from '@/app/components'
 import { useStore, useVariations } from '@/app/hooks'
 import { FilterLayerKeys, Filters } from '@/app/types'
+import ProductGrid from '@/app/components/ProductGrid'
 
 export const FilteredVariations = ({
   filters,

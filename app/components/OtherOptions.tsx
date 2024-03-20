@@ -1,4 +1,4 @@
-import { ProductGrid } from '@/app/components'
+import ProductGrid from '@/app/components/ProductGrid'
 import { useStore } from '@/app/hooks'
 
 export const OtherOptions = () => {
