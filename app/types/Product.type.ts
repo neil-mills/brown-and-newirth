@@ -25,6 +25,7 @@ export interface VariationAttributes {
   pa_gauge?: VariationGauge
   pa_width?: string
   pa_size?: VariationSize
+  pa_ceramic_colour?: VariationCeramicColours
 }
 export type VariationStatus = 'publish'
 export type VariationStockStatus = 'instock'
@@ -37,6 +38,8 @@ export type VariationGauge =
   | 'super-heavy'
 export type ProductDiamondQuality = 'GSI' | 'HSI' | 'D-FVS' | 'GVS'
 export type VariationDiamondQuality = 'gsi' | 'hsi' | 'd-fvs' | 'gvs'
+export type VariationCeramicColours = 'Black' | 'Grey' | 'Blue' | 'Red'
+export type ProductCeramicColours = 'BLACK' | 'GREY' | 'BLUE' | 'RED'
 
 export interface Images<T> {
   thumbnail: T
@@ -114,6 +117,7 @@ export interface Product {
   'sale-price': number
   'related-upsell': number[]
   'related-cross-sell': number[]
+  'pa_ceramic-colour'?: ProductCeramicColours[]
   variations: Variation[]
 }
 
