@@ -11,7 +11,8 @@ export const ImageCarousel = () => {
     >
       <div className="carousel-inner">
         <a
-          href="#"
+          href={product?.permalink || '#'}
+          target="_blank"
           className="btn bubble position-absolute bg-grey px-3 px-sm-4 px-lg-3 px-xxl-4"
         >
           <span>View Online</span>

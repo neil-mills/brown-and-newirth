@@ -73,6 +73,7 @@ export interface Product {
   productId: number
   name: string
   sku: string
+  permalink: string
   category: string
   attributes: {
     'pa_metal-code': MetalCode[]
