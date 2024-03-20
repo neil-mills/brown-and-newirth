@@ -31,8 +31,14 @@ export const useProducts = (
         'HALF SET',
         'FULL SET',
         'Two Colour',
+        'Diamond',
       ].includes(category)
     ) {
+      if (category === 'Diamond') {
+        products = data.filter((product) =>
+          product.attributes.pa_shoulders?.includes('Diamond')
+        )
+      }
       if (category === 'Shaped') {
         products = data.filter(
           (product) => product.attributes.pa_shaped?.length

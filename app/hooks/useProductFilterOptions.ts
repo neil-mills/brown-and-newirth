@@ -65,6 +65,11 @@ export const useProductFilterOptions = ({
               ['PLAIN', 'MIXED METAL'].includes(pattern)
             )
           )
+        } else if (category === 'Diamond') {
+          return (
+            product?.attributes?.pa_shoulders &&
+            product.attributes.pa_shoulders.includes('Diamond')
+          )
         } else if (category === 'PLAIN') {
           return (
             product?.attributes?.pa_pattern &&
