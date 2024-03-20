@@ -33,12 +33,12 @@ export type ProductAttributeKeys =
   | 'pa_shaped'
 
 export type ProductFilterAttributeKeys =
-  | 'pa_gauge'
-  | 'pa_width'
   | 'pa_shape'
   | 'pa_shaped'
   | 'pa_profile'
   | 'pa_diamond'
+  | 'pa_centre-carat'
+  | 'pa_total-carat'
   | 'pa_pattern'
   | 'pa_setting'
 

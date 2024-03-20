@@ -5,7 +5,7 @@ import {
   Images,
   Product,
   Variation,
-  ProductFilterAttributeKeys,
+  SearchParamKeys,
 } from '@/app/types'
 import { mountStoreDevtool } from 'simple-zustand-devtools'
 
@@ -47,7 +47,7 @@ interface ProductsQuery {
 }
 
 type Filters = {
-  [TKey in ProductFilterAttributeKeys]: string[]
+  [TKey in SearchParamKeys]: string[]
 }
 
 const selectedSku = {
@@ -63,19 +63,23 @@ const selectedSku = {
   size: '',
   metal: '',
 }
+
 export const useStore = create<Store>((set) => ({
   selectedSku,
   basket: [],
   searchParams: '',
   filters: {
-    pa_gauge: [],
-    pa_width: [],
+    pa_diamond: [],
+    'pa_centre-carat': [],
+    'pa_total-carat': [],
     pa_shape: [],
     pa_shaped: [],
-    pa_profile: [],
-    pa_diamond: [],
+    'pa_diamond-set': [],
+    pa_gauge: [],
+    pa_width: [],
     pa_pattern: [],
     pa_setting: [],
+    pa_profile: [],
   },
   productsQuery: {} as ProductsQuery,
   setSelectedSku: (selectedSku: SelectedSku) =>

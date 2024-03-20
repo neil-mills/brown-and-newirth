@@ -1,48 +1,36 @@
 'use client'
-import { useFilterSearchParams, useRangeFilter } from '@/app/hooks'
-import { formatSearchParams } from '@/app/utils'
+import { useFilterSearchParams, useRangeFilter, useStore } from '@/app/hooks'
 import icon from '@/public/img/svg/icon-shape-round.svg'
 import Image from 'next/image'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { Carats } from '../types'
-import { useEffect, useState } from 'react'
+import { getFilterSearchParamUrl } from '@/app/utils'
 
 interface Props {
   attribute: 'pa_centre-carat' | 'pa_total-carat'
 }
 
 export const DiamondCaratFilter = ({ attribute }: Props) => {
-  const pathname = usePathname()
+  const storeFilters = useStore((store) => store.filters)
+  const setFilters = useStore((store) => store.setFilters)
   const searchParams = useSearchParams()
-  const [selectedCarats, setSelectedCarats] = useState<string[]>([])
   const filters = useFilterSearchParams(searchParams.toString())
   const [carats, availableCarats] = useRangeFilter<Carats>({
     rangeFilter: attribute,
     filters,
   })
-  const router = useRouter()
 
   const handleClick = (value: string) => {
-    setSelectedCarats(
-      selectedCarats.includes(value)
-        ? selectedCarats.filter((option) => option !== value)
-        : [value, ...selectedCarats]
-    )
-  }
-
-  useEffect(() => {
-    const query = selectedCarats.length
-      ? formatSearchParams(searchParams.toString(), {
-          [attribute]: selectedCarats.join(','),
-        })
-      : null
-
-    const { protocol, host, pathname } = window.location
-    const newUrl = query
-      ? `${protocol}//${host}${pathname}?${query}`
-      : `${protocol}//${host}${pathname}`
+    const newOptions = storeFilters[attribute].includes(value)
+      ? storeFilters[attribute].filter((option) => option !== value)
+      : [value, ...storeFilters[attribute]]
+    const newUrl = getFilterSearchParamUrl({
+      type: attribute,
+      selectedOptions: newOptions,
+    })
+    setFilters({ ...storeFilters, [attribute]: newOptions })
     window.history.pushState({ path: newUrl }, '', newUrl)
-  }, [router, selectedCarats, attribute, searchParams, pathname])
+  }
 
   return (
     <div className="row row-pad-xs row-panels-sm row-natural-created justify-content-center text-xs text-uppercase text-center">
@@ -52,7 +40,7 @@ export const DiamondCaratFilter = ({ attribute }: Props) => {
             className={`btn btn-icon alt w-100 natural ${carat.class}`}
             disabled={!availableCarats.includes(carat.slug as Carats)}
             onClick={() => handleClick(carat.slug)}
-            aria-pressed={selectedCarats.includes(carat.slug)}
+            aria-pressed={storeFilters[attribute].includes(carat.slug)}
           >
             <div className="icon-wrapper-square d-flex align-items-center justify-content-center">
               <Image src={icon} alt="Round" />
