@@ -10,7 +10,7 @@ interface Props {
   hasChild?: boolean
 }
 
-export const ShapeFilterMenu = ({ category, hasChild = false }: Props) => {
+const ShapeFilterMenu = ({ category, hasChild = false }: Props) => {
   const searchParams = useSearchParams()
   const filters = useFilterSearchParams(searchParams.toString())
   const filter = category === 'Shaped' ? 'pa_shaped' : 'pa_shape'
@@ -32,7 +32,7 @@ export const ShapeFilterMenu = ({ category, hasChild = false }: Props) => {
     )
   }, [shapes, router, pathname])
 
-  if (isLoading) return <p>Loading</p>
+  // if (isLoading) return null
   if (error) return <p>{error.message}</p>
 
   return (
@@ -46,3 +46,5 @@ export const ShapeFilterMenu = ({ category, hasChild = false }: Props) => {
     </div>
   )
 }
+
+export default ShapeFilterMenu

@@ -2,21 +2,30 @@
 import { notFound, useSearchParams } from 'next/navigation'
 import { stylesMap } from '@/app/maps'
 import { Styles } from '@/app/types'
+import dynamic from 'next/dynamic'
 import {
   BackLink,
   CategoryBanner,
-  ShapeFilterMenu,
   ProfileFilterMenu,
   FilteredProducts,
   PatternFilter,
   DiamondSetFilter,
   SettingFilterMenu,
+  FilterGridSkeleton,
 } from '@/app/components'
 import { useCategory, useFilterSearchParams, useStore } from '@/app/hooks'
 
 interface Props {
   params: { slug: string }
 }
+
+const ShapeFilterMenu = dynamic(
+  () => import('@/app/components/ShapeFilterMenu'),
+  {
+    ssr: false,
+    loading: () => <FilterGridSkeleton />,
+  }
+)
 
 const ProductCategoryPage = ({ params: { slug } }: Props) => {
   const setFilterLayers = useStore((store) => store.setFilterLayers)
