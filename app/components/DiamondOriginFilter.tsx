@@ -1,25 +1,34 @@
 'use client'
-import { usePathname, useRouter } from 'next/navigation'
-import { useProductFilterOptions, useRangeFilter, useStore } from '@/app/hooks'
+import { useRangeFilter, useStore } from '@/app/hooks'
 import classNames from 'classnames'
-import { formatSearchParams, searchParamsToObject } from '../utils'
+import { getFilterSearchParamUrl, searchParamsToObject } from '@/app/utils'
 
-export const DiamondOriginFilter = () => {
-  const { product } = useStore((store) => store.selectedSku)
+export const DiamondOriginFilter = ({
+  childType,
+}: {
+  childType: 'pa_centre-carat' | 'pa_total-carat'
+}) => {
+  const storeFilters = useStore((store) => store.filters)
+  const setFilters = useStore((store) => store.setFilters)
   const searchParams = useStore((store) => store.searchParams)
   const searchParamsObj = searchParamsToObject(searchParams)
-  const pathname = usePathname()
-  const router = useRouter()
+
   const [diamondOrigins, availableDiamondOrigins] = useRangeFilter({
     rangeFilter: 'pa_diamond',
     filters: null,
   })
 
-  const handleClick = (diamondOrigin: string) => {
-    const query = formatSearchParams(searchParams, {
-      pa_diamond: diamondOrigin,
+  const handleClick = (value: string) => {
+    const newOptions = storeFilters.pa_diamond.includes(value)
+      ? storeFilters.pa_diamond.filter((option) => option !== value)
+      : [value, ...storeFilters.pa_diamond]
+    const newUrl = getFilterSearchParamUrl({
+      type: 'pa_diamond',
+      childType,
+      selectedOptions: newOptions,
     })
-    router.push(`${pathname}?${query}`)
+    setFilters({ ...storeFilters, pa_diamond: newOptions, [childType]: [] })
+    window.history.pushState({ path: newUrl }, '', newUrl)
   }
 
   return (
@@ -39,9 +48,11 @@ export const DiamondOriginFilter = () => {
             >
               <button
                 className={`btn btn-filter ${btnClass} ${diamondOrigin.class} w-100`}
-                // disabled={diamondOrigins.length === 1}
                 onClick={() => handleClick(diamondOrigin.slug)}
                 disabled={!availableDiamondOrigins.includes(diamondOrigin.slug)}
+                aria-pressed={storeFilters.pa_diamond.includes(
+                  diamondOrigin.slug
+                )}
               >
                 <span>{diamondOrigin.label}</span>
               </button>

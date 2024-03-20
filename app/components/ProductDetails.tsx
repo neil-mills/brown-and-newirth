@@ -26,6 +26,9 @@ export const ProductDetails = () => {
 
   const showSize = !product?.attributes?.['pa_type-2']?.length
 
+  const showCentreCaratFilter = filterLayers.includes('pa_centre-carat')
+  const showTotalCaratFilter = filterLayers.includes('pa_total-carat')
+
   useEffect(() => {
     const show = !showSize
       ? selectedMetal !== ''
@@ -48,15 +51,23 @@ export const ProductDetails = () => {
             ) && (
               <>
                 {filterLayers.includes('pa_gauge') && <GaugeFilter />}
-                {filterLayers.includes('pa_diamond') && <DiamondOriginFilter />}
+                {filterLayers.includes('pa_diamond') && (
+                  <DiamondOriginFilter
+                    childType={
+                      showCentreCaratFilter
+                        ? 'pa_centre-carat'
+                        : 'pa_total-carat'
+                    }
+                  />
+                )}
                 <hr />
               </>
             )}
             {filterLayers.includes('pa_width') && <WidthFilter />}
-            {filterLayers.includes('pa_centre-carat') && (
+            {showCentreCaratFilter && (
               <DiamondCaratFilter attribute="pa_centre-carat" />
             )}
-            {filterLayers.includes('pa_total-carat') && (
+            {showTotalCaratFilter && (
               <DiamondCaratFilter attribute="pa_total-carat" />
             )}
           </>
