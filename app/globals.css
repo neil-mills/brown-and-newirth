@@ -413,9 +413,9 @@ sup {
   padding: 0;
 }
 
-.btn-icon:hover,
-.btn-icon.alt:hover {
-  box-shadow: inset 0px 0px 0px 1px rgba(0, 0, 0, 1);
+.btn-icon.alt:hover,
+.btn-icon:hover {
+  box-shadow: inset 0 0 0 1px #aaa;
 }
 
 .btn-icon img {
@@ -494,6 +494,9 @@ sup {
 }
 .btn-icon.selected {
   box-shadow: inset 0 0 0 1px #000;
+}
+.btn-icon.gauge.disabled img {
+  opacity: 0.05;
 }
 
 /* Forms */
