@@ -863,6 +863,19 @@ sup {
   width: calc(33.33333333% - 11px);
 }
 
+.product-single-data-table.x3 .col-sm-4 {
+  border-bottom: none !important;
+}
+
+@media (max-width: 575px) {
+  .product-single-data-table.x3 .col-sm-4 {
+    border-right: none !important;
+  }
+  .product-single-data-table.x3 .col-sm-4:not(:last-child) {
+    border-bottom: 1px solid #ccc !important;
+  }
+}
+
 /* Col Right Results */
 
 .result-filter {
