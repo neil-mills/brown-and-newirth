@@ -5,7 +5,7 @@ import { FilterGrid, TitleBar } from '@/app/components'
 import { Styles } from '@/app/types'
 import { useEffect } from 'react'
 
-export const SettingFilterMenu = ({ category }: { category: Styles }) => {
+const SettingFilterMenu = ({ category }: { category: Styles }) => {
   const searchParams = useSearchParams()
   const filters = useFilterSearchParams(searchParams.toString())
   const router = useRouter()

@@ -6,9 +6,7 @@ import dynamic from 'next/dynamic'
 import {
   BackLink,
   CategoryBanner,
-  ProfileFilterMenu,
   FilteredProducts,
-  PatternFilter,
   DiamondSetFilter,
   FilterGridSkeleton,
 } from '@/app/components'
@@ -28,6 +26,20 @@ const ShapeFilterMenu = dynamic(
 
 const SettingFilterMenu = dynamic(
   () => import('@/app/components/SettingFilterMenu'),
+  {
+    ssr: false,
+    loading: () => <FilterGridSkeleton />,
+  }
+)
+const PatternFilterMenu = dynamic(
+  () => import('@/app/components/PatternFilterMenu'),
+  {
+    ssr: false,
+    loading: () => <FilterGridSkeleton />,
+  }
+)
+const ProfileFilterMenu = dynamic(
+  () => import('@/app/components/ProfileFilterMenu'),
   {
     ssr: false,
     loading: () => <FilterGridSkeleton />,
@@ -74,7 +86,7 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
           )}
           {showSettingFilter && <SettingFilterMenu category={category} />}
           {showProfileFilter && <ProfileFilterMenu category={category} />}
-          {showPatternFilter && <PatternFilter category={category} />}
+          {showPatternFilter && <PatternFilterMenu category={category} />}
         </div>
       </div>
       <div className="col col-right h-100">

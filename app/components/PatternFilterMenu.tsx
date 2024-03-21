@@ -5,7 +5,7 @@ import { FilterGrid, TitleBar } from '@/app/components'
 import { Styles } from '@/app/types'
 import { useEffect } from 'react'
 
-export const PatternFilter = ({ category }: { category: Styles }) => {
+const PatternFilterMenu = ({ category }: { category: Styles }) => {
   const searchParams = useSearchParams()
   const filters = useFilterSearchParams(searchParams.toString())
   const router = useRouter()
@@ -26,7 +26,6 @@ export const PatternFilter = ({ category }: { category: Styles }) => {
     )
   }, [patterns, router, pathname])
 
-  if (isLoading) return <p>Loading</p>
   if (error) return <p>{error.message}</p>
   return (
     <>
@@ -35,3 +34,5 @@ export const PatternFilter = ({ category }: { category: Styles }) => {
     </>
   )
 }
+
+export default PatternFilterMenu
