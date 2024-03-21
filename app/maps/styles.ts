@@ -71,7 +71,7 @@ export const stylesMap: StyleMap = {
     label: 'Dress',
     slug: 'dress',
     image: '/img/13_dress.png',
-    filterLayers: ['pa_coverage', 'pa_shape', 'pa_setting'],
+    filterLayers: ['pa_coverage', 'pa_shape', 'pa_setting', 'pa_total-carat'],
   },
   'FULL SET': {
     label: 'Full set',
@@ -107,7 +107,7 @@ export const stylesMap: StyleMap = {
     label: 'Ceramic',
     slug: 'ceramic',
     image: '/img/08_ceramic.png',
-    filterLayers: ['pa_gauge', 'pa_width'],
+    filterLayers: ['pa_ceramic-colour', 'pa_width'],
   },
   CELTIC: {
     label: 'Celtic',
