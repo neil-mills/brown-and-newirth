@@ -82,7 +82,6 @@ export const useVariations = ({
     const productSkus = getUniqueArrayValues<string[]>(
       filteredVariations.map((variation) => variation.sku)
     )
-
     let uniqueAtts: string[] = []
     filteredVariations.forEach((variation) => {
       if (variation?.attributes?.[filterByAttribute as VariationAttributeKeys])
@@ -105,8 +104,11 @@ export const useVariations = ({
         if (variation) groupedFilteredVariations.push(variation)
       })
     })
-
-    filteredVariations = groupedFilteredVariations
+    if (!groupedFilteredVariations.length) {
+      filteredVariations = [filteredVariations[0]]
+    } else {
+      filteredVariations = groupedFilteredVariations
+    }
 
     filteredVariations = filteredVariations.map((variation) => ({
       ...variation,
