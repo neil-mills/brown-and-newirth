@@ -21,13 +21,13 @@ export const useProducts = (
 ): Result => {
   let products: Product[] = []
   const { data, error, isLoading } = useGetData()
-
   if (!isLoading && !error && data) {
     if (
       [
         'Shaped',
         'Patterns',
         'PLAIN',
+        'CERAMIC',
         'HALF SET',
         'FULL SET',
         'Two Colour',
@@ -63,7 +63,7 @@ export const useProducts = (
           (product) =>
             product?.attributes?.pa_pattern &&
             product.attributes.pa_pattern.some(
-              (filter) => !['PLAIN'].includes(filter)
+              (filter) => !['PLAIN', 'CERAMIC'].includes(filter)
             )
         )
       }
@@ -79,6 +79,13 @@ export const useProducts = (
           (product) =>
             product?.attributes?.pa_pattern &&
             product.attributes.pa_pattern.includes('PLAIN')
+        )
+      }
+      if (category === 'CERAMIC') {
+        products = data.filter(
+          (product) =>
+            product?.attributes?.pa_pattern &&
+            product.attributes.pa_pattern.includes('CERAMIC')
         )
       }
     } else {

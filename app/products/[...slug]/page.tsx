@@ -7,7 +7,12 @@ import {
   ResultsTabs,
   FilteredVariations,
 } from '@/app/components'
-import { useProduct, useStore, useFilterSearchParams } from '@/app/hooks'
+import {
+  useProduct,
+  useStore,
+  useFilterSearchParams,
+  useGetParams,
+} from '@/app/hooks'
 import { useSearchParams } from 'next/navigation'
 
 interface Props {
@@ -18,9 +23,7 @@ interface Props {
 
 const ProductDetailsPage = ({ params: { slug } }: Props) => {
   const searchParams = useSearchParams()
-  const [idParam, id] = slug
-  const productId = idParam === 'productId' ? id : null
-  const sku = idParam === 'sku' ? id : null
+  const { sku, productId } = useGetParams()
   const setSelectedSku = useStore((store) => store.setSelectedSku)
   const resetSelectedSku = useStore((store) => store.resetSelectedSku)
   const setSearchParams = useStore((store) => store.setSearchParams)
@@ -64,10 +67,9 @@ const ProductDetailsPage = ({ params: { slug } }: Props) => {
     filterLayers,
     resetSelectedSku,
   ])
-
-  if (isLoading) return <p>Loading</p>
+  // if (isLoading) return null
   if (error) return <p>{error.message}</p>
-  if (!product) return <p>No product found</p>
+  // if (!product) return <p>No product found</p>
 
   return (
     <>
