@@ -36,6 +36,7 @@ export const ProductDetails = () => {
     setShowAddToBasket(show)
   }, [selectedSize, selectedMetal, showSize])
 
+  if (!product) return null
   if (!variations) return null
 
   return (
