@@ -45,6 +45,13 @@ const ProfileFilterMenu = dynamic(
     loading: () => <FilterGridSkeleton />,
   }
 )
+const CeramicColourFilterMenu = dynamic(
+  () => import('@/app/components/CeramicColourFilterMenu'),
+  {
+    ssr: false,
+    loading: () => <FilterGridSkeleton />,
+  }
+)
 
 const ProductCategoryPage = ({ params: { slug } }: Props) => {
   const setFilterLayers = useStore((store) => store.setFilterLayers)
@@ -73,7 +80,8 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
     stylesMap[category as Styles].filterLayers.includes('pa_setting')
   const showProfileFilter =
     stylesMap[category as Styles].filterLayers.includes('pa_profile')
-
+  const showCeramicColourFilter =
+    stylesMap[category as Styles].filterLayers.includes('pa_ceramic-colour')
   return (
     <>
       <div className="col-left h-100 d-flex flex-column">
@@ -87,6 +95,9 @@ const ProductCategoryPage = ({ params: { slug } }: Props) => {
           {showSettingFilter && <SettingFilterMenu category={category} />}
           {showProfileFilter && <ProfileFilterMenu category={category} />}
           {showPatternFilter && <PatternFilterMenu category={category} />}
+          {showCeramicColourFilter && (
+            <CeramicColourFilterMenu category={category} />
+          )}
         </div>
       </div>
       <div className="col col-right h-100">

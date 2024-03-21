@@ -25,7 +25,7 @@ export interface VariationAttributes {
   pa_gauge?: VariationGauge
   pa_width?: string
   pa_size?: VariationSize
-  pa_ceramic_colour?: VariationCeramicColours
+  'pa_ceramic-colour'?: VariationCeramicColours
 }
 export type VariationStatus = 'publish'
 export type VariationStockStatus = 'instock'
@@ -109,6 +109,7 @@ export interface Product {
     pa_shaped?: ('Pinch' | 'Twist' | 'Curved' | 'Cutaway')[]
     'pa_diamond-set'?: 'Yes' | 'No'
     pa_diamond?: DiamondOrigin[]
+    'pa_ceramic-colour'?: ProductCeramicColours[]
   }
   collection: string | null
   'product-images': Images<string>
@@ -117,7 +118,6 @@ export interface Product {
   'sale-price': number
   'related-upsell': number[]
   'related-cross-sell': number[]
-  'pa_ceramic-colour'?: ProductCeramicColours[]
   variations: Variation[]
 }
 

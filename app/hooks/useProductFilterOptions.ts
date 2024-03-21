@@ -15,9 +15,8 @@ import {
   patternMap,
   stylesMap,
   settingMap,
-  gaugeMap,
-  widthMap,
   caratMap,
+  ceramicColoursMap,
 } from '@/app/maps'
 import { getUniqueArrayValues } from '@/app/utils'
 
@@ -32,6 +31,7 @@ const map: ProductFilterAttributesMap = {
   pa_setting: settingMap,
   'pa_centre-carat': caratMap,
   'pa_total-carat': caratMap,
+  'pa_ceramic-colour': ceramicColoursMap,
 }
 
 interface Props {
@@ -62,7 +62,7 @@ export const useProductFilterOptions = ({
           return (
             product?.attributes?.pa_pattern &&
             !product.attributes.pa_pattern.some((pattern) =>
-              ['PLAIN', 'MIXED METAL'].includes(pattern)
+              ['PLAIN', 'MIXED METAL', 'CERAMIC'].includes(pattern)
             )
           )
         } else if (category === 'Diamond') {
@@ -74,6 +74,11 @@ export const useProductFilterOptions = ({
           return (
             product?.attributes?.pa_pattern &&
             product.attributes.pa_pattern.includes('PLAIN')
+          )
+        } else if (category === 'CERAMIC') {
+          return (
+            product?.attributes?.pa_pattern &&
+            product.attributes.pa_pattern.includes('CERAMIC')
           )
         } else if (category === 'Two Colour') {
           return (

@@ -7,6 +7,7 @@ export type VariationAttributeKeys =
   | 'pa_gauge'
   | 'pa_width'
   | 'pa_size'
+  | 'pa_ceramic-colour'
 
 export type FilterLayerKeys =
   | VariationAttributeKeys
@@ -31,6 +32,7 @@ export type ProductAttributeKeys =
   | 'pa_coverage'
   | 'pa_setting'
   | 'pa_shaped'
+  | 'pa_ceramic-colour'
 
 export type ProductFilterAttributeKeys =
   | 'pa_shape'
@@ -41,6 +43,7 @@ export type ProductFilterAttributeKeys =
   | 'pa_total-carat'
   | 'pa_pattern'
   | 'pa_setting'
+  | 'pa_ceramic-colour'
 
 export type SearchParamKeys =
   | 'pa_diamond'
@@ -54,6 +57,7 @@ export type SearchParamKeys =
   | 'pa_width'
   | 'pa_pattern'
   | 'pa_setting'
+  | 'pa_ceramic-colour'
 
 export type Filters = {
   [TKey in FilterLayerKeys]?: string[]

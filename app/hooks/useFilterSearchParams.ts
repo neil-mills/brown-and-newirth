@@ -9,6 +9,7 @@ import {
   widthMap,
   patternMap,
   settingMap,
+  ceramicColoursMap,
 } from '@/app/maps'
 import { Map, SearchParamKeys, Filters } from '@/app/types'
 import { searchParamsToObject } from '@/app/utils'
@@ -29,6 +30,7 @@ const map: FilterSearchParamsMap = {
   pa_width: widthMap,
   pa_pattern: patternMap,
   pa_setting: settingMap,
+  'pa_ceramic-colour': ceramicColoursMap,
 }
 
 export const useFilterSearchParams = (
