@@ -80,6 +80,7 @@ export const useStore = create<Store>((set) => ({
     pa_pattern: [],
     pa_setting: [],
     pa_profile: [],
+    'pa_ceramic-colour': [],
   },
   productsQuery: {} as ProductsQuery,
   setSelectedSku: (selectedSku: SelectedSku) =>
