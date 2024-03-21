@@ -2,8 +2,8 @@
 import { useFilterSearchParams, useRangeFilter, useStore } from '@/app/hooks'
 import { Widths } from '@/app/types'
 import { getFilterSearchParamUrl } from '@/app/utils'
-import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
 
 export const WidthFilter = () => {
   const storeFilters = useStore((store) => store.filters)
@@ -33,8 +33,14 @@ export const WidthFilter = () => {
           <button
             className="btn btn-icon gauge alt w-100 ultra-light"
             onClick={() => handleClick(width.slug)}
-            disabled={!availableWidths.includes(width.slug as Widths)}
-            aria-pressed={storeFilters.pa_width.includes(width.slug)}
+            disabled={
+              !availableWidths.includes(width.slug as Widths) ||
+              availableWidths.length === 1
+            }
+            aria-pressed={
+              storeFilters.pa_width.includes(width.slug) ||
+              availableWidths.length === 1
+            }
           >
             <div className="icon-wrapper-gauge d-flex align-items-center justify-content-center py-3 px-2">
               <Image

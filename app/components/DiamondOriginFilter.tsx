@@ -1,7 +1,7 @@
 'use client'
 import { useRangeFilter, useStore } from '@/app/hooks'
-import classNames from 'classnames'
 import { getFilterSearchParamUrl, searchParamsToObject } from '@/app/utils'
+import classNames from 'classnames'
 import { decode } from 'html-entities'
 
 export const DiamondOriginFilter = ({
@@ -50,10 +50,14 @@ export const DiamondOriginFilter = ({
               <button
                 className={`btn btn-filter ${btnClass} ${diamondOrigin.class} w-100`}
                 onClick={() => handleClick(diamondOrigin.slug)}
-                disabled={!availableDiamondOrigins.includes(diamondOrigin.slug)}
-                aria-pressed={storeFilters.pa_diamond.includes(
-                  diamondOrigin.slug
-                )}
+                disabled={
+                  !availableDiamondOrigins.includes(diamondOrigin.slug) ||
+                  availableDiamondOrigins.length === 1
+                }
+                aria-pressed={
+                  storeFilters.pa_diamond.includes(diamondOrigin.slug) ||
+                  availableDiamondOrigins.length === 1
+                }
               >
                 <span>{decode(diamondOrigin.label, { level: 'html5' })}</span>
               </button>

@@ -1,8 +1,8 @@
 'use client'
-import { useRangeFilter, useFilterSearchParams, useStore } from '@/app/hooks'
+import { useFilterSearchParams, useRangeFilter, useStore } from '@/app/hooks'
+import { VariationGauge } from '@/app/types'
 import { getFilterSearchParamUrl } from '@/app/utils'
 import { useSearchParams } from 'next/navigation'
-import { VariationGauge } from '@/app/types'
 
 export const GaugeFilter = () => {
   const storeFilters = useStore((store) => store.filters)
@@ -39,8 +39,14 @@ export const GaugeFilter = () => {
                 isActive ? ' bg-pink' : ''
               } btn-filter btn-border btn-gauge-${gauge.slug} h-100 w-100 px-1`}
               onClick={() => handleClick(gauge.slug)}
-              disabled={!availableGauges.includes(gauge.slug as VariationGauge)}
-              aria-pressed={storeFilters.pa_gauge.includes(gauge.slug)}
+              disabled={
+                !availableGauges.includes(gauge.slug as VariationGauge) ||
+                gauges.length === 1
+              }
+              aria-pressed={
+                storeFilters.pa_gauge.includes(gauge.slug) ||
+                gauges.length === 1
+              }
             >
               <span>{gauge.label}</span>
             </button>

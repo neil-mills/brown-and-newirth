@@ -1,10 +1,10 @@
 'use client'
 import { useFilterSearchParams, useRangeFilter, useStore } from '@/app/hooks'
+import { getFilterSearchParamUrl } from '@/app/utils'
 import icon from '@/public/img/svg/icon-shape-round.svg'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import { Carats } from '../types'
-import { getFilterSearchParamUrl } from '@/app/utils'
 
 interface Props {
   attribute: 'pa_centre-carat' | 'pa_total-carat'
@@ -38,9 +38,15 @@ export const DiamondCaratFilter = ({ attribute }: Props) => {
         <div key={carat.slug} className="col-ninth col-pad-xs col-panel-xs">
           <button
             className={`btn btn-icon alt w-100 natural ${carat.class}`}
-            disabled={!availableCarats.includes(carat.slug as Carats)}
+            disabled={
+              !availableCarats.includes(carat.slug as Carats) ||
+              availableCarats.length === 1
+            }
             onClick={() => handleClick(carat.slug)}
-            aria-pressed={storeFilters[attribute].includes(carat.slug)}
+            aria-pressed={
+              storeFilters[attribute].includes(carat.slug) ||
+              availableCarats.length === 1
+            }
           >
             <div className="icon-wrapper-square d-flex align-items-center justify-content-center">
               <Image src={icon} alt="Round" />
