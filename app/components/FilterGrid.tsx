@@ -41,7 +41,10 @@ export const FilterGrid = ({ type, filters, childType }: Props) => {
           <button
             className="btn btn-icon bg-gradient-grey w-100"
             onClick={() => handleClick(filter.slug)}
-            aria-pressed={storeFilters[type].includes(filter.slug)}
+            disabled={filters.length === 1}
+            aria-pressed={
+              storeFilters[type].includes(filter.slug) || filters.length === 1
+            }
           >
             <p className="pt-2 mb-0">{filter.label}</p>
             <div className="icon-wrapper-square d-flex align-items-center justify-content-center px-4 pb-2">
