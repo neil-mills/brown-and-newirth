@@ -3,6 +3,7 @@ import { useFilterSearchParams, useRangeFilter, useStore } from '@/app/hooks'
 import { Widths } from '@/app/types'
 import { getFilterSearchParamUrl } from '@/app/utils'
 import { useSearchParams } from 'next/navigation'
+import Image from 'next/image'
 
 export const WidthFilter = () => {
   const storeFilters = useStore((store) => store.filters)
@@ -36,7 +37,12 @@ export const WidthFilter = () => {
             aria-pressed={storeFilters.pa_width.includes(width.slug)}
           >
             <div className="icon-wrapper-gauge d-flex align-items-center justify-content-center py-3 px-2">
-              <img src={width.image} alt={width.label} />
+              <Image
+                src={width.image || ''}
+                width={0}
+                height={0}
+                alt={width.label}
+              />
             </div>
           </button>
           <p className="mt-2">{width.label}</p>

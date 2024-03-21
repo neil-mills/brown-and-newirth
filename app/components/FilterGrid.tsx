@@ -2,6 +2,7 @@
 import { Mapping, ProductFilterAttributeKeys } from '@/app/types'
 import { getFilterSearchParamUrl } from '@/app/utils'
 import { useStore } from '@/app/hooks'
+import Image from 'next/image'
 
 interface Props {
   type: ProductFilterAttributeKeys
@@ -44,7 +45,12 @@ export const FilterGrid = ({ type, filters, childType }: Props) => {
           >
             <p className="pt-2 mb-0">{filter.label}</p>
             <div className="icon-wrapper-square d-flex align-items-center justify-content-center px-4 pb-2">
-              <img src={filter.image} alt={filter.label} />
+              <Image
+                src={filter.image || ''}
+                width={0}
+                height={0}
+                alt={filter.label}
+              />
             </div>
           </button>
         </div>
