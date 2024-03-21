@@ -7,7 +7,7 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.brownandnewirth.com',
         port: '',
-        pathname: '/wp-content/uploads/**',
+        pathname: '/wp-content/uploads/wpallimport/files/*',
       },
     ],
   },
